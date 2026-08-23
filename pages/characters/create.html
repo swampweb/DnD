@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100f">
+  <title>Create Character | Three Realms Adventures</title>
+  <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/characters.css">
+  <link rel="stylesheet" href="../../css/modal.css">
+</head>
+<body>
+  <div class="character-page-shell">
+    <div id="site-navigation" data-active-page="characters"></div>
+    <main class="character-form-main">
+      <div class="character-page-heading compact-heading">
+        <div><p class="section-label">Character Workshop</p><h1>Create Character</h1><p>Build a universal character. No Adventure is assigned during creation.</p></div>
+        <a class="secondary-link" href="index.html">Back to Characters</a>
+      </div>
+
+      <form class="character-form" id="character-form">
+        <section class="form-card identity-card">
+          <div class="form-card-heading"><span>01</span><div><h2>Identity</h2><p>The core information shown throughout Three Realms.</p></div></div>
+          <div class="form-grid three-cols">
+            <label>Character Name<input id="character-name" required maxlength="60"></label>
+            <label>Title<input id="character-title" maxlength="60" placeholder="Optional title"></label>
+            <label>Level<input id="character-level" type="number" min="1" max="100" value="1" required></label>
+            <label>Race<input id="character-race" maxlength="50" placeholder="Human, Elf, Dwarf..."></label>
+            <label>Class<input id="character-class" maxlength="50" placeholder="Warrior, Ranger, Mystic..."></label>
+            <label>Background<input id="character-background" maxlength="60" placeholder="Outlander, Scholar..."></label>
+            <label>Alignment<input id="character-alignment" maxlength="40" placeholder="Optional"></label>
+            <label>Age<input id="character-age" type="number" min="0" max="999"></label>
+            <label>Status<select id="character-status"><option>Active</option><option>Retired</option></select></label>
+          </div>
+        </section>
+
+        <section class="form-card">
+          <div class="form-card-heading"><span>02</span><div><h2>Attributes</h2><p>Starting attribute values for the character sheet.</p></div></div>
+          <div class="attribute-entry-grid">
+            <label>Strength<input id="stat-strength" type="number" min="1" max="30" value="10"></label>
+            <label>Dexterity<input id="stat-dexterity" type="number" min="1" max="30" value="10"></label>
+            <label>Constitution<input id="stat-constitution" type="number" min="1" max="30" value="10"></label>
+            <label>Intelligence<input id="stat-intelligence" type="number" min="1" max="30" value="10"></label>
+            <label>Wisdom<input id="stat-wisdom" type="number" min="1" max="30" value="10"></label>
+            <label>Charisma<input id="stat-charisma" type="number" min="1" max="30" value="10"></label>
+          </div>
+        </section>
+
+        <section class="form-card">
+          <div class="form-card-heading"><span>03</span><div><h2>Health and Progression</h2><p>Starting health, resources, and experience.</p></div></div>
+          <div class="form-grid four-cols">
+            <label>Current HP<input id="current-hp" type="number" min="0" value="10"></label>
+            <label>Max HP<input id="max-hp" type="number" min="1" value="10"></label>
+            <label>Current Mana<input id="current-mana" type="number" min="0" value="0"></label>
+            <label>Max Mana<input id="max-mana" type="number" min="0" value="0"></label>
+            <label>Experience<input id="experience" type="number" min="0" value="0"></label>
+            <label>Next Level XP<input id="experience-next" type="number" min="1" value="1000"></label>
+            <label>Gold<input id="gold" type="number" min="0" value="0"></label>
+            <label>Silver<input id="silver" type="number" min="0" value="0"></label>
+          </div>
+        </section>
+
+        <section class="form-card">
+          <div class="form-card-heading"><span>04</span><div><h2>Profile</h2><p>The character story and optional portrait location.</p></div></div>
+          <div class="form-grid">
+            <label class="wide-field">Portrait URL<input id="portrait-url" type="url" placeholder="Optional image URL"></label>
+            <label class="wide-field">Biography<textarea id="character-biography" rows="6" maxlength="3000" placeholder="Write the character background, goals, and history..."></textarea></label>
+          </div>
+        </section>
+
+        <div class="form-actions"><a class="cancel-form" href="index.html">Cancel</a><button class="save-character" type="submit">Create Character</button></div>
+      </form>
+    </main>
+  </div>
+  <div class="toast" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/navigation.js"></script>
+  <script src="../../js/modal.js"></script>
+  <script src="../../js/character-create.js"></script>
+</body>
+</html>

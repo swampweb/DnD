@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100f">
+  <title>Characters | Three Realms Adventures</title>
+  <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/characters.css">
+  <link rel="stylesheet" href="../../css/modal.css">
+</head>
+<body>
+  <div class="character-page-shell">
+    <div id="site-navigation" data-active-page="characters"></div>
+    <main class="character-library-main">
+      <div class="character-page-heading">
+        <div><p class="section-label">Hero Library</p><h1>My Characters</h1><p>Create and manage universal characters. Adventure assignment happens separately.</p></div>
+        <a class="create-character-button" href="create.html">Create Character</a>
+      </div>
+      <section class="character-library" id="character-library">
+        <div class="character-loading">Loading characters...</div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/navigation.js"></script>
+  <script src="../../js/modal.js"></script>
+  <script src="../../js/characters.js"></script>
+</body>
+</html>
