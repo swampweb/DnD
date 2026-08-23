@@ -40,19 +40,9 @@
 .brand-name strong { display: block; font-family: Georgia, serif; font-size: clamp(1.05rem, 2vw, 1.45rem); letter-spacing: .14em; }
 .brand-name small { display: block; margin-top: 5px; color: #d3b08d; letter-spacing: .28em; text-transform: uppercase; }
 
-.visual-copy { max-width: 690px; padding: 38px 0; }
-.eyebrow { color: #ff9a4e; font-size: .78rem; font-weight: 900; letter-spacing: .22em; text-transform: uppercase; }
-.visual-copy h1 {
-  margin: 13px 0 18px;
-  max-width: 720px;
-  font-family: Georgia, serif;
-  font-size: clamp(3.2rem, 7vw, 7rem);
-  line-height: .88;
-  letter-spacing: -.055em;
-  text-shadow: 0 8px 28px rgba(0,0,0,.72);
-}
-.visual-copy h1 span { display: block; color: #ed8a45; }
-.visual-copy > p { max-width: 590px; margin: 0 0 24px; color: #d7c8ba; line-height: 1.7; font-size: 1rem; text-shadow: 0 2px 10px #000; }
+.visual-copy { max-width: 690px; padding: 22px 0; }
+.eyebrow { margin-bottom: 14px; color: #ff9a4e; font-size: .78rem; font-weight: 900; letter-spacing: .22em; text-transform: uppercase; }
+.intro-copy { max-width: 600px; margin: 0 0 22px; color: #eee4da; line-height: 1.7; font-size: 1.02rem; text-shadow: 0 2px 10px #000; }
 .feature-list { display: grid; grid-template-columns: repeat(2, minmax(190px, 1fr)); gap: 10px 18px; max-width: 560px; }
 .feature-item { display: flex; align-items: center; gap: 9px; color: #eee3d8; font-size: .9rem; }
 .feature-item::before { content: "✦"; color: #ff8a32; }
@@ -133,9 +123,8 @@
   .brand-row { justify-content: center; }
   .site-logo { width: 82px; }
   .brand-name { display: none; }
-  .visual-copy { text-align: center; }
-  .visual-copy h1 { font-size: clamp(2.7rem, 15vw, 4.6rem); }
-  .visual-copy > p { font-size: .9rem; }
+  .visual-copy { text-align: center; padding: 18px 0; }
+  .intro-copy { font-size: .9rem; }
   .feature-list { grid-template-columns: 1fr; justify-items: center; }
   .realm-status { justify-content: center; }
   .realm-pill { min-width: 102px; }
