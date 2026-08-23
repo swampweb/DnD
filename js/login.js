@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const tabs = document.querySelectorAll('[data-auth-tab]');
   const forms = document.querySelectorAll('.auth-form');
   const resetModal = document.getElementById('reset-modal');
+  const confirmationModal = document.getElementById('confirmation-modal');
 
   const openTab = (name) => {
     tabs.forEach(btn => btn.classList.toggle('active', btn.dataset.authTab === name));
@@ -11,6 +12,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   tabs.forEach(btn => btn.addEventListener('click', () => openTab(btn.dataset.authTab)));
   document.getElementById('forgot-button').addEventListener('click', () => resetModal.classList.add('open'));
   document.getElementById('close-reset').addEventListener('click', () => resetModal.classList.remove('open'));
+  document.getElementById('confirmation-close').addEventListener('click', () => {
+    confirmationModal.classList.remove('open');
+    openTab('login');
+  });
   resetModal.addEventListener('click', event => {
     if (event.target === resetModal) resetModal.classList.remove('open');
   });
@@ -41,6 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const password = document.getElementById('register-password').value;
     const confirmPassword = document.getElementById('register-confirm').value;
     if (password !== confirmPassword) return window.DND.toast('The passwords do not match.', 'error');
+
     const button = event.currentTarget.querySelector('button[type="submit"]');
     button.disabled = true;
     button.textContent = 'Creating account...';
@@ -49,13 +55,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { data, error } = await window.DND.client.auth.signUp({
       email,
       password,
-      options: { data: { display_name: displayName } }
+      options: {
+        emailRedirectTo: new URL('../login/index.html', window.location.href).href,
+        data: { display_name: displayName }
+      }
     });
     button.disabled = false;
     button.textContent = 'Create Adventurer Account';
     if (error) return window.DND.toast(error.message, 'error');
-    if (data.session) window.location.replace('../dashboard/index.html');
-    else window.DND.toast('Account created. Check your email to confirm the account.', 'success');
+
+    if (data.session) {
+      window.location.replace('../dashboard/index.html');
+    } else {
+      document.getElementById('confirmation-email').textContent = email;
+      confirmationModal.classList.add('open');
+      event.currentTarget.reset();
+    }
   });
 
   document.getElementById('reset-form').addEventListener('submit', async event => {

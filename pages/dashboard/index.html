@@ -3,48 +3,108 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard | Three Realms Adventures</title>
+  <title>Home | Three Realms Adventures</title>
   <link rel="stylesheet" href="../../css/global.css">
   <link rel="stylesheet" href="../../css/dashboard.css">
 </head>
 <body>
   <div class="dashboard-shell">
     <header class="topbar">
-      <div class="topbar-brand"><div class="brand-mark" aria-hidden="true">III</div><strong>THREE REALMS</strong></div>
-      <div class="user-actions"><span class="user-name">Signed in as <strong data-user-name>Adventurer</strong></span><button class="signout" id="signout-button">Sign Out</button></div>
+      <div class="topbar-brand">
+        <img class="topbar-logo" src="../../assets/images/Three%20Realms%20Emblem.png" alt="Three Realms Adventures emblem">
+        <div><strong>THREE REALMS</strong><small>Adventures</small></div>
+      </div>
+
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a class="nav-link active" href="index.html">Home</a>
+        <a class="nav-link" href="../characters/index.html">Characters</a>
+        <a class="nav-link" href="../campaigns/index.html">Campaigns</a>
+        <a class="nav-link" href="../adventures/index.html">Adventures</a>
+        <a class="nav-link" href="#" data-role-link="manager" hidden>Management</a>
+        <a class="nav-link" href="#" data-role-link="admin" hidden>Administration</a>
+      </nav>
+
+      <div class="user-actions">
+        <div class="user-block"><strong data-user-name>Adventurer</strong><span class="role-badge" id="role-badge">User</span></div>
+        <button class="signout" id="signout-button">Sign Out</button>
+      </div>
     </header>
 
     <main class="dashboard-main">
       <section class="hero">
-        <div><div class="eyebrow">Account hub</div><h1>Welcome, <span data-user-name>Adventurer</span>.</h1><p>Your characters remain independent and can join eligible campaigns across the realms.</p></div>
+        <div>
+          <div class="eyebrow">Account home</div>
+          <h1>Welcome back,<br><span data-user-name>Adventurer</span>.</h1>
+          <p>Manage universal characters, review campaigns, and select a realm when an Adventure is ready to enter.</p>
+        </div>
         <div class="quick-stats" aria-label="Account statistics">
           <div class="stat"><strong id="character-count">0</strong><span>Characters</span></div>
-          <div class="stat"><strong>0</strong><span>Active Campaigns</span></div>
-          <div class="stat"><strong>0</strong><span>Achievements</span></div>
+          <div class="stat"><strong id="campaign-count">0</strong><span>Active Campaigns</span></div>
+          <div class="stat"><strong id="achievement-count">0</strong><span>Achievements</span></div>
         </div>
       </section>
 
-      <section class="dashboard-grid">
-        <article class="panel">
-          <h2>My Characters</h2>
-          <p class="panel-subtitle">Select an existing hero or create the first character.</p>
-          <div class="empty-card">
-            <div><div class="brand-mark" style="margin:auto">+</div><strong>No characters yet</strong><p>The next build step will add the graphical character creation wizard and character library.</p><a class="start-button" href="#" aria-disabled="true">Character Creation Coming Next</a></div>
+      <section class="section-panel">
+        <div class="section-heading">
+          <div><h2>My Characters</h2><p>Your characters remain independent from Adventures.</p></div>
+          <a class="section-link" href="../characters/index.html">View all characters</a>
+        </div>
+        <div class="character-layout">
+          <a class="create-character" href="../characters/create.html">
+            <div><img src="../../assets/images/shared/character-placeholder.png" alt="Create a character"><strong>Create New Character</strong><span>Build a universal hero for eligible campaigns.</span></div>
+          </a>
+          <div class="empty-character-area" id="character-area">
+            <div><h3>No characters created yet</h3><p>Character cards will appear here after the Character Creation wizard is completed.</p></div>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <aside class="panel">
-          <h2>Adventure Portals</h2>
-          <p class="panel-subtitle">Campaign access is controlled separately from character creation.</p>
-          <div class="realms">
-            <div class="realm-card"><header><h3>Viking</h3><span class="status-chip active">Available</span></header><p>Norse campaigns, runic stories, frozen wilds, and the first configured realm.</p></div>
-            <div class="realm-card"><header><h3>Cajun</h3><span class="status-chip">Coming Soon</span></header><p>A future realm with its own visual configuration, assets, and campaigns.</p></div>
-            <div class="realm-card"><header><h3>Fantasy</h3><span class="status-chip">Coming Soon</span></header><p>A future realm with separate theme assets while keeping shared game functions.</p></div>
-          </div>
-        </aside>
+      <section class="section-panel">
+        <div class="section-heading">
+          <div><h2>Adventure Portal</h2><p>Select a realm to view available campaigns.</p></div>
+          <a class="section-link" href="../adventures/index.html">Explore all Adventures</a>
+        </div>
+        <div class="adventure-grid">
+          <article class="adventure-card">
+            <div class="adventure-art"><img src="../../assets/images/adventures/viking-card.png" alt="Viking Adventure realm"></div>
+            <div class="adventure-info">
+              <div class="adventure-title-row"><h3>Viking Adventure</h3><span class="status-chip available">Available</span></div>
+              <p>Frozen fjords, runic mysteries, longships, and legendary foes.</p>
+              <a class="adventure-button available" href="../adventures/index.html?realm=viking">View Viking Campaigns</a>
+            </div>
+          </article>
+
+          <article class="adventure-card">
+            <div class="adventure-art"><img src="../../assets/images/adventures/cajun-card.png" alt="Cajun Adventure realm"></div>
+            <div class="adventure-info">
+              <div class="adventure-title-row"><h3>Cajun Adventure</h3><span class="status-chip">Coming Soon</span></div>
+              <p>Bayou settlements, cypress shadows, lantern paths, and hidden legends.</p>
+              <span class="adventure-button">Realm Not Yet Available</span>
+            </div>
+          </article>
+
+          <article class="adventure-card">
+            <div class="adventure-art"><img src="../../assets/images/adventures/fantasy-card.png" alt="Fantasy Adventure realm"></div>
+            <div class="adventure-info">
+              <div class="adventure-title-row"><h3>Fantasy Adventure</h3><span class="status-chip">Coming Soon</span></div>
+              <p>Arcane kingdoms, ancient castles, magical ruins, and mythical creatures.</p>
+              <span class="adventure-button">Realm Not Yet Available</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-panel admin-notice" id="management-panel">
+        <div class="section-heading"><div><h2>Platform Tools</h2><p>Links shown here are based on the signed-in platform role.</p></div></div>
+        <div class="admin-grid">
+          <a class="admin-tool" href="#"><strong>Campaign Management</strong><span>Create, update, and archive campaign records.</span></a>
+          <a class="admin-tool" href="#"><strong>Adventure Content</strong><span>Manage realm availability and shared content.</span></a>
+          <a class="admin-tool" href="#" data-admin-only hidden><strong>User and Role Management</strong><span>Assign Admin, Manager, and User platform roles.</span></a>
+        </div>
       </section>
     </main>
   </div>
+
   <div class="toast" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../js/config.js"></script>
