@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100f">
+  <title>Sign In | Three Realms Adventures</title>
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/login.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="realm-visual" aria-label="Three Realms Adventures introduction">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">III</div>
+        <div><strong>THREE REALMS</strong><small>Adventures</small></div>
+      </div>
+
+      <div class="visual-copy">
+        <div class="eyebrow">Build the legend</div>
+        <h1>One hero.<span>Three realms.</span></h1>
+        <p>Create characters that can travel between campaigns when permitted by the Dungeon Master. Track inventories, equipment, achievements, and campaign history from one shared account hub.</p>
+      </div>
+
+      <div class="realm-status" aria-label="Adventure availability">
+        <div class="realm-pill"><strong>Cajun</strong><span>Coming soon</span></div>
+        <div class="realm-pill active"><strong>Viking</strong><span>Available</span></div>
+        <div class="realm-pill"><strong>Fantasy</strong><span>Coming soon</span></div>
+      </div>
+    </section>
+
+    <section class="auth-side">
+      <div class="auth-card">
+        <h2>Welcome, Adventurer</h2>
+        <p>Sign in to manage characters, campaigns, and the road ahead.</p>
+
+        <div class="tab-list" role="tablist" aria-label="Account access">
+          <button class="tab-button active" type="button" data-auth-tab="login">Sign In</button>
+          <button class="tab-button" type="button" data-auth-tab="register">Create Account</button>
+        </div>
+
+        <form class="auth-form active" id="login-form">
+          <div class="field"><label for="login-email">Email address</label><input id="login-email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required></div>
+          <div class="form-row">
+            <label class="check"><input type="checkbox" checked> Keep me signed in</label>
+            <button class="text-button" id="forgot-button" type="button">Forgot password?</button>
+          </div>
+          <button class="primary-button" type="submit">Enter Three Realms</button>
+        </form>
+
+        <form class="auth-form" id="register-form">
+          <div class="field"><label for="register-name">Display name</label><input id="register-name" type="text" autocomplete="nickname" maxlength="40" required></div>
+          <div class="field"><label for="register-email">Email address</label><input id="register-email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="register-password">Password</label><input id="register-password" type="password" autocomplete="new-password" minlength="8" required></div>
+          <div class="field"><label for="register-confirm">Confirm password</label><input id="register-confirm" type="password" autocomplete="new-password" minlength="8" required></div>
+          <button class="primary-button" type="submit">Create Adventurer Account</button>
+          <div class="form-note">Account confirmation follows the email settings configured in Supabase Authentication.</div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-title">
+    <div class="modal">
+      <h3 id="reset-title">Reset Password</h3>
+      <p>Enter the email address used for the account. Supabase will send the password recovery link.</p>
+      <form id="reset-form">
+        <div class="field"><label for="reset-email">Email address</label><input id="reset-email" type="email" autocomplete="email" required></div>
+        <div class="modal-actions">
+          <button class="secondary-button" id="close-reset" type="button">Cancel</button>
+          <button class="primary-button" type="submit">Send Reset Link</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/login.js"></script>
+</body>
+</html>

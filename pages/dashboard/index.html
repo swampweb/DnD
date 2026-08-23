@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Three Realms Adventures</title>
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-shell">
+    <header class="topbar">
+      <div class="topbar-brand"><div class="brand-mark" aria-hidden="true">III</div><strong>THREE REALMS</strong></div>
+      <div class="user-actions"><span class="user-name">Signed in as <strong data-user-name>Adventurer</strong></span><button class="signout" id="signout-button">Sign Out</button></div>
+    </header>
+
+    <main class="dashboard-main">
+      <section class="hero">
+        <div><div class="eyebrow">Account hub</div><h1>Welcome, <span data-user-name>Adventurer</span>.</h1><p>Your characters remain independent and can join eligible campaigns across the realms.</p></div>
+        <div class="quick-stats" aria-label="Account statistics">
+          <div class="stat"><strong id="character-count">0</strong><span>Characters</span></div>
+          <div class="stat"><strong>0</strong><span>Active Campaigns</span></div>
+          <div class="stat"><strong>0</strong><span>Achievements</span></div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel">
+          <h2>My Characters</h2>
+          <p class="panel-subtitle">Select an existing hero or create the first character.</p>
+          <div class="empty-card">
+            <div><div class="brand-mark" style="margin:auto">+</div><strong>No characters yet</strong><p>The next build step will add the graphical character creation wizard and character library.</p><a class="start-button" href="#" aria-disabled="true">Character Creation Coming Next</a></div>
+          </div>
+        </article>
+
+        <aside class="panel">
+          <h2>Adventure Portals</h2>
+          <p class="panel-subtitle">Campaign access is controlled separately from character creation.</p>
+          <div class="realms">
+            <div class="realm-card"><header><h3>Viking</h3><span class="status-chip active">Available</span></header><p>Norse campaigns, runic stories, frozen wilds, and the first configured realm.</p></div>
+            <div class="realm-card"><header><h3>Cajun</h3><span class="status-chip">Coming Soon</span></header><p>A future realm with its own visual configuration, assets, and campaigns.</p></div>
+            <div class="realm-card"><header><h3>Fantasy</h3><span class="status-chip">Coming Soon</span></header><p>A future realm with separate theme assets while keeping shared game functions.</p></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <div class="toast" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/dashboard.js"></script>
+</body>
+</html>
