@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100f">
+  <title>Administration | Three Realms Adventures</title>
+  <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/administration.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <div id="site-navigation" data-active-page="administration"></div>
+
+    <main class="admin-main" id="admin-content" hidden>
+      <div class="admin-heading">
+        <div>
+          <p class="section-label">Platform control</p>
+          <h1>Administration</h1>
+        </div>
+        <button class="refresh-button" id="refresh-admin" type="button">Refresh Data</button>
+      </div>
+
+      <section class="admin-card invitation-card">
+        <div class="card-heading">
+          <div>
+            <h2>Invitation Management</h2>
+            <p>Send invitations and review delivery, acceptance, expiration, and provider errors.</p>
+          </div>
+          <button class="invite-button" id="admin-invite-button" type="button">Invite Adventurer</button>
+        </div>
+
+        <div class="summary-grid" aria-label="Invitation summary">
+          <div class="summary-item"><span>Total</span><strong id="invite-total">0</strong></div>
+          <div class="summary-item sent"><span>Sent</span><strong id="invite-sent">0</strong></div>
+          <div class="summary-item accepted"><span>Accepted</span><strong id="invite-accepted">0</strong></div>
+          <div class="summary-item pending"><span>Pending</span><strong id="invite-pending">0</strong></div>
+          <div class="summary-item failed"><span>Failed</span><strong id="invite-failed">0</strong></div>
+          <div class="summary-item expired"><span>Expired</span><strong id="invite-expired">0</strong></div>
+        </div>
+
+        <div class="filter-row">
+          <label for="status-filter">Status</label>
+          <select id="status-filter">
+            <option value="all">All invitations</option>
+            <option value="sent">Sent</option>
+            <option value="accepted">Accepted</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
+            <option value="expired">Expired</option>
+          </select>
+          <label class="search-label" for="invite-search">Search</label>
+          <input id="invite-search" type="search" placeholder="Email or invited by">
+        </div>
+
+        <div class="table-wrap">
+          <table class="invite-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Invited By</th>
+                <th>Created</th>
+                <th>Sent</th>
+                <th>Status</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="invite-table-body">
+              <tr><td colspan="6" class="loading-cell">Loading invitation history...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-grid">
+        <article class="admin-card compact-card">
+          <h2>User and Role Management</h2>
+          <p>Review platform users and assign Admin, Manager, or User access.</p>
+          <span class="coming-label">Page coming next</span>
+        </article>
+        <article class="admin-card compact-card">
+          <h2>Adventure Management</h2>
+          <p>Manage realm availability and shared Adventure information.</p>
+          <span class="coming-label">Page coming later</span>
+        </article>
+        <article class="admin-card compact-card">
+          <h2>Campaign Oversight</h2>
+          <p>Review campaigns, membership, and campaign status across the platform.</p>
+          <span class="coming-label">Page coming later</span>
+        </article>
+      </section>
+    </main>
+
+    <main class="access-denied" id="access-denied" hidden>
+      <div class="denied-card">
+        <h1>Administrator Access Required</h1>
+        <p>This page is available only to Three Realms platform administrators.</p>
+        <a href="../dashboard/index.html">Return to Dashboard</a>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="admin-invite-modal" role="dialog" aria-modal="true" aria-labelledby="admin-invite-title" hidden>
+    <div class="admin-modal">
+      <button class="modal-close" id="admin-invite-close" type="button" aria-label="Close">×</button>
+      <div class="modal-symbol">✦</div>
+      <h2 id="admin-invite-title">Invite Adventurer</h2>
+      <p>The invitation will be sent securely through the Three Realms backend.</p>
+      <form id="admin-invite-form">
+        <label for="admin-invite-email">Email address</label>
+        <input id="admin-invite-email" type="email" autocomplete="email" required placeholder="adventurer@example.com">
+        <div class="modal-actions">
+          <button class="cancel-button" id="admin-invite-cancel" type="button">Cancel</button>
+          <button class="send-button" type="submit">Send Invite</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/navigation.js"></script>
+  <script src="../../js/administration.js"></script>
+</body>
+</html>
