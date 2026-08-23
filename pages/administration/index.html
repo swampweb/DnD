@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="../../css/global.css">
   <link rel="stylesheet" href="../../css/dashboard.css">
   <link rel="stylesheet" href="../../css/administration.css">
+  <link rel="stylesheet" href="../../css/administration-actions.css">
+  <link rel="stylesheet" href="../../css/modal.css">
 </head>
 <body>
   <div class="admin-shell">
@@ -17,7 +19,7 @@
     <main class="admin-main" id="admin-content" hidden>
       <div class="admin-heading">
         <div>
-          <p class="section-label">Platform control</p>
+          <p class="section-label">Platform Control</p>
           <h1>Administration</h1>
         </div>
         <button class="refresh-button" id="refresh-admin" type="button">Refresh Data</button>
@@ -65,10 +67,11 @@
                 <th>Sent</th>
                 <th>Status</th>
                 <th>Details</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody id="invite-table-body">
-              <tr><td colspan="6" class="loading-cell">Loading invitation history...</td></tr>
+              <tr><td colspan="7" class="loading-cell">Loading invitation history...</td></tr>
             </tbody>
           </table>
         </div>
@@ -124,6 +127,7 @@
   <script src="../../js/config.js"></script>
   <script src="../../js/supabase.js"></script>
   <script src="../../js/navigation.js"></script>
+  <script src="../../js/modal.js"></script>
   <script src="../../js/administration.js"></script>
 </body>
 </html>
