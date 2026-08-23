@@ -123,7 +123,15 @@ const resendInvitation = async (id, email, button) => {
 };
 
 const deleteInvitation = async (id, email) => {
-  const confirmed = window.confirm(`Delete the invitation record for ${email}? This cannot be undone.`);
+  const confirmed = await window.DNDModal.confirm({
+    type: 'danger',
+    kicker: 'Invitation Management',
+    title: 'Delete Invitation',
+    message: `Delete the invitation record for ${email}?\n\nThis permanently removes the invitation history record and cannot be undone.`,
+    confirmText: 'Delete Invitation',
+    cancelText: 'Keep Invitation',
+    focusCancel: true
+  });
   if (!confirmed) return;
 
   const { error } = await window.DND.client
