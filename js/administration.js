@@ -35,7 +35,8 @@ const renderTable = () => {
   }
 
   body.innerHTML = filtered.map(row => {
-    const inviter = row.inviter?.display_name || row.inviter?.username || 'Unknown';
+    const inviter =
+  row.invited_by || 'Unknown';
     const detail = row.error_message
       ? `Error: ${row.error_message}`
       : row.provider_message_id
@@ -58,10 +59,22 @@ const loadInvitations = async () => {
   const body = document.getElementById('invite-table-body');
   body.innerHTML = '<tr><td colspan="6" class="loading-cell">Loading invitation history...</td></tr>';
 
-  const { data, error } = await window.DND.client
-    .from('invitations')
-    .select(`id,email,status,email_provider,provider_message_id,error_message,sent_at,accepted_at,expires_at,created_at,inviter:profiles!invitations_invited_by_fkey(display_name,username)`)
-    .order('created_at', { ascending: false });
+const { data, error } = await window.DND.client
+  .from('invitations')
+  .select(`
+    id,
+    email,
+    status,
+    email_provider,
+    provider_message_id,
+    error_message,
+    sent_at,
+    accepted_at,
+    expires_at,
+    created_at,
+    invited_by
+  `)
+  .order('created_at', { ascending: false });
 
   if (error) {
     body.innerHTML = `<tr><td colspan="6" class="empty-cell">${escapeHtml(error.message)}</td></tr>`;
