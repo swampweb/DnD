@@ -1,0 +1,88 @@
+{
+  "id": "wandering-storykeeper",
+  "name": "Wandering Storykeeper",
+  "realm": "Viking Adventure",
+  "class": "Skald",
+  "specialization": "Wandering Storykeeper",
+
+  "role": "Support / Lore",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A traveling Nordic keeper of stories who crosses settlements collecting local histories, preserving forgotten names, guiding companions with remembered paths, and turning hard-won knowledge into practical support.",
+
+  "visualIdentity": "Layered travel garments, teal embroidery, carved story staff, memory scroll satchel, bronze memory tokens, fur collar, weathered road cloak, and restrained amber rune-memory effects.",
+
+  "consistency": "Use the same face, hairstyle, travel-garment silhouette, teal embroidery patterns, staff carvings, satchel design, bronze token details, fur placement, and teal, brown, gray, bronze, and amber palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "roadside-chronicle",
+      "name": "Roadside Chronicle",
+      "icon": "Roadside Chronicle Icon.png",
+      "description": "Gather and apply knowledge from remembered journeys and local histories."
+    },
+    {
+      "id": "guiding-tale",
+      "name": "Guiding Tale",
+      "icon": "Guiding Tale Icon.png",
+      "description": "Share lessons learned from past travelers to aid companions."
+    },
+    {
+      "id": "names-remembered",
+      "name": "Names Remembered",
+      "icon": "Names Remembered Icon.png",
+      "description": "Recall the deeds of forgotten heroes to strengthen allies."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "wayfarer-story-staff",
+      "name": "Wayfarer Story Staff",
+      "icon": "Wayfarer Story Staff Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "roadworn-skald-garments",
+      "name": "Roadworn Skald Garments",
+      "icon": "Roadworn Skald Garments Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "memory-scroll-satchel",
+      "name": "Memory Scroll Satchel",
+      "icon": "Memory Scroll Satchel Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "travelers-tale-tokens",
+      "name": "Travelers Tale Tokens",
+      "icon": "Travelers Tale Tokens Icon.png",
+      "quantity": 3
+    },
+    {
+      "id": "hearthbrew-flask",
+      "name": "Hearthbrew Flask",
+      "icon": "Hearthbrew Flask Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Skald - Wandering Storykeeper - Portrait.png",
+    "model": "Skald - Wandering Storykeeper Model.png",
+    "boardPiece": "Skald - Wandering Storykeeper Board Piece.png",
+    "banner": "Skald - Wandering Storykeeper - Banner.png",
+    "previewCard": "Skald - Wandering Storykeeper - Preview Card.png"
+  },
+
+  "palette": [
+    "teal",
+    "brown",
+    "weathered gray",
+    "bronze",
+    "amber"
+  ]
+}
