@@ -1,0 +1,88 @@
+{
+  "id": "war-drummer",
+  "name": "War Drummer",
+  "realm": "Viking Adventure",
+  "class": "Skald",
+  "specialization": "War Drummer",
+
+  "role": "Support / Battlefield Command",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A battle-tested Nordic skald who controls the pace of combat through thunderous drum patterns, strengthens allied formations, disrupts enemy timing, and carries commands across the battlefield.",
+
+  "visualIdentity": "Heavy skald garments reinforced for travel, iron-bound war drum, ashwood mallets, fur mantle, bronze fittings, command banners, leather harness, and restrained amber battlefield-rhythm effects.",
+
+  "consistency": "Use the same face, hairstyle, garment silhouette, drum design, mallet design, fur placement, harness arrangement, bronze fittings, and amber, brown, iron, bronze, and charcoal palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "marching-thunder",
+      "name": "Marching Thunder",
+      "icon": "Marching Thunder Icon.png",
+      "description": "Drive allies forward with powerful rhythms that improve movement and coordination."
+    },
+    {
+      "id": "rallying-cadence",
+      "name": "Rallying Cadence",
+      "icon": "Rallying Cadence Icon.png",
+      "description": "Strengthen nearby allies through battlefield commands and encouraging drumbeats."
+    },
+    {
+      "id": "break-their-rhythm",
+      "name": "Break Their Rhythm",
+      "icon": "Break Their Rhythm Icon.png",
+      "description": "Disrupt enemy coordination and timing through overwhelming percussion."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "ironbound-war-drum",
+      "name": "Ironbound War Drum",
+      "icon": "Ironbound War Drum Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "ashwood-drum-mallets",
+      "name": "Ashwood Drum Mallets",
+      "icon": "Ashwood Drum Mallets Icon.png",
+      "quantity": 2
+    },
+    {
+      "id": "battlebeat-skald-garments",
+      "name": "Battlebeat Skald Garments",
+      "icon": "Battlebeat Skald Garments Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "marchwarden-harness",
+      "name": "Marchwarden Harness",
+      "icon": "Marchwarden Harness Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "emberbrew-tonic",
+      "name": "Emberbrew Tonic",
+      "icon": "Emberbrew Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Skald - War Drummer - Portrait.png",
+    "model": "Skald - War Drummer Model.png",
+    "boardPiece": "Skald - War Drummer Board Piece.png",
+    "banner": "Skald - War Drummer - Banner.png",
+    "previewCard": "Skald - War Drummer - Preview Card.png"
+  },
+
+  "palette": [
+    "amber",
+    "bronze",
+    "charcoal",
+    "brown",
+    "iron gray"
+  ]
+}
