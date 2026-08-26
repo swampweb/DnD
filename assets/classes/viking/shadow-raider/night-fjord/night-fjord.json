@@ -1,0 +1,89 @@
+{
+  "id": "night-fjord",
+  "name": "Night Fjord",
+
+  "realm": "Viking Adventure",
+  "class": "Shadow Raider",
+  "specialization": "Night Fjord",
+
+  "role": "Stealth / Specialist",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A covert Nordic shoreline raider who moves through moonless fjords, uses tide noise and deep shadow for concealment, disables maritime defenses, and delivers precise attacks before disappearing into the dark.",
+
+  "visualIdentity": "Deep navy and charcoal raider leathers, twin Fjordshadow Seax Knives, muted iron fittings, coastal infiltration gear, sea-weathered accessories, and restrained silver-gray fog and shadow effects.",
+
+  "consistency": "Use the same face, hairstyle, raider silhouette, knife design, gear arrangement, muted iron fittings, and navy, charcoal, steel, sea-fog blue, and dark iron palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "tide-shadow",
+      "name": "Tide Shadow",
+      "icon": "Tide Shadow Icon.png",
+      "description": "Blend into shoreline terrain and moving shadows to avoid detection."
+    },
+    {
+      "id": "moonless-strike",
+      "name": "Moonless Strike",
+      "icon": "Moonless Strike Icon.png",
+      "description": "Launch a devastating attack from darkness before the target can react."
+    },
+    {
+      "id": "undertow-snare",
+      "name": "Undertow Snare",
+      "icon": "Undertow Snare Icon.png",
+      "description": "Create hazardous terrain and movement restrictions using hidden traps."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "fjordshadow-seax-knives",
+      "name": "Fjordshadow Seax Knives",
+      "icon": "Fjordshadow Seax Knives Icon.png",
+      "quantity": 2
+    },
+    {
+      "id": "nighttide-raider-leathers",
+      "name": "Nighttide Raider Leathers",
+      "icon": "Nighttide Raider Leathers Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "blackwater-smoke-vials",
+      "name": "Blackwater Smoke Vials",
+      "icon": "Blackwater Smoke Vials Icon.png",
+      "quantity": 2
+    },
+    {
+      "id": "fjordline-deployment-kit",
+      "name": "Fjordline Deployment Kit",
+      "icon": "Fjordline Deployment Kit Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "deepwell-elixir",
+      "name": "Deepwell Elixir",
+      "icon": "Deepwell Elixir Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Shadow Raider - Night Fjord - Portrait.png",
+    "model": "Shadow Raider - Night Fjord Model.png",
+    "boardPiece": "Shadow Raider - Night Fjord Board Piece.png",
+    "banner": "Shadow Raider - Night Fjord - Banner.png",
+    "previewCard": "Shadow Raider - Night Fjord - Preview Card.png"
+  },
+
+  "palette": [
+    "deep navy",
+    "charcoal black",
+    "cold steel gray",
+    "sea fog blue",
+    "muted iron"
+  ]
+}
