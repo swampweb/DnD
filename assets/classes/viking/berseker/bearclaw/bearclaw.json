@@ -1,0 +1,89 @@
+{
+  "id": "bearclaw",
+  "name": "Bearclaw",
+
+  "realm": "Viking Adventure",
+  "class": "Berserker",
+  "specialization": "Bearclaw",
+
+  "role": "Damage Dealer / Frontline",
+
+  "difficulty": 4,
+  "difficultyMax": 5,
+
+  "theme": "A savage northern berserker who fights with bear-like strength, survives punishment, and overwhelms powerful enemies through brutal close combat and relentless aggression.",
+
+  "visualIdentity": "Massive fur-lined armor, broad greataxe, bear pelt mantle, iron-plated leather, carved rage totems, weathered battle gear, and restrained amber rage effects.",
+
+  "consistency": "Use the same face, hairstyle, fur mantle, greataxe design, armor silhouette, totem design, leather bindings, and brown, iron, amber, and dark fur palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "berserker-rage",
+      "name": "Berserker Rage",
+      "icon": "Berserker Rage Icon.png",
+      "description": "Unleash primal fury to increase offensive pressure."
+    },
+    {
+      "id": "bears-ferocity",
+      "name": "Bear's Ferocity",
+      "icon": "Bear's Ferocity Icon.png",
+      "description": "Channel raw bear-like strength to overpower enemies."
+    },
+    {
+      "id": "devastating-strike",
+      "name": "Devastating Strike",
+      "icon": "Devastating Strike Icon.png",
+      "description": "Deliver a crushing blow capable of staggering powerful foes."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "broadhead-greataxe",
+      "name": "Broadhead Greataxe",
+      "icon": "Broadhead Greataxe Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "ironhide-battle-armor",
+      "name": "Ironhide Battle Armor",
+      "icon": "Ironhide Battle Armor Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "bear-pelt-cloak",
+      "name": "Bear Pelt Cloak",
+      "icon": "Bear Pelt Cloak Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "bearclaw-rage-totem",
+      "name": "Bearclaw Rage Totem",
+      "icon": "Bearclaw Rage Totem Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "winterroot-healing-draught",
+      "name": "Winterroot Healing Draught",
+      "icon": "Winterroot Healing Draught Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Berserker - Bearclaw - Portrait.png",
+    "model": "Berserker - Bearclaw Model.png",
+    "boardPiece": "Berserker - Bearclaw Board Piece.png",
+    "banner": "Berserker - Bearclaw - Banner.png",
+    "previewCard": "Berserker - Bearclaw - Preview Card.png"
+  },
+
+  "palette": [
+    "brown",
+    "dark fur",
+    "iron",
+    "amber",
+    "weathered leather"
+  ]
+}
