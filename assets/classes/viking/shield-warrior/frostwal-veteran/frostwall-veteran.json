@@ -1,0 +1,89 @@
+{
+  "id": "frostwall-veteran",
+  "name": "Frostwall Veteran",
+
+  "realm": "Viking Adventure",
+  "class": "Shield Warrior",
+  "specialization": "Frostwall Veteran",
+
+  "role": "Defender / Frontline",
+
+  "difficulty": 2,
+  "difficultyMax": 5,
+
+  "theme": "A seasoned northern shield warrior hardened by years defending frozen passes, using experience, resilience, and disciplined defensive tactics to withstand overwhelming odds.",
+
+  "visualIdentity": "Weathered frozen-steel armor, frostscar round shield, veteran iceblade, thick winter cloak, fur trim, reinforced equipment, and restrained ice-blue veteran effects.",
+
+  "consistency": "Use the same face, hairstyle, armor silhouette, shield design, sword design, fur placement, winter cloak, and blue, silver, white, gray, and ice-blue palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "frostwall-guard",
+      "name": "Frostwall Guard",
+      "icon": "Frostwall Guard Icon.png",
+      "description": "Hold defensive positions with unmatched discipline."
+    },
+    {
+      "id": "hold-the-pass",
+      "name": "Hold the Pass",
+      "icon": "Hold the Pass Icon.png",
+      "description": "Prevent enemies from advancing through key terrain."
+    },
+    {
+      "id": "veteran-resolve",
+      "name": "Veteran Resolve",
+      "icon": "Veteran Resolve Icon.png",
+      "description": "Draw on years of experience to endure tremendous pressure."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "frostscar-round-shield",
+      "name": "Frostscar Round Shield",
+      "icon": "Frostscar Round Shield Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "veteran-iceblade",
+      "name": "Veteran Iceblade",
+      "icon": "Veteran Iceblade Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "frostlinked-chain-armor",
+      "name": "Frostlinked Chain Armor",
+      "icon": "Frostlinked Chain Armor Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "winterwatch-cloak",
+      "name": "Winterwatch Cloak",
+      "icon": "Winterwatch Cloak Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "hearthroot-tonic",
+      "name": "Hearthroot Tonic",
+      "icon": "Hearthroot Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Shield Warrior - Frostwall Veteran - Portrait.png",
+    "model": "Shield Warrior - Frostwall Veteran Model.png",
+    "boardPiece": "Shield Warrior - Frostwall Veteran Board Piece.png",
+    "banner": "Shield Warrior - Frostwall Veteran - Banner.png",
+    "previewCard": "Shield Warrior - Frostwall Veteran - Preview Card.png"
+  },
+
+  "palette": [
+    "silver",
+    "blue",
+    "white",
+    "gray",
+    "ice-blue"
+  ]
+}
