@@ -1,0 +1,79 @@
+{
+  "id": "snow-tracker",
+  "name": "Snow Tracker",
+  "realm": "Viking Adventure",
+  "class": "Wolf Ranger",
+  "specialization": "Snow Tracker",
+  "role": "Ranged Control / Survival",
+  "difficulty": 3,
+  "difficultyMax": 5,
+  "theme": "A patient Nordic ranger who follows faint signs across frozen terrain, predicts movement through disturbed snow, guides allies through winter hazards, and uses precise bow fire to slow fleeing or advancing targets.",
+  "visualIdentity": "Layered white-gray and muted-blue ranger leathers, snow-hide fur mantle, pale ashwood longbow, practical seax, tracking tools, rope, weathered steel fittings, insulated boots, and restrained ice-blue wind effects.",
+  "consistency": "Use the same face, hair, ranger-leather silhouette, snow-hide mantle pattern, longbow design, seax shape, tracking-kit arrangement, steel fittings, and white-gray, muted blue, brown, silver, and ice-blue palette across every character image.",
+  "starterAbilities": [
+    {
+      "id": "read-the-snow",
+      "name": "Read the Snow",
+      "icon": "Read the Snow Icon.png",
+      "description": "Reveal tracks and weak points, gaining insight that improves accuracy and tracking of the target."
+    },
+    {
+      "id": "frostbinding-shot",
+      "name": "Frostbinding Shot",
+      "icon": "Frostbinding Shot Icon.png",
+      "description": "Fire a chilling arrow that slows the target's movement and hinders escape or advance."
+    },
+    {
+      "id": "winters-path",
+      "name": "Winters Path",
+      "icon": "Winters Path Icon.png",
+      "description": "Guide allies through treacherous snow and ice, reducing environmental penalties and increasing survival."
+    }
+  ],
+  "starterEquipment": [
+    {
+      "id": "whitepine-longbow",
+      "name": "Whitepine Longbow",
+      "icon": "Whitepine Longbow Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "frosttrail-seax",
+      "name": "Frosttrail Seax",
+      "icon": "Frosttrail Seax Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "snowhide-ranger-leathers",
+      "name": "Snowhide Ranger Leathers",
+      "icon": "Snowhide Ranger Leathers Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "winter-tracking-kit",
+      "name": "Winter Tracking Kit",
+      "icon": "Winter Tracking Kit Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "trailroot-tonic",
+      "name": "Trailroot Tonic",
+      "icon": "Trailroot Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+  "assets": {
+    "portrait": "Wolf Ranger - Snow Tracker - Portrait.png",
+    "model": "Wolf Ranger - Snow Tracker Model.png",
+    "boardPiece": "Wolf Ranger - Snow Tracker Board Piece.png",
+    "banner": "Wolf Ranger - Snow Tracker - Banner.png",
+    "previewCard": "Wolf Ranger - Snow Tracker - Preview Card.png"
+  },
+  "palette": [
+    "white-gray",
+    "muted blue",
+    "brown",
+    "silver",
+    "ice-blue"
+  ]
+}
