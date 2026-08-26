@@ -1,0 +1,89 @@
+{
+  "id": "stone-oracle",
+  "name": "Stone Oracle",
+
+  "realm": "Viking Adventure",
+  "class": "Rune Seer",
+  "specialization": "Stone Oracle",
+
+  "role": "Control / Support Magic",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "An ancient Nordic rune-seer who draws wisdom from sacred stones, shaping protective wards, binding threats, and revealing hidden truths through earthbound prophecy.",
+
+  "visualIdentity": "Earth-toned oracle robes, carved runestone staff, stone talismans, layered furs, weathered leather bindings, engraved runes, and restrained amber and stone-gray magical effects.",
+
+  "consistency": "Use the same face, hairstyle, robe silhouette, runestone staff design, rune carvings, talisman placement, leather bindings, and earth-tone palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "stone-ward",
+      "name": "Stone Ward",
+      "icon": "Stone Ward Icon.png",
+      "description": "Create a protective rune barrier that shields allies."
+    },
+    {
+      "id": "earthshackle",
+      "name": "Earthshackle",
+      "icon": "Earthshackle Icon.png",
+      "description": "Bind enemies with earthen runes that hinder movement."
+    },
+    {
+      "id": "oracles-revelation",
+      "name": "Oracle's Revelation",
+      "icon": "Oracle's Revelation Icon.png",
+      "description": "Reveal hidden threats and gain prophetic insight."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "runestone-crook",
+      "name": "Runestone Crook",
+      "icon": "Runestone Crook Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "earthwoven-oracle-robes",
+      "name": "Earthwoven Oracle Robes",
+      "icon": "Earthwoven Oracle Robes Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "heartstone-reliquary",
+      "name": "Heartstone Reliquary",
+      "icon": "Heartstone Reliquary Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "prophecy-slabs",
+      "name": "Prophecy Slabs",
+      "icon": "Prophecy Slabs Icon.png",
+      "quantity": 3
+    },
+    {
+      "id": "deepwell-elixir",
+      "name": "Deepwell Elixir",
+      "icon": "Deepwell Elixir Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Rune Seer - Stone Oracle - Portrait.png",
+    "model": "Rune Seer - Stone Oracle Model.png",
+    "boardPiece": "Rune Seer - Stone Oracle Board Piece.png",
+    "banner": "Rune Seer - Stone Oracle - Banner.png",
+    "previewCard": "Rune Seer - Stone Oracle - Preview Card.png"
+  },
+
+  "palette": [
+    "stone gray",
+    "earth brown",
+    "amber",
+    "weathered leather",
+    "granite"
+  ]
+}
