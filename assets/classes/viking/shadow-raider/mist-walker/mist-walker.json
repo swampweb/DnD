@@ -1,0 +1,89 @@
+{
+  "id": "mist-walker",
+  "name": "Mist Walker",
+
+  "realm": "Viking Adventure",
+  "class": "Shadow Raider",
+  "specialization": "Mist Walker",
+
+  "role": "Stealth / Specialist",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A covert Nordic mist raider who uses coastal fog, silent movement, concealed tools, and precise strikes to infiltrate guarded areas, bypass hazards, and expose vulnerable targets.",
+
+  "visualIdentity": "Layered gray and smoke-blue cloak, weathered leather armor, muted iron fittings, twin Mistfang Seax Knives, concealed infiltration tools, and restrained silver-gray mist effects.",
+
+  "consistency": "Use the same face, hairstyle, cloak silhouette, leather armor pattern, Mistfang knife design, tool placement, muted iron fittings, and silver-gray mist palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "mist-step",
+      "name": "Mist Step",
+      "icon": "Mist Step Icon.png",
+      "description": "Move through cover and fog with exceptional speed and concealment."
+    },
+    {
+      "id": "veiled-strike",
+      "name": "Veiled Strike",
+      "icon": "Veiled Strike Icon.png",
+      "description": "Deliver a precise hidden strike while remaining difficult to track."
+    },
+    {
+      "id": "fogwire-trap",
+      "name": "Fogwire Trap",
+      "icon": "Fogwire Trap Icon.png",
+      "description": "Deploy a concealed trap to hinder enemy movement and awareness."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "mistfang-seax-knives",
+      "name": "Mistfang Seax Knives",
+      "icon": "Mistfang Seax Knives Icon.png",
+      "quantity": 2
+    },
+    {
+      "id": "fogweave-raider-leathers",
+      "name": "Fogweave Raider Leathers",
+      "icon": "Fogweave Raider Leathers Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "veilglass-smoke-vials",
+      "name": "Veilglass Smoke Vials",
+      "icon": "Veilglass Smoke Vials Icon.png",
+      "quantity": 2
+    },
+    {
+      "id": "mistwire-trap-kit",
+      "name": "Mistwire Trap Kit",
+      "icon": "Mistwire Trap Kit Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "deepwell-elixir",
+      "name": "Deepwell Elixir",
+      "icon": "Deepwell Elixir Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Shadow Raider - Mist Walker - Portrait.png",
+    "model": "Shadow Raider - Mist Walker Model.png",
+    "boardPiece": "Shadow Raider - Mist Walker Board Piece.png",
+    "banner": "Shadow Raider - Mist Walker - Banner.png",
+    "previewCard": "Shadow Raider - Mist Walker - Preview Card.png"
+  },
+
+  "palette": [
+    "gray",
+    "smoke-blue",
+    "silver",
+    "charcoal",
+    "muted iron"
+  ]
+}
