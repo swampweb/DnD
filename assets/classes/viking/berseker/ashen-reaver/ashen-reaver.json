@@ -1,0 +1,89 @@
+{
+  "id": "ashen-reaver",
+  "name": "Ashen Reaver",
+
+  "realm": "Viking Adventure",
+  "class": "Berserker",
+  "specialization": "Ashen Reaver",
+
+  "role": "Damage Dealer / Frontline",
+
+  "difficulty": 4,
+  "difficultyMax": 5,
+
+  "theme": "A ruthless raider forged in fire and battle, using overwhelming aggression, brutal axe strikes, and relentless determination to break enemy lines.",
+
+  "visualIdentity": "Charred armor plates, massive greataxe, bone trophies, dark leather bindings, ash-stained furs, scarred equipment, and restrained ember-red effects.",
+
+  "consistency": "Use the same face, hairstyle, greataxe design, armor silhouette, bone trophies, leather bindings, fur placement, and black, gray, ember-red, and ash palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "raging-onslaught",
+      "name": "Raging Onslaught",
+      "icon": "Raging Onslaught Icon.png",
+      "description": "Launch an aggressive assault with overwhelming momentum."
+    },
+    {
+      "id": "ashen-fury",
+      "name": "Ashen Fury",
+      "icon": "Ashen Fury Icon.png",
+      "description": "Channel burning rage into devastating attacks."
+    },
+    {
+      "id": "reavers-cleave",
+      "name": "Reaver's Cleave",
+      "icon": "Reaver's Cleave Icon.png",
+      "description": "Deliver a sweeping attack capable of striking multiple foes."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "reaver-greataxe",
+      "name": "Reaver Greataxe",
+      "icon": "Reaver Greataxe Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "spiked-warplate",
+      "name": "Spiked Warplate",
+      "icon": "Spiked Warplate Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "bone-totem",
+      "name": "Bone Totem",
+      "icon": "Bone Totem Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "cinder-throwing-axes",
+      "name": "Cinder Throwing Axes",
+      "icon": "Cinder Throwing Axes Icon.png",
+      "quantity": 3
+    },
+    {
+      "id": "ashblood-elixir",
+      "name": "Ashblood Elixir",
+      "icon": "Ashblood Elixir Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Berserker - Ashen Reaver - Portrait.png",
+    "model": "Berserker - Ashen Reaver Model.png",
+    "boardPiece": "Berserker - Ashen Reaver Board Piece.png",
+    "banner": "Berserker - Ashen Reaver - Banner.png",
+    "previewCard": "Berserker - Ashen Reaver - Preview Card.png"
+  },
+
+  "palette": [
+    "ash gray",
+    "charcoal",
+    "ember red",
+    "black",
+    "weathered steel"
+  ]
+}
