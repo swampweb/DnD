@@ -1,0 +1,89 @@
+{
+  "id": "aurora-seer",
+  "name": "Aurora Seer",
+
+  "realm": "Viking Adventure",
+  "class": "Rune Seer",
+  "specialization": "Aurora Seer",
+
+  "role": "Support / Magic",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A mystical Nordic seer who studies the northern lights, guiding allies through prophetic visions and channeling celestial rune magic for protection and restoration.",
+
+  "visualIdentity": "Elegant rune-seer robes, aurora-infused rune staff, celestial jewelry, glowing prisms, silver accents, flowing fabrics, and restrained green, purple, and blue aurora effects.",
+
+  "consistency": "Use the same face, hairstyle, robe silhouette, staff design, prism appearance, celestial accents, silver fittings, and aurora-inspired palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "aurora-veil",
+      "name": "Aurora Veil",
+      "icon": "Aurora Veil Icon.png",
+      "description": "Wrap allies in protective aurora energy."
+    },
+    {
+      "id": "guiding-light",
+      "name": "Guiding Light",
+      "icon": "Guiding Light Icon.png",
+      "description": "Reveal safe paths and strengthen allied awareness."
+    },
+    {
+      "id": "boreal-restoration",
+      "name": "Boreal Restoration",
+      "icon": "Boreal Restoration Icon.png",
+      "description": "Restore allies through celestial rune energy."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "aurora-rune-staff",
+      "name": "Aurora Rune Staff",
+      "icon": "Aurora Rune Staff Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "starlight-seer-robes",
+      "name": "Starlight Seer Robes",
+      "icon": "Starlight Seer Robes Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "boreal-prism",
+      "name": "Boreal Prism",
+      "icon": "Boreal Prism Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "prophecy-rune-stones",
+      "name": "Prophecy Rune Stones",
+      "icon": "Prophecy Rune Stones Icon.png",
+      "quantity": 3
+    },
+    {
+      "id": "moonwell-elixir",
+      "name": "Moonwell Elixir",
+      "icon": "Moonwell Elixir Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Rune Seer - Aurora Seer - Portrait.png",
+    "model": "Rune Seer - Aurora Seer Model.png",
+    "boardPiece": "Rune Seer - Aurora Seer Board Piece.png",
+    "banner": "Rune Seer - Aurora Seer - Banner.png",
+    "previewCard": "Rune Seer - Aurora Seer - Preview Card.png"
+  },
+
+  "palette": [
+    "aurora green",
+    "aurora blue",
+    "aurora purple",
+    "silver",
+    "starlight white"
+  ]
+}
