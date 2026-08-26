@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100f">
+  <title>Realm Guide | Three Realms Adventures</title>
+  <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/realm-guide.css">
+  <link rel="stylesheet" href="../../css/modal.css">
+</head>
+<body>
+  <div class="realm-guide-shell">
+    <div id="site-navigation" data-active-page="realm-guide"></div>
+
+    <main class="realm-guide-main">
+      <div class="realm-guide-heading">
+        <div>
+          <p class="realm-guide-kicker">Realm Master's Guide</p>
+          <h1>The Three Realms Codex</h1>
+          <p>Rules, heroes, creatures, lore, and tools for building adventures across the Three Realms.</p>
+        </div>
+        <button class="mobile-codex-toggle" id="mobile-codex-toggle" type="button" aria-expanded="false" aria-controls="codex-sidebar">Browse Guide</button>
+      </div>
+
+      <div class="codex-layout">
+        <aside class="codex-sidebar" id="codex-sidebar" aria-label="Codex navigation">
+          <div class="codex-sidebar-title">
+            <span class="codex-rune">&#9672;</span>
+            <div><strong>Realm Guide</strong><small>Three Realms Codex</small></div>
+          </div>
+
+          <label class="codex-search" for="codex-search-input">
+            <span class="sr-only">Search the Codex</span>
+            <input id="codex-search-input" type="search" placeholder="Search the Codex..." autocomplete="off">
+            <span aria-hidden="true">&#9906;</span>
+          </label>
+
+          <nav class="codex-nav">
+            <button class="codex-nav-item active" type="button" data-section="getting-started"><span>&#128214;</span>Getting Started</button>
+            <button class="codex-nav-item" type="button" data-section="character-creation"><span>&#9812;</span>Character Creation</button>
+
+            <div class="codex-nav-group open">
+              <button class="codex-nav-item codex-nav-parent" type="button" aria-expanded="true"><span>&#9671;</span>Viking Adventure<i></i></button>
+              <div class="codex-nav-children">
+                <button type="button" data-section="viking-classes">Classes &amp; Specializations</button>
+                <button type="button" data-section="abilities">Abilities</button>
+                <button type="button" data-section="equipment">Equipment</button>
+                <button type="button" data-section="world-lore">Lore</button>
+              </div>
+            </div>
+
+            <button class="codex-nav-item" type="button" data-section="campaigns"><span>&#9876;</span>Running Campaigns</button>
+            <button class="codex-nav-item" type="button" data-section="combat"><span>&#9876;</span>Combat System</button>
+            <button class="codex-nav-item" type="button" data-section="creatures"><span>&#128062;</span>Creatures &amp; Enemies</button>
+            <button class="codex-nav-item" type="button" data-section="realm-tools"><span>&#9881;</span>Realm Master Tools</button>
+            <button class="codex-nav-item" type="button" data-section="quest-generator"><span>&#10022;</span>Quest Generator</button>
+            <button class="codex-nav-item" type="button" data-section="loot-tables"><span>&#9670;</span>Loot Tables</button>
+          </nav>
+        </aside>
+
+        <section class="codex-book" aria-live="polite">
+          <article class="codex-section active" id="getting-started" data-search="getting started three realms adventures realm master players guide">
+            <header class="codex-hero">
+              <p>Welcome to</p>
+              <h2>The Three Realms Codex</h2>
+              <div class="codex-divider"><span>&#10022;</span></div>
+              <p class="codex-intro">Your guide to Three Realms Adventures. Learn the game, create heroes, prepare campaigns, and build original stories as a Realm Master.</p>
+              <div class="viking-landscape" role="img" aria-label="Viking longship crossing a frozen sea toward a mountain stronghold">
+                <div class="landscape-copy"><span>Current Realm</span><strong>Viking Adventure</strong><small>Fate, honor, and glory await.</small></div>
+              </div>
+            </header>
+
+            <div class="codex-copy-grid">
+              <section class="parchment-card">
+                <h3>How Three Realms Works</h3>
+                <p>Three Realms Adventures is an original tabletop roleplaying experience built around distinct realms, guided character creation, campaign play, and expandable adventure content.</p>
+              </section>
+              <section class="parchment-card">
+                <h3>Players &amp; Realm Masters</h3>
+                <p>Players create heroes and make choices within the story. The Realm Master prepares the world, presents challenges, guides encounters, and brings each campaign to life.</p>
+              </section>
+            </div>
+
+            <section class="quick-paths">
+              <h3>Begin Your Journey</h3>
+              <div class="quick-path-grid">
+                <button type="button" data-jump="character-creation"><span>01</span><strong>Create a Character</strong><small>Choose a realm, class, and specialization.</small></button>
+                <button type="button" data-jump="viking-classes"><span>02</span><strong>Explore Viking Classes</strong><small>Meet the six current hero paths.</small></button>
+                <button type="button" data-jump="campaigns"><span>03</span><strong>Prepare a Campaign</strong><small>Build sessions, encounters, and rewards.</small></button>
+              </div>
+            </section>
+          </article>
+
+          <article class="codex-section" id="character-creation" data-search="character creation choose realm class specialization hero">
+            <div class="book-section-heading"><p>Chapter Two</p><h2>Character Creation</h2><span></span></div>
+            <p class="chapter-lead">Create a universal hero first, then assign that hero to an available adventure or campaign.</p>
+            <div class="step-grid">
+              <section><b>1</b><h3>Choose a Realm</h3><p>Begin with the setting that defines the hero's culture, dangers, and available paths.</p></section>
+              <section><b>2</b><h3>Choose a Class</h3><p>Select the hero's primary role, strengths, and approach to adventure.</p></section>
+              <section><b>3</b><h3>Choose a Specialization</h3><p>Refine the class with a focused identity, starter abilities, and equipment.</p></section>
+            </div>
+          </article>
+
+          <article class="codex-section" id="viking-classes" data-search="viking adventure classes berserker rune seer shadow raider shield warrior skald wolf ranger ashen reaver bearclaw storm rage aurora seer ice rune keeper stone oracle mist walker night fjord raven knife frostwall veteran guardian jarl sentinel hall singer wandering storykeeper war drummer raven scout snow tracker wolf companion">
+            <div class="book-section-heading"><p>Viking Adventure</p><h2>Classes &amp; Specializations</h2><span></span></div>
+            <p class="chapter-lead">Choose one of six Viking Adventure classes, then follow a specialization that defines the hero's unique path.</p>
+            <div class="class-grid">
+              <details class="class-card"><summary><span class="class-sigil berserker">B</span><div><h3>Berserker</h3><p>Relentless frontline force</p></div></summary><ul><li>Ashen Reaver</li><li>Bearclaw</li><li>Storm Rage</li></ul></details>
+              <details class="class-card"><summary><span class="class-sigil rune-seer">R</span><div><h3>Rune Seer</h3><p>Runic magic and foresight</p></div></summary><ul><li>Aurora Seer</li><li>Ice Rune Keeper</li><li>Stone Oracle</li></ul></details>
+              <details class="class-card"><summary><span class="class-sigil shadow-raider">S</span><div><h3>Shadow Raider</h3><p>Stealth and precision</p></div></summary><ul><li>Mist Walker</li><li>Night Fjord</li><li>Raven Knife</li></ul></details>
+              <details class="class-card"><summary><span class="class-sigil shield-warrior">W</span><div><h3>Shield Warrior</h3><p>Defense and battlefield control</p></div></summary><ul><li>Frostwall Veteran</li><li>Guardian</li><li>Jarl's Sentinel</li></ul></details>
+              <details class="class-card"><summary><span class="class-sigil skald">K</span><div><h3>Skald</h3><p>Story, rhythm, and inspiration</p></div></summary><ul><li>Hall Singer</li><li>Wandering Storykeeper</li><li>War Drummer</li></ul></details>
+              <details class="class-card"><summary><span class="class-sigil wolf-ranger">F</span><div><h3>Wolf Ranger</h3><p>Tracking and wilderness mastery</p></div></summary><ul><li>Raven Scout</li><li>Snow Tracker</li><li>Wolf Companion</li></ul></details>
+            </div>
+          </article>
+
+          <article class="codex-section" id="campaigns" data-search="running campaigns session setup encounters travel downtime rewards campaign management">
+            <div class="book-section-heading"><p>Realm Master Chapter</p><h2>Running Campaigns</h2><span></span></div>
+            <div class="topic-list">
+              <section><h3>Session Setup</h3><p>Define the session objective, opening scene, important locations, and likely choices.</p></section>
+              <section><h3>Encounters</h3><p>Prepare obstacles that support the story and allow different hero abilities to matter.</p></section>
+              <section><h3>Travel</h3><p>Use routes, weather, discoveries, and dangers to make movement through the realm meaningful.</p></section>
+              <section><h3>Downtime</h3><p>Give heroes space to recover, craft, gather information, and pursue personal goals.</p></section>
+              <section><h3>Rewards</h3><p>Connect treasure, equipment, recognition, and story progress to meaningful accomplishments.</p></section>
+            </div>
+          </article>
+
+          <article class="codex-section" id="creatures" data-search="creatures enemies draugr frost trolls ice wraiths sea serpents rune constructs bestiary">
+            <div class="book-section-heading"><p>Viking Bestiary</p><h2>Creatures &amp; Enemies</h2><span></span></div>
+            <p class="chapter-lead">The Viking bestiary is prepared for future creature profiles, encounter guidance, and Realm Master notes.</p>
+            <div class="placeholder-grid"><span>Draugr</span><span>Frost Trolls</span><span>Ice Wraiths</span><span>Sea Serpents</span><span>Rune Constructs</span></div>
+          </article>
+
+          <article class="codex-section" id="equipment" data-search="equipment weapons armor consumables crafting items loot">
+            <div class="book-section-heading"><p>Hero Resources</p><h2>Equipment</h2><span></span></div>
+            <div class="placeholder-grid"><span>Weapons</span><span>Armor</span><span>Consumables</span><span>Crafting</span></div>
+          </article>
+
+          <article class="codex-section" id="world-lore" data-search="world lore realms viking cajun fantasy history locations people">
+            <div class="book-section-heading"><p>The Known Realms</p><h2>World Lore</h2><span></span></div>
+            <div class="realm-status-grid">
+              <section class="current"><h3>Viking Adventure</h3><b>Current Realm</b><p>A frozen realm shaped by runes, seafaring, honor, and ancient threats.</p></section>
+              <section><h3>Cajun Adventure</h3><b>Coming Soon</b><p>Swamps, bayous, hidden settlements, and mysteries waiting beyond the lantern light.</p></section>
+              <section><h3>Fantasy Adventure</h3><b>Coming Soon</b><p>Kingdoms, magic, legendary creatures, and adventures across a high-fantasy realm.</p></section>
+            </div>
+          </article>
+
+          <article class="codex-section" id="abilities" data-search="abilities starter powers class specialization skills"><div class="book-section-heading"><p>Hero Powers</p><h2>Abilities</h2><span></span></div><div class="coming-panel"><strong>Ability Library</strong><p>This section is ready for ability descriptions, effects, requirements, and specialization links.</p></div></article>
+          <article class="codex-section" id="combat" data-search="combat system initiative turns actions damage defense"><div class="book-section-heading"><p>Rules of Battle</p><h2>Combat System</h2><span></span></div><div class="coming-panel"><strong>Combat Rules</strong><p>This section is ready for the original Three Realms combat sequence and encounter rules.</p></div></article>
+          <article class="codex-section" id="realm-tools" data-search="realm master tools session planner encounter builder npc generator random events"><div class="book-section-heading"><p>Realm Master Resources</p><h2>Realm Master Tools</h2><span></span></div><div class="tool-card-grid"><span>Session Planner</span><span>Encounter Builder</span><span>NPC Generator</span><span>Random Events</span></div></article>
+          <article class="codex-section" id="quest-generator" data-search="quest generator missions objectives hooks"><div class="book-section-heading"><p>Story Builder</p><h2>Quest Generator</h2><span></span></div><div class="coming-panel"><strong>Quest Generator</strong><p>This space is prepared for original quests, story hooks, objectives, complications, and rewards.</p></div></article>
+          <article class="codex-section" id="loot-tables" data-search="loot tables treasure rewards weapons armor consumables"><div class="book-section-heading"><p>Rewards &amp; Treasure</p><h2>Loot Tables</h2><span></span></div><div class="coming-panel"><strong>Loot Tables</strong><p>This space is prepared for realm-specific reward tables and equipment drops.</p></div></article>
+
+          <div class="codex-no-results" id="codex-no-results" hidden><strong>No Codex entries found.</strong><p>Try a class, specialization, creature, item type, or guide topic.</p></div>
+        </section>
+
+        <aside class="codex-rail">
+          <section class="rail-panel">
+            <h2>Realms</h2>
+            <button type="button" data-jump="world-lore" class="realm-rail-card active"><span class="realm-icon viking">V</span><div><strong>Viking Adventure</strong><b>Current Realm</b><small>Fate, honor, and glory.</small></div></button>
+            <button type="button" data-jump="world-lore" class="realm-rail-card"><span class="realm-icon cajun">C</span><div><strong>Cajun Adventure</strong><b>Coming Soon</b><small>Swamps, bayous, and mysteries.</small></div></button>
+            <button type="button" data-jump="world-lore" class="realm-rail-card"><span class="realm-icon fantasy">F</span><div><strong>Fantasy Adventure</strong><b>Coming Soon</b><small>Magic, kingdoms, and legends.</small></div></button>
+          </section>
+
+          <section class="rail-panel">
+            <h2>Realm Master Tools</h2>
+            <button type="button" data-jump="realm-tools">Session Planner</button>
+            <button type="button" data-jump="realm-tools">Encounter Builder</button>
+            <button type="button" data-jump="quest-generator">Quest Generator</button>
+            <button type="button" data-jump="loot-tables">Loot Tables</button>
+          </section>
+
+          <blockquote>“A good Realm Master tells a story. A great Realm Master creates a legend.”<cite>The Old Skalds</cite></blockquote>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/navigation.js"></script>
+  <script src="../../js/modal.js"></script>
+  <script src="../../js/realm-guide.js"></script>
+</body>
+</html>
