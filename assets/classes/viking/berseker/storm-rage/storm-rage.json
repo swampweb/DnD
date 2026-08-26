@@ -1,0 +1,89 @@
+{
+  "id": "storm-rage",
+  "name": "Storm Rage",
+
+  "realm": "Viking Adventure",
+  "class": "Berserker",
+  "specialization": "Storm Rage",
+
+  "role": "Damage Dealer / Frontline",
+
+  "difficulty": 4,
+  "difficultyMax": 5,
+
+  "theme": "A storm-touched Viking warrior who channels thunder and lightning through relentless melee combat.",
+
+  "visualIdentity": "Storm-scarred armor, lightning-etched greataxe, heavy leather harness, rune-forged metal plates, weathered furs, and restrained blue-white electrical effects.",
+
+  "consistency": "Use the same face, hairstyle, greataxe design, armor silhouette, rune patterns, leather harness, fur placement, and storm-blue, gray, silver, and white palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "storm-rage",
+      "name": "Storm Rage",
+      "icon": "Storm Rage Icon.png",
+      "description": "Harness thunderous fury to overwhelm enemies."
+    },
+    {
+      "id": "tempest-strike",
+      "name": "Tempest Strike",
+      "icon": "Tempest Strike Icon.png",
+      "description": "Strike with the force of a raging storm."
+    },
+    {
+      "id": "unrelenting-fury",
+      "name": "Unrelenting Fury",
+      "icon": "Unrelenting Fury Icon.png",
+      "description": "Maintain relentless offensive momentum during battle."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "tempest-greataxe",
+      "name": "Tempest Greataxe",
+      "icon": "Tempest Greataxe Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "stormforged-harness",
+      "name": "Stormforged Harness",
+      "icon": "Stormforged Harness Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "thunderheart-core",
+      "name": "Thunderheart Core",
+      "icon": "Thunderheart Core Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "volt-javelins",
+      "name": "Volt Javelins",
+      "icon": "Volt Javelins Icon.png",
+      "quantity": 3
+    },
+    {
+      "id": "stormblood-tonic",
+      "name": "Stormblood Tonic",
+      "icon": "Stormblood Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Berserker - Storm Rage - Portrait.png",
+    "model": "Berserker - Storm Rage Model.png",
+    "boardPiece": "Berserker - Storm Rage Board Piece.png",
+    "banner": "Berserker - Storm Rage - Banner.png",
+    "previewCard": "Berserker - Storm Rage - Preview Card.png"
+  },
+
+  "palette": [
+    "storm blue",
+    "silver",
+    "gray",
+    "white",
+    "iron"
+  ]
+}
