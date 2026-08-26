@@ -1,0 +1,89 @@
+{
+  "id": "raven-scout",
+  "name": "Raven Scout",
+
+  "realm": "Viking Adventure",
+  "class": "Wolf Ranger",
+  "specialization": "Raven Scout",
+
+  "role": "Ranged Support / Reconnaissance",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A watchful Nordic ranger who reads tracks, scouts dangerous routes, signals allies through trained raven calls, and uses precise bow fire to expose threats before the main group advances.",
+
+  "visualIdentity": "Dark ranger leathers with muted black and charcoal tones, raven-feather accents, weathered hunting bow, practical seax, scouting tools, signal whistle, leather pouches, dark steel fittings, and subtle blue-black raven-energy effects.",
+
+  "consistency": "Use the same face, hair, ranger-leather silhouette, raven-feather accents, bow design, seax shape, scouting-kit arrangement, fittings, and black, charcoal, brown, silver, and blue-black palette across every character image.",
+
+  "starterAbilities": [
+    {
+      "id": "ravens-eye",
+      "name": "Raven's Eye",
+      "icon": "Raven's Eye Icon.png",
+      "description": "Survey the battlefield and reveal hidden threats and enemy positions."
+    },
+    {
+      "id": "mark-the-trail",
+      "name": "Mark the Trail",
+      "icon": "Mark the Trail Icon.png",
+      "description": "Mark paths and targets, allowing allies to track and pursue more effectively."
+    },
+    {
+      "id": "pinning-shot",
+      "name": "Pinning Shot",
+      "icon": "Pinning Shot Icon.png",
+      "description": "Fire a precise arrow that hinders movement and limits escape routes."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "ravenwing-hunting-bow",
+      "name": "Ravenwing Hunting Bow",
+      "icon": "Ravenwing Hunting Bow Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "scout-seax",
+      "name": "Scout Seax",
+      "icon": "Scout Seax Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "blackpine-ranger-leathers",
+      "name": "Blackpine Ranger Leathers",
+      "icon": "Blackpine Ranger Leathers Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "raven-signal-kit",
+      "name": "Raven Signal Kit",
+      "icon": "Raven Signal Kit Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "trailroot-tonic",
+      "name": "Trailroot Tonic",
+      "icon": "Trailroot Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Wolf Ranger - Raven Scout - Portrait.png",
+    "model": "Wolf Ranger - Raven Scout Model.png",
+    "boardPiece": "Wolf Ranger - Raven Scout Board Piece.png",
+    "banner": "Wolf Ranger - Raven Scout - Banner.png",
+    "previewCard": "Wolf Ranger - Raven Scout - Preview Card.png"
+  },
+
+  "palette": [
+    "charcoal",
+    "black",
+    "brown",
+    "silver",
+    "blue-black"
+  ]
+}

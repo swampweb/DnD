@@ -1,0 +1,18 @@
+{
+  "id": "wolf-ranger",
+  "name": "Wolf Ranger",
+
+  "realm": "Viking Adventure",
+
+  "role": "Ranged Specialist",
+
+  "difficulty": 3,
+
+  "description": "Nordic hunters who master tracking, survival, ranged combat, and battlefield awareness.",
+
+  "heroes": [
+    "wolf-companion",
+    "raven-scout",
+    "snow-tracker"
+  ]
+}
