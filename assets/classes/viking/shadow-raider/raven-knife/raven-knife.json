@@ -1,0 +1,89 @@
+{
+  "id": "raven-knife",
+  "name": "Raven Knife",
+
+  "realm": "Viking Adventure",
+  "class": "Shadow Raider",
+  "specialization": "Raven Knife",
+
+  "role": "Stealth / Specialist",
+
+  "difficulty": 4,
+  "difficultyMax": 5,
+
+  "theme": "A silent Nordic infiltrator trained in espionage, reconnaissance, sabotage, and precision strikes. Raven Knives move unseen through enemy territory, exploit weaknesses, mark targets, and eliminate threats before slipping back into the shadows.",
+
+  "visualIdentity": "Black and charcoal raider leathers, dark raven-feather mantle, twin seax knives, concealed throwing blades, muted iron fittings, utility pouches, lightweight travel gear, and restrained blue-black shadow effects.",
+
+  "consistency": "Use the same face, hairstyle, raven-feather mantle, leather armor silhouette, twin seax knife design, utility pouch layout, muted iron fittings, and charcoal, black, steel, brown, and blue-black palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "raven-ambush",
+      "name": "Raven Ambush",
+      "icon": "Raven Ambush Icon.png",
+      "description": "Strike from concealment to gain advantage against an unsuspecting target."
+    },
+    {
+      "id": "hooked-pull",
+      "name": "Hooked Pull",
+      "icon": "Hooked Pull Icon.png",
+      "description": "Use a hooked blade to reposition an enemy or pull yourself into a superior position."
+    },
+    {
+      "id": "shadow-mark",
+      "name": "Shadow Mark",
+      "icon": "Shadow Mark Icon.png",
+      "description": "Mark a target for pursuit, increasing tracking and precision against that foe."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "ravenfang-seax-knives",
+      "name": "Ravenfang Seax Knives",
+      "icon": "Ravenfang Seax Knives Icon.png",
+      "quantity": 2
+    },
+    {
+      "id": "shadowweave-raider-leathers",
+      "name": "Shadowweave Raider Leathers",
+      "icon": "Shadowweave Raider Leathers Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "ravencloak-mantle",
+      "name": "Ravencloak Mantle",
+      "icon": "Ravencloak Mantle Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "infiltrator-tool-kit",
+      "name": "Infiltrator Tool Kit",
+      "icon": "Infiltrator Tool Kit Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "deepwell-elixir",
+      "name": "Deepwell Elixir",
+      "icon": "Deepwell Elixir Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Shadow Raider - Raven Knife - Portrait.png",
+    "model": "Shadow Raider - Raven Knife Model.png",
+    "boardPiece": "Shadow Raider - Raven Knife Board Piece.png",
+    "banner": "Shadow Raider - Raven Knife - Banner.png",
+    "previewCard": "Shadow Raider - Raven Knife - Preview Card.png"
+  },
+
+  "palette": [
+    "charcoal",
+    "black",
+    "dark brown",
+    "cold steel",
+    "blue-black"
+  ]
+}
