@@ -1,0 +1,89 @@
+{
+  "id": "guardian",
+  "name": "Guardian",
+
+  "realm": "Viking Adventure",
+  "class": "Shield Warrior",
+  "specialization": "Guardian",
+
+  "role": "Defender / Frontline",
+
+  "difficulty": 2,
+  "difficultyMax": 5,
+
+  "theme": "A disciplined Nordic shield warrior who anchors the front line, protects nearby allies, blocks dangerous pathways, and uses precise shield-and-spear tactics to control enemy movement.",
+
+  "visualIdentity": "Broad blue-and-silver round shield, polished chain armor, layered navy padding, bright steel fittings, practical pale fur trim, reinforced helmet, balanced spear, sturdy boots, and restrained silver-blue protective effects.",
+
+  "consistency": "Use the same face, hairstyle, armor silhouette, round shield design, spear design, fur placement, helmet shape, fittings, and blue, silver, steel, brown, and white palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "guardian-ward",
+      "name": "Guardian Ward",
+      "icon": "Guardian Ward Icon.png",
+      "description": "Protect nearby allies with disciplined defensive positioning."
+    },
+    {
+      "id": "shield-lock",
+      "name": "Shield Lock",
+      "icon": "Shield Lock Icon.png",
+      "description": "Establish a fortified shield stance that blocks enemy movement."
+    },
+    {
+      "id": "protectors-rally",
+      "name": "Protectors Rally",
+      "icon": "Protectors Rally Icon.png",
+      "description": "Bolster nearby allies through steadfast leadership and defense."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "guardian-round-shield",
+      "name": "Guardian Round Shield",
+      "icon": "Guardian Round Shield Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "guardian-spear",
+      "name": "Guardian Spear",
+      "icon": "Guardian Spear Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "guardian-chain-armor",
+      "name": "Guardian Chain Armor",
+      "icon": "Guardian Chain Armor Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "sentinel-travel-cloak",
+      "name": "Sentinel Travel Cloak",
+      "icon": "Sentinel Travel Cloak Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "ironroot-tonic",
+      "name": "Ironroot Tonic",
+      "icon": "Ironroot Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Shield Warrior - Guardian - Portrait.png",
+    "model": "Shield Warrior - Guardian Model.png",
+    "boardPiece": "Shield Warrior - Guardian Board Piece.png",
+    "banner": "Shield Warrior - Guardian - Banner.png",
+    "previewCard": "Shield Warrior - Guardian - Preview Card.png"
+  },
+
+  "palette": [
+    "blue",
+    "silver",
+    "steel",
+    "brown",
+    "white"
+  ]
+}
