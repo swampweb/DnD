@@ -1,0 +1,90 @@
+{
+  "id": "wolf-companion",
+  "name": "Wolf Companion",
+
+  "realm": "Viking Adventure",
+  "class": "Wolf Ranger",
+  "specialization": "Wolf Companion",
+
+  "role": "Ranged Support / Companion Control",
+
+  "difficulty": 4,
+  "difficultyMax": 5,
+
+  "theme": "A bonded Nordic ranger who fights beside a trained gray wolf, using shared tracking instincts, coordinated movement, protective commands, and precise ranged attacks to control the battlefield as a two-member hunting pack.",
+
+  "visualIdentity": "Layered forest-brown ranger leathers with muted-green and charcoal accents, gray wolf-fur mantle, compact ashwood shortbow, practical iron-edged seax, companion whistle, travel pouches, dark iron fittings, durable Nordic boots, and restrained pale-blue pack-bond energy.",
+
+  "consistency": "Use the same face, hair, ranger-leather silhouette, fur mantle pattern, shortbow design, seax design, companion gear arrangement, wolf appearance, wolf harness, wolf markings, proportions, and color palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "pack-flank",
+      "name": "Pack Flank",
+      "icon": "Pack Flank Icon.png",
+      "description": "Coordinate an attack with the wolf companion to pressure and surround the target."
+    },
+    {
+      "id": "guardian-howl",
+      "name": "Guardian Howl",
+      "icon": "Guardian Howl Icon.png",
+      "description": "The wolf emits a protective howl that bolsters nearby allies."
+    },
+    {
+      "id": "shared-hunt",
+      "name": "Shared Hunt",
+      "icon": "Shared Hunt Icon.png",
+      "description": "Hunter and companion focus on the same target, improving pursuit and accuracy."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "packhunter-shortbow",
+      "name": "Packhunter Shortbow",
+      "icon": "Packhunter Shortbow Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "ranger-seax",
+      "name": "Ranger Seax",
+      "icon": "Ranger Seax Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "wolfbond-ranger-leathers",
+      "name": "Wolfbond Ranger Leathers",
+      "icon": "Wolfbond Ranger Leathers Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "companion-harness-supply-kit",
+      "name": "Companion Harness and Supply Kit",
+      "icon": "Companion Harness and Supply Kit Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "trailroot-tonic",
+      "name": "Trailroot Tonic",
+      "icon": "Trailroot Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Wolf Ranger - Wolf Companion - Portrait.png",
+    "model": "Wolf Ranger - Wolf Companion Model.png",
+    "boardPiece": "Wolf Ranger - Wolf Companion Board Piece.png",
+    "banner": "Wolf Ranger - Wolf Companion - Banner.png",
+    "previewCard": "Wolf Ranger - Wolf Companion - Preview Card.png"
+  },
+
+  "palette": [
+    "forest brown",
+    "charcoal gray",
+    "muted green",
+    "wolf gray",
+    "iron silver",
+    "pale blue"
+  ]
+}
