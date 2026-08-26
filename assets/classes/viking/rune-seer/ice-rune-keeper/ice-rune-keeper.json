@@ -1,0 +1,89 @@
+{
+  "id": "ice-rune-keeper",
+  "name": "Ice Rune Keeper",
+
+  "realm": "Viking Adventure",
+  "class": "Rune Seer",
+  "specialization": "Ice Rune Keeper",
+
+  "role": "Control / Support Magic",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A northern rune guardian who preserves ancient frost magic, controls battlefields through glacial runes, and protects allies with enduring winter wards.",
+
+  "visualIdentity": "Frostbound robes, carved rune staff, glacier-blue runes, fur-lined garments, crystalline ornaments, silver fittings, and restrained icy magical effects.",
+
+  "consistency": "Use the same face, hairstyle, robe silhouette, rune staff design, rune carvings, frost accents, crystalline details, and blue-white-silver palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "frozen-ward",
+      "name": "Frozen Ward",
+      "icon": "Frozen Ward Icon.png",
+      "description": "Protect allies through defensive frost runes."
+    },
+    {
+      "id": "glacial-bind",
+      "name": "Glacial Bind",
+      "icon": "Glacial Bind Icon.png",
+      "description": "Root enemies with magical ice and rune bindings."
+    },
+    {
+      "id": "rune-of-winter",
+      "name": "Rune of Winter",
+      "icon": "Rune of Winter Icon.png",
+      "description": "Channel winter magic to weaken and control foes."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "frostbound-rune-staff",
+      "name": "Frostbound Rune Staff",
+      "icon": "Frostbound Rune Staff Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "glacier-ward-robes",
+      "name": "Glacier Ward Robes",
+      "icon": "Glacier Ward Robes Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "eternal-ice-sigil",
+      "name": "Eternal Ice Sigil",
+      "icon": "Eternal Ice Sigil Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "frozen-rune-tablets",
+      "name": "Frozen Rune Tablets",
+      "icon": "Frozen Rune Tablets Icon.png",
+      "quantity": 3
+    },
+    {
+      "id": "rimeheart-elixir",
+      "name": "Rimeheart Elixir",
+      "icon": "Rimeheart Elixir Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Rune Seer - Ice Rune Keeper - Portrait.png",
+    "model": "Rune Seer - Ice Rune Keeper Model.png",
+    "boardPiece": "Rune Seer - Ice Rune Keeper Board Piece.png",
+    "banner": "Rune Seer - Ice Rune Keeper - Banner.png",
+    "previewCard": "Rune Seer - Ice Rune Keeper - Preview Card.png"
+  },
+
+  "palette": [
+    "ice blue",
+    "frost white",
+    "silver",
+    "glacier blue",
+    "snow gray"
+  ]
+}
