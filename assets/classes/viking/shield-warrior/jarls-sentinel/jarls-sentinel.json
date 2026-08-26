@@ -1,0 +1,90 @@
+{
+  "id": "jarls-sentinel",
+  "name": "Jarl's Sentinel",
+
+  "realm": "Viking Adventure",
+  "class": "Shield Warrior",
+  "specialization": "Jarl's Sentinel",
+
+  "role": "Defender / Frontline",
+
+  "difficulty": 2,
+  "difficultyMax": 5,
+
+  "theme": "An oath-sworn Nordic sentinel entrusted with the Jarl's safety, using disciplined shield formations, decisive interception, and commanding battlefield presence to protect leaders, allies, and critical ground.",
+
+  "visualIdentity": "Crimson and charcoal equipment accented by dark oak, polished steel, restrained gold, fur trim, a crested helm, a winged spear, and amber oathbound effects.",
+
+  "consistency": "Use the same face, hairstyle, shield design, spear design, armor silhouette, helmet crest, fur placement, and crimson, charcoal, dark oak, steel, gold, and amber palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "oathwall-guard",
+      "name": "Oathwall Guard",
+      "icon": "Oathwall Guard Icon.png",
+      "description": "Establish a disciplined defensive wall around allies."
+    },
+    {
+      "id": "royal-intercept",
+      "name": "Royal Intercept",
+      "icon": "Royal Intercept Icon.png",
+      "description": "Intercept attacks directed toward protected allies."
+    },
+    {
+      "id": "sentinels-command",
+      "name": "Sentinels Command",
+      "icon": "Sentinels Command Icon.png",
+      "description": "Issue commands that strengthen nearby defenders."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "jarls-oathshield",
+      "name": "Jarl's Oathshield",
+      "icon": "Jarl's Oathshield Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "sentinel-winged-spear",
+      "name": "Sentinel Winged Spear",
+      "icon": "Sentinel Winged Spear Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "oathbound-sentinel-armor",
+      "name": "Oathbound Sentinel Armor",
+      "icon": "Oathbound Sentinel Armor Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "jarls-watch-cloak",
+      "name": "Jarl's Watch Cloak",
+      "icon": "Jarl's Watch Cloak Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "kingsroot-tonic",
+      "name": "Kingsroot Tonic",
+      "icon": "Kingsroot Tonic Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Shield Warrior - Jarl's Sentinel - Portrait.png",
+    "model": "Shield Warrior - Jarl's Sentinel Model.png",
+    "boardPiece": "Shield Warrior - Jarl's Sentinel Board Piece.png",
+    "banner": "Shield Warrior - Jarl's Sentinel - Banner.png",
+    "previewCard": "Shield Warrior - Jarl's Sentinel - Preview Card.png"
+  },
+
+  "palette": [
+    "crimson",
+    "charcoal",
+    "dark oak",
+    "steel",
+    "gold",
+    "amber"
+  ]
+}
