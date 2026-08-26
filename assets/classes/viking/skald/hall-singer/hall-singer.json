@@ -1,0 +1,88 @@
+{
+  "id": "hall-singer",
+  "name": "Hall Singer",
+  "realm": "Viking Adventure",
+  "class": "Skald",
+  "specialization": "Hall Singer",
+
+  "role": "Support / Morale",
+
+  "difficulty": 3,
+  "difficultyMax": 5,
+
+  "theme": "A renowned Nordic storyteller and singer who carries clan history through powerful verse, strengthens allies with uplifting refrains, and turns remembered deeds into courage during battle.",
+
+  "visualIdentity": "Deep red and gold skald garments, ceremonial harp, decorative seax, embroidered mantle, bronze ornaments, and warm amber musical-rune effects.",
+
+  "consistency": "Use the same face, hairstyle, garment silhouette, harp design, mantle pattern, bronze ornaments, embroidery placement, and deep red, gold, bronze, brown, and amber palette across all assets.",
+
+  "starterAbilities": [
+    {
+      "id": "saga-chorus",
+      "name": "Saga Chorus",
+      "icon": "Saga Chorus Icon.png",
+      "description": "Inspire nearby allies through powerful verses celebrating heroic deeds."
+    },
+    {
+      "id": "heartening-refrain",
+      "name": "Heartening Refrain",
+      "icon": "Heartening Refrain Icon.png",
+      "description": "Restore confidence and morale through uplifting song."
+    },
+    {
+      "id": "echoes-of-valor",
+      "name": "Echoes of Valor",
+      "icon": "Echoes of Valor Icon.png",
+      "description": "Call upon remembered victories to embolden companions."
+    }
+  ],
+
+  "starterEquipment": [
+    {
+      "id": "oakwood-hall-harp",
+      "name": "Oakwood Hall Harp",
+      "icon": "Oakwood Hall Harp Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "ceremonial-seax",
+      "name": "Ceremonial Seax",
+      "icon": "Ceremonial Seax Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "sagaweave-skald-garments",
+      "name": "Sagaweave Skald Garments",
+      "icon": "Sagaweave Skald Garments Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "hearthsong-mantle",
+      "name": "Hearthsong Mantle",
+      "icon": "Hearthsong Mantle Icon.png",
+      "quantity": 1
+    },
+    {
+      "id": "honeyed-voice-draught",
+      "name": "Honeyed Voice Draught",
+      "icon": "Honeyed Voice Draught Icon.png",
+      "quantity": 2
+    }
+  ],
+
+  "assets": {
+    "portrait": "Skald - Hall Singer - Portrait.png",
+    "model": "Skald - Hall Singer Model.png",
+    "boardPiece": "Skald - Hall Singer Board Piece.png",
+    "banner": "Skald - Hall Singer - Banner.png",
+    "previewCard": "Skald - Hall Singer - Preview Card.png"
+  },
+
+  "palette": [
+    "deep red",
+    "ochre gold",
+    "dark brown",
+    "bronze",
+    "amber gold"
+  ]
+}
