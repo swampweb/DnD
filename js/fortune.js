@@ -2,7 +2,7 @@
   const $ = selector => document.querySelector(selector);
   let heroicClaimed = false;
   let popupShownForRoll = false;
-  let observerBusy = false;
+  let scheduled = false;
 
   function setHidden(element, hidden) {
     if (element && element.hidden !== hidden) element.hidden = hidden;
@@ -18,66 +18,64 @@
     document.body.appendChild(popup);
     $('#heroic-popup-claim').addEventListener('click', () => {
       heroicClaimed = true;
-      setHidden(popup, true);
+      popup.hidden = true;
       document.body.classList.remove('creator-preview-open');
-      updateD8Visibility();
+      updateD8();
       $('#bonus-d8-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 
-  function isFirstScreen() {
-    return ($('#fortune-roll-count')?.textContent || '').includes('0 of 3');
+  function firstRollNotStarted() {
+    const stage = $('#fortune-die');
+    const count = $('#fortune-roll-count')?.textContent || '';
+    return count.includes('0 of 3') && !stage?.classList.contains('is-rolling');
   }
 
-  function isNatural20() {
+  function natural20() {
     return ($('#fortune-die-value')?.textContent || '').trim() === '20' &&
-      !isFirstScreen() &&
+      !($('#fortune-roll-count')?.textContent || '').includes('0 of 3') &&
       ($('#fortune-experience')?.textContent || '').includes('Heroic Fortune');
   }
 
-  function updateD8Visibility() {
-    setHidden($('#bonus-d8-panel'), !(isNatural20() && heroicClaimed));
+  function updateD8() {
+    setHidden($('#bonus-d8-panel'), !(natural20() && heroicClaimed));
   }
 
-  function inspectFortune() {
-    if (observerBusy) return;
-    observerBusy = true;
-    requestAnimationFrame(() => {
-      if (isFirstScreen()) {
-        const result = $('#fortune-die-value');
-        if (result && result.textContent) result.textContent = '';
-        setHidden($('#fortune-reward'), true);
-      }
-      const natural20 = isNatural20();
-      if (natural20 && !popupShownForRoll) {
-        popupShownForRoll = true;
-        heroicClaimed = false;
-        const popup = $('#heroic-fortune-popup');
-        setHidden(popup, false);
-        document.body.classList.add('creator-preview-open');
-        $('#heroic-popup-claim')?.focus();
-      } else if (!natural20) {
-        popupShownForRoll = false;
-        heroicClaimed = false;
-      }
-      updateD8Visibility();
-      observerBusy = false;
-    });
+  function inspect() {
+    scheduled = false;
+    if (firstRollNotStarted()) {
+      const value = $('#fortune-die-value');
+      if (value?.textContent) value.textContent = '';
+      setHidden($('#fortune-reward'), true);
+    }
+    const heroic = natural20();
+    if (heroic && !popupShownForRoll) {
+      popupShownForRoll = true;
+      heroicClaimed = false;
+      const popup = $('#heroic-fortune-popup');
+      popup.hidden = false;
+      document.body.classList.add('creator-preview-open');
+      $('#heroic-popup-claim')?.focus();
+    } else if (!heroic) {
+      popupShownForRoll = false;
+      heroicClaimed = false;
+    }
+    updateD8();
+  }
+
+  function scheduleInspect() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(inspect);
   }
 
   function initialize() {
     createPopup();
-    inspectFortune();
+    inspect();
     const target = $('[data-step="4"]');
-    if (target) {
-      new MutationObserver(inspectFortune).observe(target, {
-        subtree: true,
-        childList: true,
-        characterData: true
-      });
-    }
+    if (target) new MutationObserver(scheduleInspect).observe(target, { subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:['class'] });
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once: true });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true });
   else initialize();
 })();
