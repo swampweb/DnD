@@ -1,5 +1,5 @@
 (() => {
-  const STORAGE_KEY = 'three-realms-character-draft-v3';
+  const STORAGE_KEY = 'three-realms-character-draft-v4';
   const MANIFEST = 'assets/classes/viking/classes.json';
   const state = { step: 1, adventureId: null, classId: null, adventurerId: null, classes: [], selectedClass: null, adventurers: [], selectedAdventurer: null };
 
@@ -8,6 +8,23 @@
   const esc = value => String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
   const siteUrl = path => window.DND?.siteUrl ? window.DND.siteUrl(path) : `/${String(path).replace(/^\//,'')}`;
   const assetUrl = path => encodeURI(siteUrl(path));
+
+  const ADVENTURE_IMAGE_CANDIDATES = {
+    viking: ['assets/images/adventures/viking-adventure.png','assets/images/adventures/Viking Adventure.png','assets/images/dashboard/viking-adventure.png','assets/images/shared/viking-adventure.png','assets/images/viking-adventure.png','assets/images/adventure-viking.png'],
+    cajun: ['assets/images/adventures/cajun-adventure.png','assets/images/adventures/Cajun Adventure.png','assets/images/dashboard/cajun-adventure.png','assets/images/shared/cajun-adventure.png','assets/images/cajun-adventure.png','assets/images/adventure-cajun.png'],
+    fantasy: ['assets/images/adventures/fantasy-adventure.png','assets/images/adventures/Fantasy Adventure.png','assets/images/dashboard/fantasy-adventure.png','assets/images/shared/fantasy-adventure.png','assets/images/fantasy-adventure.png','assets/images/adventure-fantasy.png']
+  };
+
+  function loadImageFromCandidates(image, candidates, index = 0) {
+    if (!image || index >= candidates.length) { image?.closest('.adventure-choice')?.classList.add('image-not-found'); return; }
+    image.onerror = () => loadImageFromCandidates(image, candidates, index + 1);
+    image.onload = () => image.closest('.adventure-choice')?.classList.add('image-loaded');
+    image.src = assetUrl(candidates[index]);
+  }
+
+  function initializeAdventureImages() {
+    $$('[data-adventure-image]').forEach(image => loadImageFromCandidates(image, ADVENTURE_IMAGE_CANDIDATES[image.dataset.adventureImage] || []));
+  }
 
   async function fetchJson(path) {
     const response = await fetch(assetUrl(path), { cache: 'no-cache' });
@@ -218,6 +235,7 @@
 
   async function initialize() {
     restoreDraft();
+    initializeAdventureImages();
     bindEvents();
     if (state.adventureId === 'viking') $('.adventure-choice.selectable').classList.add('selected');
     try {
