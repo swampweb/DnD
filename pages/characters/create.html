@@ -10,70 +10,85 @@
   <link rel="stylesheet" href="../../css/dashboard.css">
   <link rel="stylesheet" href="../../css/characters.css">
   <link rel="stylesheet" href="../../css/modal.css">
+  <link rel="stylesheet" href="../../css/character-creator.css">
 </head>
 <body>
-  <div class="character-page-shell">
+  <div class="character-page-shell creator-page-shell">
     <div id="site-navigation" data-active-page="characters"></div>
-    <main class="character-form-main">
-      <div class="character-page-heading compact-heading">
-        <div><p class="section-label">Character Workshop</p><h1>Create Character</h1><p>Build a universal character. No Adventure is assigned during creation.</p></div>
+
+    <main class="creator-main">
+      <header class="creator-heading">
+        <div>
+          <p class="section-label">Character Workshop</p>
+          <h1>Create a New Character</h1>
+          <p>Choose an Adventure, Class, and Adventurer. Character statistics remain system-controlled.</p>
+        </div>
         <a class="secondary-link" href="index.html">Back to Characters</a>
-      </div>
+      </header>
 
-      <form class="character-form" id="character-form">
-        <section class="form-card identity-card">
-          <div class="form-card-heading"><span>01</span><div><h2>Identity</h2><p>The core information shown throughout Three Realms.</p></div></div>
-          <div class="form-grid three-cols">
-            <label>Character Name<input id="character-name" required maxlength="60"></label>
-            <label>Title<input id="character-title" maxlength="60" placeholder="Optional title"></label>
-            <label>Level<input id="character-level" type="number" min="1" max="100" value="1" required></label>
-            <label>Race<input id="character-race" maxlength="50" placeholder="Human, Elf, Dwarf..."></label>
-            <label>Class<input id="character-class" maxlength="50" placeholder="Warrior, Ranger, Mystic..."></label>
-            <label>Background<input id="character-background" maxlength="60" placeholder="Outlander, Scholar..."></label>
-            <label>Alignment<input id="character-alignment" maxlength="40" placeholder="Optional"></label>
-            <label>Age<input id="character-age" type="number" min="0" max="999"></label>
-            <label>Status<select id="character-status"><option>Active</option><option>Retired</option></select></label>
-          </div>
-        </section>
+      <nav class="creator-progress" aria-label="Character creation progress">
+        <button class="progress-step active" type="button" data-step-button="1" aria-current="step"><span>1</span><b>Adventure</b></button>
+        <button class="progress-step" type="button" data-step-button="2" disabled><span>2</span><b>Class</b></button>
+        <button class="progress-step" type="button" data-step-button="3" disabled><span>3</span><b>Adventurer</b></button>
+        <button class="progress-step future" type="button" disabled><span>4</span><b>Fortune</b></button>
+        <button class="progress-step future" type="button" disabled><span>5</span><b>Attributes</b></button>
+        <button class="progress-step future" type="button" disabled><span>6</span><b>Review</b></button>
+      </nav>
 
-        <section class="form-card">
-          <div class="form-card-heading"><span>02</span><div><h2>Attributes</h2><p>Starting attribute values for the character sheet.</p></div></div>
-          <div class="attribute-entry-grid">
-            <label>Strength<input id="stat-strength" type="number" min="1" max="30" value="10"></label>
-            <label>Dexterity<input id="stat-dexterity" type="number" min="1" max="30" value="10"></label>
-            <label>Constitution<input id="stat-constitution" type="number" min="1" max="30" value="10"></label>
-            <label>Intelligence<input id="stat-intelligence" type="number" min="1" max="30" value="10"></label>
-            <label>Wisdom<input id="stat-wisdom" type="number" min="1" max="30" value="10"></label>
-            <label>Charisma<input id="stat-charisma" type="number" min="1" max="30" value="10"></label>
-          </div>
-        </section>
+      <div id="creator-status" class="creator-status" role="status" aria-live="polite"></div>
 
-        <section class="form-card">
-          <div class="form-card-heading"><span>03</span><div><h2>Health and Progression</h2><p>Starting health, resources, and experience.</p></div></div>
-          <div class="form-grid four-cols">
-            <label>Current HP<input id="current-hp" type="number" min="0" value="10"></label>
-            <label>Max HP<input id="max-hp" type="number" min="1" value="10"></label>
-            <label>Current Mana<input id="current-mana" type="number" min="0" value="0"></label>
-            <label>Max Mana<input id="max-mana" type="number" min="0" value="0"></label>
-            <label>Experience<input id="experience" type="number" min="0" value="0"></label>
-            <label>Next Level XP<input id="experience-next" type="number" min="1" value="1000"></label>
-            <label>Gold<input id="gold" type="number" min="0" value="0"></label>
-            <label>Silver<input id="silver" type="number" min="0" value="0"></label>
-          </div>
-        </section>
+      <section class="creator-step active" data-step="1">
+        <div class="step-heading">
+          <div><p class="step-kicker">Step 1</p><h2>Select Adventure</h2></div>
+          <p>Viking Adventure is available first. Additional Adventures will unlock later.</p>
+        </div>
+        <div class="adventure-choice-grid">
+          <button class="adventure-choice selectable" type="button" data-adventure="viking">
+            <span class="adventure-emblem">V</span>
+            <span class="choice-copy"><strong>Viking Adventure</strong><small>Available</small><em>Enter a world of runes, raiders, shield walls, and ancient northern magic.</em></span>
+          </button>
+          <article class="adventure-choice locked" aria-disabled="true">
+            <span class="adventure-emblem">C</span>
+            <span class="choice-copy"><strong>Cajun Adventure</strong><small>Coming Soon</small><em>This Adventure is not yet available for character creation.</em></span>
+          </article>
+          <article class="adventure-choice locked" aria-disabled="true">
+            <span class="adventure-emblem">F</span>
+            <span class="choice-copy"><strong>Fantasy Adventure</strong><small>Coming Soon</small><em>This Adventure is not yet available for character creation.</em></span>
+          </article>
+        </div>
+      </section>
 
-        <section class="form-card">
-          <div class="form-card-heading"><span>04</span><div><h2>Profile</h2><p>The character story and optional portrait location.</p></div></div>
-          <div class="form-grid">
-            <label class="wide-field">Portrait URL<input id="portrait-url" type="url" placeholder="Optional image URL"></label>
-            <label class="wide-field">Biography<textarea id="character-biography" rows="6" maxlength="3000" placeholder="Write the character background, goals, and history..."></textarea></label>
-          </div>
-        </section>
+      <section class="creator-step" data-step="2" hidden>
+        <div class="step-heading">
+          <div><p class="step-kicker">Step 2</p><h2>Choose Class</h2></div>
+          <p>Select a Class or preview its Adventurers before continuing.</p>
+        </div>
+        <div id="class-grid" class="class-choice-grid"></div>
+      </section>
 
-        <div class="form-actions"><a class="cancel-form" href="index.html">Cancel</a><button class="save-character" type="submit">Create Character</button></div>
-      </form>
+      <section class="creator-step" data-step="3" hidden>
+        <div class="step-heading">
+          <div><p class="step-kicker">Step 3</p><h2>Choose Adventurer</h2></div>
+          <p id="adventurer-step-copy">Choose one of the three Adventurers in the selected Class.</p>
+        </div>
+        <div id="adventurer-grid" class="adventurer-choice-grid"></div>
+      </section>
+
+      <footer class="creator-actions">
+        <button id="creator-back" class="creator-button secondary" type="button" hidden>Back</button>
+        <div class="creator-selection-summary" id="selection-summary">No selection yet</div>
+        <button id="creator-continue" class="creator-button primary" type="button" disabled>Continue</button>
+      </footer>
     </main>
   </div>
+
+  <div id="creator-preview" class="creator-preview-backdrop" hidden>
+    <section class="creator-preview" role="dialog" aria-modal="true" aria-labelledby="preview-title">
+      <button id="preview-close" class="preview-close" type="button" aria-label="Close preview">×</button>
+      <div id="preview-content"></div>
+    </section>
+  </div>
+
   <div class="toast" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../js/config.js"></script>
