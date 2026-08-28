@@ -8,6 +8,26 @@
     if (element && element.hidden !== hidden) element.hidden = hidden;
   }
 
+  function arrangeFortuneLayout() {
+    const stage = $('.fortune-stage');
+    if (!stage || stage.querySelector('.fortune-details')) return;
+    const details = document.createElement('div');
+    details.className = 'fortune-details';
+    ['#fortune-roll-count','#fortune-experience','#fortune-result-copy','#fortune-reward','.fortune-actions','#fortune-warning'].forEach(selector => {
+      const element = stage.querySelector(selector);
+      if (element) details.appendChild(element);
+    });
+    stage.appendChild(details);
+  }
+
+  function clearInitialDisplayOnce() {
+    const rollCount = $('#fortune-roll-count')?.textContent || '';
+    if (!rollCount.includes('0 of 3')) return;
+    const result = $('#fortune-die-value');
+    if (result) result.textContent = '';
+    setHidden($('#fortune-reward'), true);
+  }
+
   function createPopup() {
     if ($('#heroic-fortune-popup')) return;
     const popup = document.createElement('div');
@@ -21,34 +41,23 @@
       popup.hidden = true;
       document.body.classList.remove('creator-preview-open');
       updateD8();
-      $('#bonus-d8-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      $('#bonus-d8-panel')?.scrollIntoView({ behavior:'smooth', block:'center' });
     });
   }
 
-  function firstRollNotStarted() {
-    const stage = $('#fortune-die');
-    const count = $('#fortune-roll-count')?.textContent || '';
-    return count.includes('0 of 3') && !stage?.classList.contains('is-rolling');
-  }
-
-  function natural20() {
+  function isNatural20() {
     return ($('#fortune-die-value')?.textContent || '').trim() === '20' &&
       !($('#fortune-roll-count')?.textContent || '').includes('0 of 3') &&
       ($('#fortune-experience')?.textContent || '').includes('Heroic Fortune');
   }
 
   function updateD8() {
-    setHidden($('#bonus-d8-panel'), !(natural20() && heroicClaimed));
+    setHidden($('#bonus-d8-panel'), !(isNatural20() && heroicClaimed));
   }
 
   function inspect() {
     scheduled = false;
-    if (firstRollNotStarted()) {
-      const value = $('#fortune-die-value');
-      if (value?.textContent) value.textContent = '';
-      setHidden($('#fortune-reward'), true);
-    }
-    const heroic = natural20();
+    const heroic = isNatural20();
     if (heroic && !popupShownForRoll) {
       popupShownForRoll = true;
       heroicClaimed = false;
@@ -70,10 +79,12 @@
   }
 
   function initialize() {
+    arrangeFortuneLayout();
+    clearInitialDisplayOnce();
     createPopup();
     inspect();
     const target = $('[data-step="4"]');
-    if (target) new MutationObserver(scheduleInspect).observe(target, { subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:['class'] });
+    if (target) new MutationObserver(scheduleInspect).observe(target, { subtree:true, childList:true, characterData:true });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true });
