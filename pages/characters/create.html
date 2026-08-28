@@ -11,136 +11,11 @@
   <link rel="stylesheet" href="../../css/characters.css">
   <link rel="stylesheet" href="../../css/modal.css">
   <link rel="stylesheet" href="../../css/character-creator.css">
-
-  <style>
-    /* Step 1 Adventure artwork update only. Everything else stays controlled by the existing creator files. */
-    .adventure-choice-grid.adventure-art-grid .adventure-choice {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      min-height: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .adventure-art-frame {
-      position: relative;
-      display: grid;
-      place-items: center;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
-      background: radial-gradient(circle at center, #2b1a10 0%, #080807 72%);
-      border-bottom: 1px solid rgba(255,255,255,.07);
-    }
-
-    .adventure-art-frame img {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transition: transform .3s ease, filter .3s ease, opacity .3s ease;
-    }
-
-    .adventure-art-fallback {
-      position: absolute;
-      z-index: 1;
-      width: 78px;
-      height: 78px;
-      display: grid;
-      place-items: center;
-      border: 1px solid #8d4b22;
-      border-radius: 50%;
-      color: #e5b272;
-      background: radial-gradient(circle, #412513, #15100c 65%);
-      font: 2rem Georgia, serif;
-    }
-
-    .adventure-choice.image-loaded .adventure-art-fallback { display: none; }
-
-    .adventure-art-copy {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 14px;
-      text-align: left;
-    }
-
-    .adventure-art-copy > span {
-      display: grid;
-      gap: 4px;
-    }
-
-    .adventure-art-copy strong {
-      color: #e8cb9b;
-      font: 1rem Georgia, serif;
-    }
-
-    .adventure-art-copy em {
-      color: #9f9388;
-      font-size: .68rem;
-      font-style: normal;
-      line-height: 1.4;
-    }
-
-    .adventure-art-copy small {
-      flex: 0 0 auto;
-      width: max-content;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: .58rem;
-      text-transform: uppercase;
-    }
-
-    .adventure-art-copy small.available {
-      color: #9ed6fa;
-      background: rgba(40,116,173,.22);
-    }
-
-    .adventure-art-copy small.coming {
-      color: #b9afa6;
-      background: rgba(255,255,255,.07);
-    }
-
-    .adventure-choice.coming-soon .adventure-art-frame img {
-      filter: grayscale(100%) brightness(.5);
-      opacity: .68;
-    }
-
-    .adventure-choice.coming-soon .adventure-art-copy { opacity: .62; }
-
-    .coming-soon-label {
-      position: absolute;
-      z-index: 3;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: #ded3c8;
-      background: rgba(4,4,4,.25);
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      text-shadow: 0 2px 10px #000;
-    }
-
-    button.adventure-choice.available-adventure:hover .adventure-art-frame img,
-    button.adventure-choice.available-adventure:focus-visible .adventure-art-frame img {
-      transform: scale(1.025);
-    }
-
-    @media (max-width: 650px) {
-      .adventure-choice-grid.adventure-art-grid { grid-template-columns: 1fr; }
-      .adventure-art-frame { aspect-ratio: 16 / 9; }
-    }
-  </style>
 </head>
 <body>
   <div class="character-page-shell creator-page-shell">
     <div id="site-navigation" data-active-page="characters"></div>
+
     <main class="creator-main">
       <header class="creator-heading">
         <div>
@@ -155,7 +30,7 @@
         <button class="progress-step active" type="button" data-step-button="1" aria-current="step"><span>1</span><b>Adventure</b></button>
         <button class="progress-step" type="button" data-step-button="2" disabled><span>2</span><b>Class</b></button>
         <button class="progress-step" type="button" data-step-button="3" disabled><span>3</span><b>Adventurer</b></button>
-        <button class="progress-step future" type="button" disabled><span>4</span><b>Fortune</b></button>
+        <button class="progress-step" type="button" data-step-button="4" disabled><span>4</span><b>Fortune</b></button>
         <button class="progress-step future" type="button" disabled><span>5</span><b>Attributes</b></button>
         <button class="progress-step future" type="button" disabled><span>6</span><b>Review</b></button>
       </nav>
@@ -167,41 +42,18 @@
           <div><p class="step-kicker">Step 1</p><h2>Select Adventure</h2></div>
           <p>Viking Adventure is available first. Additional Adventures will unlock later.</p>
         </div>
-
-        <div class="adventure-choice-grid adventure-art-grid">
-          <button class="adventure-choice selectable available-adventure" type="button" data-adventure="viking">
-            <span class="adventure-art-frame">
-              <img data-adventure-art="viking" alt="Viking Adventure artwork">
-              <span class="adventure-art-fallback">V</span>
-            </span>
-            <span class="adventure-art-copy">
-              <span><strong>Viking Adventure</strong><em>Enter a world of runes, raiders, shield walls, and ancient northern magic.</em></span>
-              <small class="available">Available</small>
-            </span>
+        <div class="adventure-choice-grid">
+          <button class="adventure-choice selectable" type="button" data-adventure="viking">
+            <span class="adventure-emblem">V</span>
+            <span class="choice-copy"><strong>Viking Adventure</strong><small>Available</small><em>Enter a world of runes, raiders, shield walls, and ancient northern magic.</em></span>
           </button>
-
-          <article class="adventure-choice locked coming-soon" aria-disabled="true">
-            <span class="adventure-art-frame">
-              <img data-adventure-art="cajun" alt="Cajun Adventure artwork">
-              <span class="adventure-art-fallback">C</span>
-              <b class="coming-soon-label">Coming Soon</b>
-            </span>
-            <span class="adventure-art-copy">
-              <span><strong>Cajun Adventure</strong><em>This Adventure is not yet available for character creation.</em></span>
-              <small class="coming">Coming Soon</small>
-            </span>
+          <article class="adventure-choice locked" aria-disabled="true">
+            <span class="adventure-emblem">C</span>
+            <span class="choice-copy"><strong>Cajun Adventure</strong><small>Coming Soon</small><em>This Adventure is not yet available for character creation.</em></span>
           </article>
-
-          <article class="adventure-choice locked coming-soon" aria-disabled="true">
-            <span class="adventure-art-frame">
-              <img data-adventure-art="fantasy" alt="Fantasy Adventure artwork">
-              <span class="adventure-art-fallback">F</span>
-              <b class="coming-soon-label">Coming Soon</b>
-            </span>
-            <span class="adventure-art-copy">
-              <span><strong>Fantasy Adventure</strong><em>This Adventure is not yet available for character creation.</em></span>
-              <small class="coming">Coming Soon</small>
-            </span>
+          <article class="adventure-choice locked" aria-disabled="true">
+            <span class="adventure-emblem">F</span>
+            <span class="choice-copy"><strong>Fantasy Adventure</strong><small>Coming Soon</small><em>This Adventure is not yet available for character creation.</em></span>
           </article>
         </div>
       </section>
@@ -220,6 +72,25 @@
           <p id="adventurer-step-copy">Choose one of the three Adventurers in the selected Class.</p>
         </div>
         <div id="adventurer-grid" class="adventurer-choice-grid"></div>
+      </section>
+
+      <section class="creator-step" data-step="4" hidden>
+        <div class="step-heading"><div><p class="step-kicker">Step 4</p><h2>Roll Your Fortune</h2></div><p>Roll the Wood D20 up to three times. Keeping a roll ends Fortune. Rolling again permanently replaces the current reward.</p></div>
+        <div class="fortune-layout">
+          <section class="fortune-stage">
+            <div class="wood-die" id="fortune-die"><span id="fortune-die-value">20</span><small>WOOD D20</small></div>
+            <p id="fortune-roll-count" class="fortune-roll-count">Roll 0 of 3</p><h3 id="fortune-experience">Your Fortune Awaits</h3>
+            <p id="fortune-result-copy">Roll the Wood D20 to reveal the Attribute Credits offered by fate.</p>
+            <div id="fortune-reward" class="fortune-reward" hidden><strong>+0</strong><span>Attribute Credits</span></div>
+            <p id="fortune-warning" class="fortune-warning"></p>
+            <div class="fortune-actions"><button id="fortune-roll" class="creator-button primary" type="button">Roll Wood D20</button><button id="fortune-keep" class="creator-button secondary" type="button" hidden>Keep Reward</button></div>
+          </section>
+          <aside class="fortune-rules"><h3>Fortune Rewards</h3>
+            <div class="fortune-rule"><b>1–5</b><span>+1 Attribute Credit</span><em>Poor Fortune</em></div><div class="fortune-rule"><b>6–10</b><span>+2 Attribute Credits</span><em>Average Fortune</em></div><div class="fortune-rule"><b>11–15</b><span>+3 Attribute Credits</span><em>Good Fortune</em></div><div class="fortune-rule"><b>16–19</b><span>+4 Attribute Credits</span><em>Great Fortune</em></div><div class="fortune-rule heroic"><b>Natural 20</b><span>+4 Credits + Bonus D8</span><em>Heroic Fortune</em></div><p>Natural 20 bonus: Wood D8 results 1–6 give +0. Results 7–8 give +1 Credit.</p>
+          </aside>
+        </div>
+        <div id="bonus-d8-panel" class="bonus-d8-panel" hidden><div class="wood-die d8"><span id="bonus-d8-value">8</span><small>WOOD D8</small></div><div><p class="step-kicker">Heroic Fortune Bonus</p><h3 id="bonus-d8-title">Bonus D8 Unlocked</h3><p id="bonus-d8-copy">Roll the Wood D8. Results 7–8 award +1 additional Attribute Credit.</p><button id="bonus-d8-roll" class="creator-button primary" type="button">Roll Bonus Wood D8</button></div></div>
+        <div id="fortune-history" class="fortune-history"></div>
       </section>
 
       <footer class="creator-actions">
@@ -244,49 +115,5 @@
   <script src="../../js/navigation.js"></script>
   <script src="../../js/modal.js"></script>
   <script src="../../js/character-create.js"></script>
-
-  <script>
-    /*
-      This update stays inside create.html and does not replace character-create.js.
-      It tries the most common existing Dashboard artwork paths in order.
-      If the project's actual filenames differ, edit only the three arrays below.
-    */
-    (() => {
-      const imageCandidates = {
-        viking: [
-          '../../assets/images/adventures/viking-card.png',
-          '../../assets/images/adventures/Viking Adventure.png',
-          '../../assets/images/dashboard/viking-card.png',
-          '../../assets/images/viking-card.png',
-          '../../assets/images/adventure-viking.png'
-        ],
-        cajun: [
-          '../../assets/images/adventures/cajun-card.png',
-          '../../assets/images/adventures/Cajun Adventure.png',
-          '../../assets/images/dashboard/cajun-card.png',
-          '../../assets/images/cajun-card.png',
-          '../../assets/images/adventure-cajun.png'
-        ],
-        fantasy: [
-          '../../assets/images/adventures/fantasy-card.png',
-          '../../assets/images/adventures/Fantasy Adventure.png',
-          '../../assets/images/dashboard/fantasy-card.png',
-          '../../assets/images/fantasy-card.png',
-          '../../assets/images/adventure-fantasy.png'
-        ]
-      };
-
-      function tryImage(image, candidates, index = 0) {
-        if (!image || index >= candidates.length) return;
-        image.onerror = () => tryImage(image, candidates, index + 1);
-        image.onload = () => image.closest('.adventure-choice')?.classList.add('image-loaded');
-        image.src = candidates[index];
-      }
-
-      document.querySelectorAll('[data-adventure-art]').forEach(image => {
-        tryImage(image, imageCandidates[image.dataset.adventureArt] || []);
-      });
-    })();
-  </script>
 </body>
 </html>

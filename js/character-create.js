@@ -1,261 +1,34 @@
 (() => {
-  const STORAGE_KEY = 'three-realms-character-draft-v4';
+  const STORAGE_KEY = 'three-realms-character-draft-v5';
   const MANIFEST = 'assets/classes/viking/classes.json';
-  const state = { step: 1, adventureId: null, classId: null, adventurerId: null, classes: [], selectedClass: null, adventurers: [], selectedAdventurer: null };
-
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const esc = value => String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-  const siteUrl = path => window.DND?.siteUrl ? window.DND.siteUrl(path) : `/${String(path).replace(/^\//,'')}`;
-  const assetUrl = path => encodeURI(siteUrl(path));
-
-  const ADVENTURE_IMAGE_CANDIDATES = {
-    viking: ['assets/images/adventures/viking-adventure.png','assets/images/adventures/Viking Adventure.png','assets/images/dashboard/viking-adventure.png','assets/images/shared/viking-adventure.png','assets/images/viking-adventure.png','assets/images/adventure-viking.png'],
-    cajun: ['assets/images/adventures/cajun-adventure.png','assets/images/adventures/Cajun Adventure.png','assets/images/dashboard/cajun-adventure.png','assets/images/shared/cajun-adventure.png','assets/images/cajun-adventure.png','assets/images/adventure-cajun.png'],
-    fantasy: ['assets/images/adventures/fantasy-adventure.png','assets/images/adventures/Fantasy Adventure.png','assets/images/dashboard/fantasy-adventure.png','assets/images/shared/fantasy-adventure.png','assets/images/fantasy-adventure.png','assets/images/adventure-fantasy.png']
-  };
-
-  function loadImageFromCandidates(image, candidates, index = 0) {
-    if (!image || index >= candidates.length) { image?.closest('.adventure-choice')?.classList.add('image-not-found'); return; }
-    image.onerror = () => loadImageFromCandidates(image, candidates, index + 1);
-    image.onload = () => image.closest('.adventure-choice')?.classList.add('image-loaded');
-    image.src = assetUrl(candidates[index]);
-  }
-
-  function initializeAdventureImages() {
-    $$('[data-adventure-image]').forEach(image => loadImageFromCandidates(image, ADVENTURE_IMAGE_CANDIDATES[image.dataset.adventureImage] || []));
-  }
-
-  async function fetchJson(path) {
-    const response = await fetch(assetUrl(path), { cache: 'no-cache' });
-    if (!response.ok) throw new Error(`${path} returned ${response.status}`);
-    return response.json();
-  }
-
-  function difficulty(value, maximum = 5) {
-    const score = Math.max(0, Math.min(maximum, Number(value) || 0));
-    return `<span class="difficulty" aria-label="Difficulty ${score} out of ${maximum}">${'★'.repeat(score)}${'☆'.repeat(maximum-score)}</span>`;
-  }
-
-  function saveDraft() {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ step: state.step, adventureId: state.adventureId, classId: state.classId, adventurerId: state.adventurerId }));
-  }
-
-  function restoreDraft() {
-    try {
-      const draft = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}');
-      state.step = Math.min(3, Math.max(1, Number(draft.step) || 1));
-      state.adventureId = draft.adventureId || null;
-      state.classId = draft.classId || null;
-      state.adventurerId = draft.adventurerId || null;
-    } catch { sessionStorage.removeItem(STORAGE_KEY); }
-  }
-
-  function setStatus(message = '', type = '') {
-    const element = $('#creator-status');
-    if (!element) return;
-    element.textContent = message;
-    element.className = `creator-status ${type}`.trim();
-    element.hidden = !message;
-  }
-
-  function updateSummary() {
-    const parts = [];
-    if (state.adventureId) parts.push('Viking Adventure');
-    if (state.selectedClass) parts.push(state.selectedClass.name);
-    if (state.selectedAdventurer) parts.push(state.selectedAdventurer.name);
-    $('#selection-summary').textContent = parts.length ? parts.join(' • ') : 'No selection yet';
-  }
-
-  function updateContinue() {
-    const button = $('#creator-continue');
-    if (state.step === 1) {
-      button.hidden = false;
-      button.disabled = !state.adventureId;
-      button.textContent = 'Continue to Class';
-    } else if (state.step === 2) {
-      button.hidden = true;
-    } else {
-      button.hidden = false;
-      button.disabled = !state.adventurerId;
-      button.textContent = 'Continue to Fortune (Next Build)';
-    }
-    updateSummary();
-  }
-
-  function changeStep(step) {
-    state.step = Math.min(3, Math.max(1, step));
-    $$('.creator-step').forEach(panel => {
-      const active = Number(panel.dataset.step) === state.step;
-      panel.hidden = !active;
-      panel.classList.toggle('active', active);
-    });
-    $$('[data-step-button]').forEach(button => {
-      const number = Number(button.dataset.stepButton);
-      button.classList.toggle('active', number === state.step);
-      button.classList.toggle('complete', number < state.step);
-      button.disabled = number > state.step || (number === 2 && !state.adventureId) || (number === 3 && !state.classId);
-    });
-    $('#creator-back').hidden = state.step === 1;
-    updateContinue();
-    saveDraft();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  async function loadClasses() {
-    if (state.classes.length) return;
-    setStatus('Loading Viking Classes...');
-    const manifest = await fetchJson(MANIFEST);
-    state.classes = await Promise.all(manifest.classes.map(id => fetchJson(`assets/classes/viking/${id}/class.json`)));
-    renderClasses();
-    setStatus();
-  }
-
-  async function loadAdventurers(classData) {
-    return Promise.all((classData.heroes || []).map(id =>
-      fetchJson(`assets/classes/viking/${classData.id}/${id}/${id}.json`).then(data => ({ ...data, _folder: id }))
-    ));
-  }
-
-  function heroAsset(hero, key) {
-    return assetUrl(`assets/classes/viking/${state.selectedClass.id}/${hero._folder}/${hero.assets?.[key] || ''}`);
-  }
-
-  function renderClasses() {
-    $('#class-grid').innerHTML = state.classes.map(item => `<article class="class-choice ${item.id === state.classId ? 'selected' : ''}">
-      <div class="class-select-area">
-        <img src="${assetUrl(`assets/classes/viking/${item.id}/${item.coin}`)}" alt="${esc(item.name)} Class coin">
-        <span class="choice-copy"><strong>${esc(item.name)}</strong><small>${esc(item.role)}</small>${difficulty(item.difficulty)}</span>
-      </div>
-      <p>${esc(item.description)}</p>
-      <div class="choice-meta"><span>${item.heroes?.length || 0} Adventurers</span></div>
-      <div class="choice-actions single-action"><button type="button" class="primary" data-select-class="${esc(item.id)}">Select ${esc(item.name)}</button></div>
-    </article>`).join('');
-  }
-
-  async function selectClassAndContinue(id) {
-    setStatus('Loading Adventurers...');
-    state.classId = id;
-    state.selectedClass = state.classes.find(item => item.id === id) || null;
-    state.adventurerId = null;
-    state.selectedAdventurer = null;
-    state.adventurers = await loadAdventurers(state.selectedClass);
-    renderClasses();
-    renderAdventurers();
-    setStatus();
-    saveDraft();
-    changeStep(3);
-  }
-
-  function renderAdventurers() {
-    if (!state.selectedClass) return;
-    $('#adventurer-step-copy').textContent = `Choose one of the ${state.adventurers.length} ${state.selectedClass.name} Adventurers.`;
-    $('#adventurer-grid').innerHTML = state.adventurers.map(hero => `<article class="adventurer-choice ${hero.id === state.adventurerId ? 'selected' : ''}">
-      <button class="adventurer-art" type="button" data-select-adventurer="${esc(hero.id)}" aria-label="Select ${esc(hero.name)}">
-        <img src="${heroAsset(hero,'previewCard')}" alt="${esc(hero.name)} preview card">
-      </button>
-      <div class="adventurer-copy"><h3>${esc(hero.name)}</h3><p>${esc(hero.role)}</p>${difficulty(hero.difficulty, hero.difficultyMax || 5)}</div>
-      <div class="choice-actions"><button type="button" data-preview-adventurer="${esc(hero.id)}">Preview Details</button><button type="button" class="primary" data-select-adventurer="${esc(hero.id)}">Select ${esc(hero.name)}</button></div>
-    </article>`).join('');
-  }
-
-  function selectAdventurer(id) {
-    state.adventurerId = id;
-    state.selectedAdventurer = state.adventurers.find(item => item.id === id) || null;
-    renderAdventurers();
-    updateContinue();
-    saveDraft();
-  }
-
-  function showPreview(html) {
-    $('#preview-content').innerHTML = html;
-    $('#creator-preview').hidden = false;
-    document.body.classList.add('creator-preview-open');
-    $('#preview-close').focus();
-  }
-
-  function closePreview() {
-    $('#creator-preview').hidden = true;
-    document.body.classList.remove('creator-preview-open');
-  }
-
-  function previewAdventurer(id) {
-    const hero = state.adventurers.find(item => item.id === id);
-    if (!hero) return;
-    const attrs = hero.baseAttributes || {};
-    const abilities = (hero.starterAbilities || []).map(item => `<li><img src="${assetUrl(`assets/classes/viking/${state.selectedClass.id}/${hero._folder}/${item.icon}`)}" alt=""><span><strong>${esc(item.name)}</strong><small>${esc(item.description)}</small></span></li>`).join('');
-    const equipment = (hero.starterEquipment || []).map(item => `<li><img src="${assetUrl(`assets/classes/viking/${state.selectedClass.id}/${hero._folder}/${item.icon}`)}" alt=""><span><strong>${esc(item.name)}</strong><small>Quantity: ${Number(item.quantity) || 1}</small></span></li>`).join('');
-    showPreview(`<div class="adventurer-preview-layout"><div class="preview-model"><img src="${heroAsset(hero,'model')}" alt="${esc(hero.name)} model"></div><div class="preview-details"><p class="step-kicker">Adventurer Details</p><h2 id="preview-title">${esc(hero.name)}</h2><p>${esc(hero.class)} • ${esc(hero.role)}</p>${difficulty(hero.difficulty, hero.difficultyMax || 5)}<p class="preview-description">${esc(hero.theme)}</p><h3>Base Attributes</h3><div class="preview-attributes">${['str','dex','con','int','wis','cha'].map(key => `<span><b>${key.toUpperCase()}</b>${Number(attrs[key]) || 0}</span>`).join('')}</div></div></div><div class="preview-columns"><section><h3>Starter Abilities</h3><ul class="preview-item-list">${abilities || '<li>No starter abilities listed.</li>'}</ul></section><section><h3>Starter Equipment</h3><ul class="preview-item-list">${equipment || '<li>No starter equipment listed.</li>'}</ul></section></div><button class="creator-button primary preview-select" type="button" data-modal-select-adventurer="${esc(hero.id)}">Select ${esc(hero.name)}</button>`);
-  }
-
-  function bindEvents() {
-    $('.adventure-choice.selectable').addEventListener('click', async () => {
-      state.adventureId = 'viking';
-      $('.adventure-choice.selectable').classList.add('selected');
-      updateContinue(); saveDraft();
-      try { await loadClasses(); } catch (error) { setStatus(`Classes could not load: ${error.message}`, 'error'); }
-    });
-
-    $('#creator-back').addEventListener('click', () => changeStep(state.step - 1));
-    $('#creator-continue').addEventListener('click', async () => {
-      if (state.step === 1 && state.adventureId) {
-        try { await loadClasses(); changeStep(2); } catch (error) { setStatus(`Classes could not load: ${error.message}`, 'error'); }
-      } else if (state.step === 3 && state.adventurerId) {
-        window.DNDModal.alert({ type:'info', title:'Selection Complete', message:`${state.selectedAdventurer.name} is selected. Roll Your Fortune is the next development stage.`, confirmText:'Close' });
-      }
-    });
-
-    $('.creator-progress').addEventListener('click', event => {
-      const button = event.target.closest('[data-step-button]');
-      if (button && !button.disabled) changeStep(Number(button.dataset.stepButton));
-    });
-
-    $('#class-grid').addEventListener('click', async event => {
-      const button = event.target.closest('[data-select-class]');
-      if (!button) return;
-      try { await selectClassAndContinue(button.dataset.selectClass); }
-      catch (error) { setStatus(`Class data could not load: ${error.message}`, 'error'); }
-    });
-
-    $('#adventurer-grid').addEventListener('click', event => {
-      const preview = event.target.closest('[data-preview-adventurer]');
-      const select = event.target.closest('[data-select-adventurer]');
-      if (preview) previewAdventurer(preview.dataset.previewAdventurer);
-      else if (select) selectAdventurer(select.dataset.selectAdventurer);
-    });
-
-    $('#preview-close').addEventListener('click', closePreview);
-    $('#creator-preview').addEventListener('click', event => {
-      if (event.target.id === 'creator-preview') { closePreview(); return; }
-      const select = event.target.closest('[data-modal-select-adventurer]');
-      if (select) { selectAdventurer(select.dataset.modalSelectAdventurer); closePreview(); }
-    });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !$('#creator-preview').hidden) closePreview(); });
-  }
-
-  async function initialize() {
-    restoreDraft();
-    initializeAdventureImages();
-    bindEvents();
-    if (state.adventureId === 'viking') $('.adventure-choice.selectable').classList.add('selected');
-    try {
-      if (state.adventureId) await loadClasses();
-      if (state.classId) {
-        state.selectedClass = state.classes.find(item => item.id === state.classId) || null;
-        if (state.selectedClass) {
-          state.adventurers = await loadAdventurers(state.selectedClass);
-          state.selectedAdventurer = state.adventurers.find(item => item.id === state.adventurerId) || null;
-          renderAdventurers();
-        }
-      }
-      renderClasses();
-      changeStep(state.step);
-    } catch (error) {
-      state.step = 1;
-      setStatus(`Saved selections could not be restored: ${error.message}`, 'error');
-      changeStep(1);
-    }
-  }
-
-  window.addEventListener('dnd:navigation-ready', initialize, { once:true });
+  const state = { step:1, adventureId:null, classId:null, adventurerId:null, classes:[], selectedClass:null, adventurers:[], selectedAdventurer:null, fortune:{rolls:[],current:null,credits:0,experience:'',accepted:false,natural20:false,bonusRoll:null,bonusCredits:0,complete:false} };
+  const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+  const siteUrl=p=>window.DND?.siteUrl?window.DND.siteUrl(p):`/${String(p).replace(/^\//,'')}`; const assetUrl=p=>encodeURI(siteUrl(p));
+  async function fetchJson(path){const r=await fetch(assetUrl(path),{cache:'no-cache'});if(!r.ok)throw new Error(`${path} returned ${r.status}`);return r.json()}
+  function difficulty(value,max=5){const score=Math.max(0,Math.min(max,Number(value)||0));return `<span class="difficulty" aria-label="Difficulty ${score} out of ${max}"><span class="stars-filled">${'★'.repeat(score)}</span><span class="stars-empty">${'★'.repeat(max-score)}</span></span>`}
+  function save(){sessionStorage.setItem(STORAGE_KEY,JSON.stringify({step:state.step,adventureId:state.adventureId,classId:state.classId,adventurerId:state.adventurerId,fortune:state.fortune}))}
+  function restore(){try{const d=JSON.parse(sessionStorage.getItem(STORAGE_KEY)||'{}');state.step=Math.min(4,Math.max(1,Number(d.step)||1));state.adventureId=d.adventureId||null;state.classId=d.classId||null;state.adventurerId=d.adventurerId||null;if(d.fortune)state.fortune={...state.fortune,...d.fortune}}catch{sessionStorage.removeItem(STORAGE_KEY)}}
+  function status(m='',t=''){const e=$('#creator-status');e.textContent=m;e.className=`creator-status ${t}`.trim();e.hidden=!m}
+  function summary(){const a=[];if(state.adventureId)a.push('Viking Adventure');if(state.selectedClass)a.push(state.selectedClass.name);if(state.selectedAdventurer)a.push(state.selectedAdventurer.name);if(state.fortune.complete)a.push(`${state.fortune.credits+state.fortune.bonusCredits} Attribute Credits`);$('#selection-summary').textContent=a.length?a.join(' • '):'No selection yet'}
+  function updateContinue(){const b=$('#creator-continue');b.hidden=state.step===2;b.disabled=!((state.step===1&&state.adventureId)||(state.step===3&&state.adventurerId)||(state.step===4&&state.fortune.complete));b.textContent=state.step===1?'Continue to Class':state.step===3?'Continue to Fortune':state.step===4?'Continue to Attributes (Next Build)':'Continue';summary()}
+  function changeStep(n){state.step=Math.min(4,Math.max(1,n));$$('.creator-step').forEach(p=>{const on=Number(p.dataset.step)===state.step;p.hidden=!on;p.classList.toggle('active',on)});$$('[data-step-button]').forEach(b=>{const n=Number(b.dataset.stepButton);b.classList.toggle('active',n===state.step);b.classList.toggle('complete',n<state.step);b.disabled=n>state.step||(n===2&&!state.adventureId)||(n===3&&!state.classId)||(n===4&&!state.adventurerId)});$('#creator-back').hidden=state.step===1;updateContinue();save();if(state.step===4)renderFortune();scrollTo({top:0,behavior:'smooth'})}
+  async function loadClasses(){if(state.classes.length)return;status('Loading Viking Classes...');const m=await fetchJson(MANIFEST);state.classes=await Promise.all(m.classes.map(id=>fetchJson(`assets/classes/viking/${id}/class.json`)));renderClasses();status()}
+  async function loadAdventurers(c){return Promise.all((c.heroes||[]).map(id=>fetchJson(`assets/classes/viking/${c.id}/${id}/${id}.json`).then(d=>({...d,_folder:id}))))}
+  function heroAsset(h,k){return assetUrl(`assets/classes/viking/${state.selectedClass.id}/${h._folder}/${h.assets?.[k]||''}`)}
+  function renderClasses(){$('#class-grid').innerHTML=state.classes.map(c=>`<article class="class-choice ${c.id===state.classId?'selected':''}"><div class="class-select-area"><img src="${assetUrl(`assets/classes/viking/${c.id}/${c.coin}`)}" alt="${esc(c.name)} Class coin"><span class="choice-copy"><strong>${esc(c.name)}</strong><small>${esc(c.role)}</small>${difficulty(c.difficulty)}</span></div><p>${esc(c.description)}</p><div class="choice-meta"><span>${c.heroes?.length||0} Adventurers</span></div><div class="choice-actions single-action"><button type="button" class="primary" data-select-class="${esc(c.id)}">Select ${esc(c.name)}</button></div></article>`).join('')}
+  async function selectClass(id){status('Loading Adventurers...');state.classId=id;state.selectedClass=state.classes.find(c=>c.id===id);state.adventurerId=null;state.selectedAdventurer=null;state.adventurers=await loadAdventurers(state.selectedClass);renderClasses();renderAdventurers();status();changeStep(3)}
+  function renderAdventurers(){if(!state.selectedClass)return;$('#adventurer-step-copy').textContent=`Choose one of the ${state.adventurers.length} ${state.selectedClass.name} Adventurers.`;$('#adventurer-grid').innerHTML=state.adventurers.map(h=>`<article class="adventurer-choice ${h.id===state.adventurerId?'selected':''}"><button class="adventurer-art" type="button" data-select-adventurer="${esc(h.id)}"><img src="${heroAsset(h,'previewCard')}" alt="${esc(h.name)} preview card"></button><div class="adventurer-copy"><h3>${esc(h.name)}</h3><p>${esc(h.role)}</p>${difficulty(h.difficulty,h.difficultyMax||5)}</div><div class="choice-actions"><button type="button" data-preview-adventurer="${esc(h.id)}">Preview Details</button><button type="button" class="primary" data-select-adventurer="${esc(h.id)}">Select ${esc(h.name)}</button></div></article>`).join('')}
+  function selectAdventurer(id){state.adventurerId=id;state.selectedAdventurer=state.adventurers.find(h=>h.id===id);state.fortune={rolls:[],current:null,credits:0,experience:'',accepted:false,natural20:false,bonusRoll:null,bonusCredits:0,complete:false};renderAdventurers();updateContinue();save()}
+  function showPreview(html){$('#preview-content').innerHTML=html;$('#creator-preview').hidden=false;document.body.classList.add('creator-preview-open')}
+  function closePreview(){$('#creator-preview').hidden=true;document.body.classList.remove('creator-preview-open')}
+  function previewAdventurer(id){const h=state.adventurers.find(x=>x.id===id);if(!h)return;const a=h.baseAttributes||{};const abilities=(h.starterAbilities||[]).map(x=>`<li><img src="${assetUrl(`assets/classes/viking/${state.selectedClass.id}/${h._folder}/${x.icon}`)}" alt=""><span><strong>${esc(x.name)}</strong><small>${esc(x.description)}</small></span></li>`).join('');const equipment=(h.starterEquipment||[]).map(x=>`<li><img src="${assetUrl(`assets/classes/viking/${state.selectedClass.id}/${h._folder}/${x.icon}`)}" alt=""><span><strong>${esc(x.name)}</strong><small>Quantity: ${Number(x.quantity)||1}</small></span></li>`).join('');showPreview(`<div class="adventurer-preview-layout"><div class="preview-model"><img src="${heroAsset(h,'model')}" alt="${esc(h.name)} model"></div><div><p class="step-kicker">Adventurer Details</p><h2 id="preview-title">${esc(h.name)}</h2><p>${esc(h.class)} • ${esc(h.role)}</p>${difficulty(h.difficulty,h.difficultyMax||5)}<p class="preview-description">${esc(h.theme)}</p><h3>Base Attributes</h3><div class="preview-attributes">${['str','dex','con','int','wis','cha'].map(k=>`<span><b>${k.toUpperCase()}</b>${Number(a[k])||0}</span>`).join('')}</div></div></div><div class="preview-columns"><section><h3>Starter Abilities</h3><ul class="preview-item-list">${abilities}</ul></section><section><h3>Starter Equipment</h3><ul class="preview-item-list">${equipment}</ul></section></div><button class="creator-button primary preview-select" type="button" data-modal-select-adventurer="${esc(h.id)}">Select ${esc(h.name)}</button>`)}
+  function reward(r){if(r===20)return{credits:4,experience:'Heroic Fortune',natural20:true};if(r>=16)return{credits:4,experience:'Great Fortune'};if(r>=11)return{credits:3,experience:'Good Fortune'};if(r>=6)return{credits:2,experience:'Average Fortune'};return{credits:1,experience:'Poor Fortune'}}
+  function renderFortune(){const f=state.fortune;$('#fortune-die-value').textContent=f.current??'20';$('#fortune-roll-count').textContent=`Roll ${f.rolls.length} of 3`;$('#fortune-experience').textContent=f.experience||'Your Fortune Awaits';$('#fortune-result-copy').textContent=f.current?`Wood D20 result: ${f.current}. Stop now to accept the reward shown.`:'Roll the Wood D20 to reveal the Attribute Credits offered by fate.';$('#fortune-reward').hidden=!f.current;if(f.current){$('#fortune-reward strong').textContent=`+${f.credits}`;$('#fortune-reward span').textContent=f.credits===1?'Attribute Credit':'Attribute Credits'}$('#fortune-keep').hidden=!f.current||f.accepted||f.natural20;$('#fortune-keep').textContent=`Stop and Keep +${f.credits}`;$('#fortune-roll').hidden=f.accepted||f.natural20||f.rolls.length>=3;$('#fortune-roll').textContent=f.rolls.length===0?'Roll Wood D20':f.rolls.length===1?'Risk It: Roll 2 of 3':'Risk It: Final Roll';$('#fortune-warning').textContent=f.current&&!f.complete&&f.rolls.length<3?`Rolling again permanently discards the current ${f.credits}-Credit reward.`:'';$('#bonus-d8-panel').hidden=!f.natural20;if(f.bonusRoll!==null){$('#bonus-d8-value').textContent=f.bonusRoll;$('#bonus-d8-title').textContent=f.bonusCredits?'+1 Bonus Attribute Credit':'No Additional Credit';$('#bonus-d8-copy').textContent=`Wood D8 result: ${f.bonusRoll}. Final reward: ${f.credits+f.bonusCredits} Attribute Credits.`;$('#bonus-d8-roll').hidden=true}$('#fortune-history').innerHTML=f.rolls.map((r,i)=>`<span><b>Roll ${i+1}</b>${r}</span>`).join('');updateContinue()}
+  function rollFortune(){const f=state.fortune;if(f.complete||f.rolls.length>=3)return;const r=Math.floor(Math.random()*20)+1,o=reward(r);f.rolls.push(r);f.current=r;f.credits=o.credits;f.experience=o.experience;f.natural20=!!o.natural20;if(f.natural20)f.accepted=true;if(f.rolls.length===3&&!f.natural20){f.accepted=true;f.complete=true}save();renderFortune()}
+  function keepFortune(){const f=state.fortune;if(!f.current)return;f.accepted=true;f.complete=!f.natural20;save();renderFortune()}
+  function rollBonus(){const f=state.fortune;if(!f.natural20||f.bonusRoll!==null)return;f.bonusRoll=Math.floor(Math.random()*8)+1;f.bonusCredits=f.bonusRoll>=7?1:0;f.complete=true;save();renderFortune()}
+  function bind(){const adventure=$('.adventure-choice.selectable');adventure.addEventListener('click',async()=>{state.adventureId='viking';adventure.classList.add('selected');updateContinue();save();try{await loadClasses()}catch(e){status(`Classes could not load: ${e.message}`,'error')}});$('#creator-back').addEventListener('click',()=>changeStep(state.step-1));$('#creator-continue').addEventListener('click',async()=>{if(state.step===1&&state.adventureId){try{await loadClasses();changeStep(2)}catch(e){status(e.message,'error')}}else if(state.step===3&&state.adventurerId)changeStep(4);else if(state.step===4&&state.fortune.complete)window.DNDModal.alert({type:'success',title:'Fortune Accepted',message:`${state.fortune.credits+state.fortune.bonusCredits} Attribute Credits are ready for the Attributes step.`,confirmText:'Close'})});$('.creator-progress').addEventListener('click',e=>{const b=e.target.closest('[data-step-button]');if(b&&!b.disabled)changeStep(Number(b.dataset.stepButton))});$('#class-grid').addEventListener('click',async e=>{const b=e.target.closest('[data-select-class]');if(b)try{await selectClass(b.dataset.selectClass)}catch(x){status(x.message,'error')}});$('#adventurer-grid').addEventListener('click',e=>{const p=e.target.closest('[data-preview-adventurer]'),s=e.target.closest('[data-select-adventurer]');if(p)previewAdventurer(p.dataset.previewAdventurer);else if(s)selectAdventurer(s.dataset.selectAdventurer)});$('#preview-close').addEventListener('click',closePreview);$('#creator-preview').addEventListener('click',e=>{if(e.target.id==='creator-preview')closePreview();const s=e.target.closest('[data-modal-select-adventurer]');if(s){selectAdventurer(s.dataset.modalSelectAdventurer);closePreview()}});$('#fortune-roll').addEventListener('click',rollFortune);$('#fortune-keep').addEventListener('click',keepFortune);$('#bonus-d8-roll').addEventListener('click',rollBonus)}
+  async function init(){restore();bind();if(state.adventureId==='viking')$('.adventure-choice.selectable').classList.add('selected');try{if(state.adventureId)await loadClasses();if(state.classId){state.selectedClass=state.classes.find(c=>c.id===state.classId);if(state.selectedClass){state.adventurers=await loadAdventurers(state.selectedClass);state.selectedAdventurer=state.adventurers.find(h=>h.id===state.adventurerId);renderAdventurers()}}renderClasses();changeStep(state.step)}catch(e){state.step=1;status(`Saved selections could not be restored: ${e.message}`,'error');changeStep(1)}}
+  window.addEventListener('dnd:navigation-ready',init,{once:true});
 })();
