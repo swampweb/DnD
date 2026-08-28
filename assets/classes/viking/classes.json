@@ -1,0 +1,11 @@
+{
+  "adventureId": "viking",
+  "classes": [
+    "berserker",
+    "rune-seer",
+    "shadow-raider",
+    "shield-warrior",
+    "skald",
+    "wolf-ranger"
+  ]
+}
