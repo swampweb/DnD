@@ -4,6 +4,7 @@
   "realm": "Viking Adventure",
   "role": "Damage Dealer Specialist",
   "difficulty": 4,
+  "coin": "berserker-coin.png",
   "description": "Savage Nordic warriors who unleash overwhelming aggression, survive tremendous punishment, and dominate close combat through fury, strength, and relentless offense.",
   "heroes": [
     "bearclaw",

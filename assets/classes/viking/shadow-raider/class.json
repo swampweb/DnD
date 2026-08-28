@@ -4,6 +4,7 @@
   "realm": "Viking Adventure",
   "role": "Stealth Specialist",
   "difficulty": 4,
+  "coin": "shadow-raider-coin.png",
   "description": "Nordic infiltrators, scouts, assassins, and saboteurs who rely on stealth, deception, mobility, reconnaissance, and precision strikes to influence the battlefield from the shadows.",
   "heroes": [
     "raven-knife",

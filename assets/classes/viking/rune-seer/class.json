@@ -4,6 +4,7 @@
   "realm": "Viking Adventure",
   "role": "Control Magic Specialist",
   "difficulty": 3,
+  "coin": "rune-seer-coin.png",
   "description": "Nordic rune mystics who guide allies, shape fate, control battlefields, and channel ancient magical forces through carved runes, prophecy, and elemental wisdom.",
   "heroes": [
     "stone-oracle",

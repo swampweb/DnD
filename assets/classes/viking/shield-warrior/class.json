@@ -4,6 +4,7 @@
   "realm": "Viking Adventure",
   "role": "Defender Specialist",
   "difficulty": 2,
+  "coin": "shield-warrior-coin.png",
   "description": "Nordic frontline defenders who hold critical ground, protect allies, establish shield formations, and control enemy movement through disciplined defensive combat.",
   "heroes": [
     "guardian",

@@ -1,15 +1,11 @@
 {
   "id": "skald",
   "name": "Skald",
-
   "realm": "Viking Adventure",
-
   "role": "Support Specialist",
-
   "difficulty": 3,
-
+  "coin": "skald-coin.png",
   "description": "Nordic storytellers, musicians, and lorekeepers who inspire allies, preserve history, coordinate groups, and influence battles through song, rhythm, memory, and leadership.",
-
   "heroes": [
     "hall-singer",
     "war-drummer",
