@@ -11,6 +11,32 @@
   "difficulty": 4,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A savage northern berserker who fights with bear-like strength, survives punishment, and overwhelms powerful enemies through brutal close combat and relentless aggression.",
 
   "visualIdentity": "Massive fur-lined armor, broad greataxe, bear pelt mantle, iron-plated leather, carved rage totems, weathered battle gear, and restrained amber rage effects.",

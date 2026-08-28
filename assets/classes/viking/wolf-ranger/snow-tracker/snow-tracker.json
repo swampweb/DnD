@@ -7,6 +7,33 @@
   "role": "Ranged Control / Survival",
   "difficulty": 3,
   "difficultyMax": 5,
+  
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A patient Nordic ranger who follows faint signs across frozen terrain, predicts movement through disturbed snow, guides allies through winter hazards, and uses precise bow fire to slow fleeing or advancing targets.",
   "visualIdentity": "Layered white-gray and muted-blue ranger leathers, snow-hide fur mantle, pale ashwood longbow, practical seax, tracking tools, rope, weathered steel fittings, insulated boots, and restrained ice-blue wind effects.",
   "consistency": "Use the same face, hair, ranger-leather silhouette, snow-hide mantle pattern, longbow design, seax shape, tracking-kit arrangement, steel fittings, and white-gray, muted blue, brown, silver, and ice-blue palette across every character image.",

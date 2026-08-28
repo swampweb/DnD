@@ -11,6 +11,32 @@
   "difficulty": 2,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A seasoned northern shield warrior hardened by years defending frozen passes, using experience, resilience, and disciplined defensive tactics to withstand overwhelming odds.",
 
   "visualIdentity": "Weathered frozen-steel armor, frostscar round shield, veteran iceblade, thick winter cloak, fur trim, reinforced equipment, and restrained ice-blue veteran effects.",

@@ -11,6 +11,32 @@
   "difficulty": 3,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A covert Nordic shoreline raider who moves through moonless fjords, uses tide noise and deep shadow for concealment, disables maritime defenses, and delivers precise attacks before disappearing into the dark.",
 
   "visualIdentity": "Deep navy and charcoal raider leathers, twin Fjordshadow Seax Knives, muted iron fittings, coastal infiltration gear, sea-weathered accessories, and restrained silver-gray fog and shadow effects.",

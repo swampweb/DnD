@@ -11,6 +11,32 @@
   "difficulty": 2,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A disciplined Nordic shield warrior who anchors the front line, protects nearby allies, blocks dangerous pathways, and uses precise shield-and-spear tactics to control enemy movement.",
 
   "visualIdentity": "Broad blue-and-silver round shield, polished chain armor, layered navy padding, bright steel fittings, practical pale fur trim, reinforced helmet, balanced spear, sturdy boots, and restrained silver-blue protective effects.",

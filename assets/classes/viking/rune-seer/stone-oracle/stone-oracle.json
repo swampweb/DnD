@@ -11,6 +11,32 @@
   "difficulty": 3,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "An ancient Nordic rune-seer who draws wisdom from sacred stones, shaping protective wards, binding threats, and revealing hidden truths through earthbound prophecy.",
 
   "visualIdentity": "Earth-toned oracle robes, carved runestone staff, stone talismans, layered furs, weathered leather bindings, engraved runes, and restrained amber and stone-gray magical effects.",

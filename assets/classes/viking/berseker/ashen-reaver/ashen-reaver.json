@@ -11,6 +11,34 @@
   "difficulty": 4,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
+  "progressionProfile": "viking-default",
+
   "theme": "A ruthless raider forged in fire and battle, using overwhelming aggression, brutal axe strikes, and relentless determination to break enemy lines.",
 
   "visualIdentity": "Charred armor plates, massive greataxe, bone trophies, dark leather bindings, ash-stained furs, scarred equipment, and restrained ember-red effects.",

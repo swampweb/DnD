@@ -11,6 +11,32 @@
   "difficulty": 4,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A bonded Nordic ranger who fights beside a trained gray wolf, using shared tracking instincts, coordinated movement, protective commands, and precise ranged attacks to control the battlefield as a two-member hunting pack.",
 
   "visualIdentity": "Layered forest-brown ranger leathers with muted-green and charcoal accents, gray wolf-fur mantle, compact ashwood shortbow, practical iron-edged seax, companion whistle, travel pouches, dark iron fittings, durable Nordic boots, and restrained pale-blue pack-bond energy.",

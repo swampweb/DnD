@@ -11,6 +11,32 @@
   "difficulty": 3,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A mystical Nordic seer who studies the northern lights, guiding allies through prophetic visions and channeling celestial rune magic for protection and restoration.",
 
   "visualIdentity": "Elegant rune-seer robes, aurora-infused rune staff, celestial jewelry, glowing prisms, silver accents, flowing fabrics, and restrained green, purple, and blue aurora effects.",

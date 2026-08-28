@@ -11,6 +11,32 @@
   "difficulty": 3,
   "difficultyMax": 5,
 
+  "baseAttributes": {
+    "str": 0,
+    "dex": 0,
+    "con": 0,
+    "int": 0,
+    "wis": 0,
+    "cha": 0
+  },
+
+  "startingLevel": 1,
+
+  "baseHealth": {
+    "hp": 0
+  },
+
+  "baseResource": {
+    "type": "",
+    "amount": 0
+  },
+
+  "startingCurrency": {
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+
   "theme": "A watchful Nordic ranger who reads tracks, scouts dangerous routes, signals allies through trained raven calls, and uses precise bow fire to expose threats before the main group advances.",
 
   "visualIdentity": "Dark ranger leathers with muted black and charcoal tones, raven-feather accents, weathered hunting bow, practical seax, scouting tools, signal whistle, leather pouches, dark steel fittings, and subtle blue-black raven-energy effects.",
