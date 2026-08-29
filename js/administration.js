@@ -149,13 +149,19 @@ const deleteInvitation = async (id, email) => {
 };
 
 window.addEventListener('dnd:navigation-ready', async event => {
-  const { isAdmin } = event.detail;
-  if (!isAdmin) {
+  const { isAdmin, session } = event.detail;
+  let currentRole = isAdmin ? 'admin' : 'user';
+  if (!isAdmin && session?.user?.id) {
+    const { data } = await window.DND.client.from('profiles').select('role').eq('id', session.user.id).single();
+    currentRole = String(data?.role || 'user').toLowerCase();
+  }
+  if (!isAdmin && currentRole !== 'manager') {
     document.getElementById('access-denied').hidden = false;
     return;
   }
 
   document.getElementById('admin-content').hidden = false;
+  if (currentRole === 'manager') return;
   await loadInvitations();
 
   document.getElementById('status-filter').addEventListener('change', renderTable);

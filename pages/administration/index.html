@@ -101,6 +101,24 @@
           </div>
         </details>
 
+        <details class="admin-card admin-accordion" id="role-matrix-panel">
+          <summary>
+            <span><strong>Role Matrix</strong><small>Admin can edit permissions. Manager can view the matrix.</small></span>
+            <span class="accordion-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="accordion-content role-matrix-content">
+            <div class="panel-toolbar"><span id="role-matrix-mode">Loading access...</span><button class="save-role-matrix" id="save-role-matrix" type="button" hidden>Save Role Matrix</button></div>
+            <div id="role-matrix-status" class="defaults-status">Open this section to load permissions.</div>
+            <div class="table-wrap">
+              <table class="admin-data-table role-matrix-table">
+                <thead><tr><th>Permission</th><th>User</th><th>Manager</th><th>Admin</th></tr></thead>
+                <tbody id="role-matrix-body"><tr><td colspan="4" class="loading-cell">Open this section to load permissions.</td></tr></tbody>
+              </table>
+            </div>
+            <p class="defaults-note">Role Matrix controls site visibility and actions. Database security policies must still protect sensitive tables.</p>
+          </div>
+        </details>
+
         <details class="admin-card admin-accordion" id="creation-defaults-panel">
           <summary>
             <span><strong>Character Creation Defaults</strong><small>Edit the base attributes used only when new characters are created.</small></span>
@@ -185,5 +203,6 @@
   <script src="../../js/modal.js"></script>
   <script src="../../js/administration.js"></script>
   <script src="../../js/admin-panels.js"></script>
+  <script src="../../js/role-matrix.js"></script>
 </body>
 </html>
