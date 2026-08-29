@@ -49,16 +49,27 @@
   }
 
   async function loadCharacters(){
-    const body=$('#admin-characters-body');body.innerHTML='<tr><td colspan="7" class="loading-cell">Loading characters...</td></tr>';
+    const body=$('#admin-characters-body');body.innerHTML='<tr><td colspan="8" class="loading-cell">Loading characters...</td></tr>';
     const [{data:characters,error},{data:profiles}] = await Promise.all([
       window.DND.client.from('characters').select('*').order('created_at',{ascending:false}),
       window.DND.client.from('profiles').select('*')
     ]);
-    if(error){body.innerHTML=`<tr><td colspan="7" class="empty-cell">${escapeHtml(error.message)}</td></tr>`;return}
+    if(error){body.innerHTML=`<tr><td colspan="8" class="empty-cell">${escapeHtml(error.message)}</td></tr>`;return}
     const profileMap=new Map((profiles||[]).map(row=>[row.id,displayUser(row)]));const rows=characters||[];
     $('#admin-character-count').textContent=`${rows.length} character${rows.length===1?'':'s'}`;
-    body.innerHTML=rows.length?rows.map(row=>`<tr><td>${escapeHtml(row.name||'Unnamed Character')}</td><td>${escapeHtml(profileMap.get(row.user_id)||row.user_id||'Unknown')}</td><td>${escapeHtml(row.adventure_id||row.adventure||row.realm||'—')}</td><td>${escapeHtml(row.class_id||row.class||'—')}</td><td>${escapeHtml(row.adventurer_id||row.specialization||row.race||'—')}</td><td>${escapeHtml(row.level??1)}</td><td>${formatDate(row.created_at)}</td></tr>`).join(''):'<tr><td colspan="7" class="empty-cell">No characters were returned.</td></tr>';
+    body.innerHTML=rows.length?rows.map(row=>`<tr><td>${escapeHtml(row.name||'Unnamed Character')}</td><td>${escapeHtml(profileMap.get(row.user_id)||row.user_id||'Unknown')}</td><td>${escapeHtml(row.adventure_id||row.adventure||row.realm||'—')}</td><td>${escapeHtml(row.class_id||row.class||'—')}</td><td>${escapeHtml(row.adventurer_id||row.specialization||row.race||'—')}</td><td>${escapeHtml(row.level??1)}</td><td>${formatDate(row.created_at)}</td><td><div class="character-admin-actions"><a href="../characters/view.html?id=${encodeURIComponent(row.id)}" target="_blank" rel="noopener">View Sheet</a><button type="button" data-admin-delete-character="${escapeHtml(row.id)}" data-admin-delete-name="${escapeHtml(row.name||'Unnamed Character')}">Delete</button></div></td></tr>`).join(''):'<tr><td colspan="8" class="empty-cell">No characters were returned.</td></tr>';
     charactersLoaded=true;
+  }
+
+  async function deleteCreatedCharacter(button){
+    const id=button.dataset.adminDeleteCharacter;
+    const name=button.dataset.adminDeleteName||'this character';
+    const confirmed=await window.DNDModal.confirm({type:'danger',kicker:'Character Management',title:'Delete Character',message:`Delete ${name}? This removes the character and linked records. This cannot be undone.`,confirmText:'Delete Character',cancelText:'Keep Character',focusCancel:true});
+    if(!confirmed)return;
+    button.disabled=true;button.textContent='Deleting...';
+    const {error}=await window.DND.client.from('characters').delete().eq('id',id);
+    if(error){button.disabled=false;button.textContent='Delete';window.DND.toast(error.message||'The character could not be deleted.','error');return}
+    window.DND.toast(`${name} was deleted.`,'success');charactersLoaded=false;await loadCharacters();
   }
 
   async function loadClassList(){
@@ -103,16 +114,8 @@
     $('#user-management-panel').addEventListener('toggle',()=>{if($('#user-management-panel').open&&!usersLoaded)loadUsers()});
     $('#created-characters-panel').addEventListener('toggle',()=>{if($('#created-characters-panel').open&&!charactersLoaded)loadCharacters()});
     $('#refresh-users').addEventListener('click',loadUsers);$('#refresh-characters').addEventListener('click',loadCharacters);
+    $('#admin-characters-body').addEventListener('click',event=>{const button=event.target.closest('[data-admin-delete-character]');if(button)deleteCreatedCharacter(button)});
     $('#admin-users-body').addEventListener('change',event=>{const select=event.target.closest('.role-select');if(select)updateUserRole(select)});
     $('#defaults-class').addEventListener('change',handleClassChange);$('#defaults-adventurer').addEventListener('change',handleAdventurerChange);$('#creation-defaults-form').addEventListener('submit',saveDefaults);$('#reset-json-defaults').addEventListener('click',resetJsonDefaults);
   });
-})();
-
-(() => {
-  const $=selector=>document.querySelector(selector);
-  const DEFAULTS={str:['Strength','STR','Physical power used for melee attacks, heavy lifting, grappling, pushing, and carrying capacity.'],dex:['Dexterity','DEX','Agility and coordination used for ranged accuracy, stealth, initiative, balance, and quick reactions.'],con:['Constitution','CON','Toughness and endurance used for health, stamina, survival, and resistance to physical hardship.'],int:['Intelligence','INT','Knowledge and reasoning used for research, memory, crafting, investigation, and understanding magic.'],wis:['Wisdom','WIS','Awareness and intuition used for perception, survival, tracking, judgment, and spiritual insight.'],cha:['Charisma','CHA','Presence and influence used for leadership, persuasion, negotiation, performance, and social interaction.']};
-  let loaded=false;
-  async function loadDefinitions(){const list=$('#attribute-definition-list');if(!list||loaded)return;const {data,error}=await window.DND.client.from('attribute_definitions').select('*').order('display_order',{ascending:true});if(error){list.innerHTML=`<div class="defaults-status error">${error.message}</div>`;return}const map=new Map((data||[]).map(row=>[row.attribute_key,row]));list.innerHTML=Object.entries(DEFAULTS).map(([key,[name,abbr,description]])=>{const row=map.get(key);return `<div class="attribute-definition-row"><label for="attribute-description-${key}">${row?.name||name} (${row?.abbreviation||abbr})</label><textarea id="attribute-description-${key}" data-attribute-description="${key}">${row?.description||description}</textarea></div>`}).join('');loaded=true}
-  async function saveDefinitions(){const button=$('#save-attribute-definitions');button.disabled=true;button.textContent='Saving...';const rows=Object.entries(DEFAULTS).map(([key,[name,abbr]],index)=>({attribute_key:key,name,abbreviation:abbr,description:$(`[data-attribute-description="${key}"]`).value.trim(),display_order:index+1,updated_by:window.DND.session?.user?.id||null}));const {error}=await window.DND.client.from('attribute_definitions').upsert(rows,{onConflict:'attribute_key'});button.disabled=false;button.textContent='Save Attribute Information';if(error){window.DND.toast(error.message,'error');return}window.DND.toast('Attribute Information saved.','success')}
-  window.addEventListener('dnd:navigation-ready',event=>{if(!event.detail.isAdmin)return;$('#creation-defaults-panel')?.addEventListener('toggle',()=>{if($('#creation-defaults-panel').open)loadDefinitions()});$('#attribute-definition-editor')?.addEventListener('toggle',()=>{if($('#attribute-definition-editor').open)loadDefinitions()});$('#save-attribute-definitions')?.addEventListener('click',saveDefinitions)});
 })();

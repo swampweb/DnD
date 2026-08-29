@@ -97,7 +97,7 @@
           </summary>
           <div class="accordion-content">
             <div class="panel-toolbar"><span id="admin-character-count">0 characters</span><button class="panel-refresh" id="refresh-characters" type="button">Refresh Characters</button></div>
-            <div class="table-wrap"><table class="admin-data-table"><thead><tr><th>Character</th><th>Player</th><th>Adventure</th><th>Class</th><th>Adventurer</th><th>Level</th><th>Created</th></tr></thead><tbody id="admin-characters-body"><tr><td colspan="7" class="loading-cell">Open this section to load characters.</td></tr></tbody></table></div>
+            <div class="table-wrap"><table class="admin-data-table"><thead><tr><th>Character</th><th>Player</th><th>Adventure</th><th>Class</th><th>Adventurer</th><th>Level</th><th>Created</th><th>Actions</th></tr></thead><tbody id="admin-characters-body"><tr><td colspan="8" class="loading-cell">Open this section to load characters.</td></tr></tbody></table></div>
           </div>
         </details>
 
@@ -145,14 +145,6 @@
                 <div class="defaults-actions"><button class="reset-defaults" id="reset-json-defaults" type="button">Reset to JSON Values</button><button class="save-defaults" type="submit">Save New Character Defaults</button></div>
               </fieldset>
             </form>
-            <details class="attribute-definition-editor" id="attribute-definition-editor">
-              <summary>Attribute Information</summary>
-              <div class="attribute-definition-content">
-                <p>Edit the information shown when a player selects an Attribute information icon.</p>
-                <div id="attribute-definition-list" class="attribute-definition-list"><div class="loading-cell">Open Character Creation Defaults to load Attribute Information.</div></div>
-                <div class="defaults-actions"><button class="save-defaults" id="save-attribute-definitions" type="button">Save Attribute Information</button></div>
-              </div>
-            </details>
             <p class="defaults-note">Saved values apply to future character creation only. Existing characters are not changed.</p>
           </div>
         </details>
