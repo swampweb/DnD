@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../../css/dashboard.css">
   <link rel="stylesheet" href="../../css/administration.css">
   <link rel="stylesheet" href="../../css/administration-actions.css">
+  <link rel="stylesheet" href="../../css/admin-panels.css">
   <link rel="stylesheet" href="../../css/modal.css">
 </head>
 <body>
@@ -77,6 +78,60 @@
         </div>
       </section>
 
+      <section class="admin-accordion-stack" aria-label="Administration tools">
+        <details class="admin-card admin-accordion" id="user-management-panel">
+          <summary>
+            <span><strong>User Management</strong><small>View registered users and their platform roles.</small></span>
+            <span class="accordion-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="accordion-content">
+            <div class="panel-toolbar"><span id="admin-user-count">0 users</span><button class="panel-refresh" id="refresh-users" type="button">Refresh Users</button></div>
+            <div class="table-wrap"><table class="admin-data-table"><thead><tr><th>User</th><th>Role</th><th>Created</th><th>Characters</th></tr></thead><tbody id="admin-users-body"><tr><td colspan="4" class="loading-cell">Open this section to load users.</td></tr></tbody></table></div>
+          </div>
+        </details>
+
+        <details class="admin-card admin-accordion" id="created-characters-panel">
+          <summary>
+            <span><strong>Created Characters</strong><small>View player characters created across Three Realms.</small></span>
+            <span class="accordion-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="accordion-content">
+            <div class="panel-toolbar"><span id="admin-character-count">0 characters</span><button class="panel-refresh" id="refresh-characters" type="button">Refresh Characters</button></div>
+            <div class="table-wrap"><table class="admin-data-table"><thead><tr><th>Character</th><th>Player</th><th>Adventure</th><th>Class</th><th>Adventurer</th><th>Level</th><th>Created</th></tr></thead><tbody id="admin-characters-body"><tr><td colspan="7" class="loading-cell">Open this section to load characters.</td></tr></tbody></table></div>
+          </div>
+        </details>
+
+        <details class="admin-card admin-accordion" id="creation-defaults-panel">
+          <summary>
+            <span><strong>Character Creation Defaults</strong><small>Edit the base attributes used only when new characters are created.</small></span>
+            <span class="accordion-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="accordion-content defaults-content">
+            <div class="defaults-selectors">
+              <label>Adventure<select id="defaults-adventure"><option value="viking">Viking Adventure</option></select></label>
+              <label>Class<select id="defaults-class"><option value="">Select a Class</option></select></label>
+              <label>Adventurer<select id="defaults-adventurer" disabled><option value="">Select an Adventurer</option></select></label>
+            </div>
+            <div id="defaults-status" class="defaults-status">Select a Class and Adventurer to edit new-character defaults.</div>
+            <form id="creation-defaults-form" class="defaults-form">
+              <fieldset id="defaults-fieldset" disabled>
+                <legend>Base Attributes</legend>
+                <div class="attribute-default-grid">
+                  <label><span>Strength</span><b>STR</b><input id="default-strength" name="strength" type="number" min="0" max="99" step="1" required></label>
+                  <label><span>Dexterity</span><b>DEX</b><input id="default-dexterity" name="dexterity" type="number" min="0" max="99" step="1" required></label>
+                  <label><span>Constitution</span><b>CON</b><input id="default-constitution" name="constitution" type="number" min="0" max="99" step="1" required></label>
+                  <label><span>Intelligence</span><b>INT</b><input id="default-intelligence" name="intelligence" type="number" min="0" max="99" step="1" required></label>
+                  <label><span>Wisdom</span><b>WIS</b><input id="default-wisdom" name="wisdom" type="number" min="0" max="99" step="1" required></label>
+                  <label><span>Charisma</span><b>CHA</b><input id="default-charisma" name="charisma" type="number" min="0" max="99" step="1" required></label>
+                </div>
+                <div class="defaults-actions"><button class="reset-defaults" id="reset-json-defaults" type="button">Reset to JSON Values</button><button class="save-defaults" type="submit">Save New Character Defaults</button></div>
+              </fieldset>
+            </form>
+            <p class="defaults-note">Saved values apply to future character creation only. Existing characters are not changed.</p>
+          </div>
+        </details>
+      </section>
+
       <section class="admin-grid">
         <article class="admin-card compact-card">
           <h2>User and Role Management</h2>
@@ -129,5 +184,6 @@
   <script src="../../js/navigation.js"></script>
   <script src="../../js/modal.js"></script>
   <script src="../../js/administration.js"></script>
+  <script src="../../js/admin-panels.js"></script>
 </body>
 </html>
