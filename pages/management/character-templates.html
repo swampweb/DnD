@@ -28,18 +28,18 @@
         <div class="definition-workspace">
           <section class="definition-card"><div class="definition-card-heading"><span>01</span><div><h3>Template Setup</h3><p>Choose where this Adventurer belongs.</p></div></div><div class="form-grid three-columns">
           <label>Template Type<select id="template-type"><option value="existing">Add Adventurer to Existing Class</option><option value="new-class">Create New Class and Adventurer</option></select></label>
-          <label>Realm<input id="realm" value="viking" required></label>
-          <label>Adventure<input id="adventure" value="Viking Adventure" required></label>
+          <label>Realm<select id="realm" required><option value="viking">Viking</option></select></label>
+          <label>Adventure<select id="adventure" required><option value="Viking Adventure" data-realm="viking">Viking Adventure</option></select></label>
           <label>Class Name<input id="class-name" placeholder="Wolf Ranger" required></label>
-          <label>Class ID<input id="class-id" placeholder="wolf-ranger" required></label>
+          <label>Class ID<span class="system-field-help">Generated from Class Name</span><input id="class-id" placeholder="wolf-ranger" required readonly aria-readonly="true"></label>
           </div></section>
           <section class="definition-card"><div class="definition-card-heading"><span>02</span><div><h3>Adventurer Identity</h3><p>Define the playable identity and gameplay position.</p></div></div><div class="form-grid three-columns"><label>Adventurer Name<input id="adventurer-name" placeholder="Wolf Companion" required></label>
-          <label>Adventurer ID<input id="adventurer-id" placeholder="wolf-companion" required></label>
+          <label>Adventurer ID<span class="system-field-help">Generated from Adventurer Name</span><input id="adventurer-id" placeholder="wolf-companion" required readonly aria-readonly="true"></label>
           <label>Specialization<input id="specialization" placeholder="Wolf Companion" required></label>
           <label>Role<input id="role" placeholder="Ranged Specialist" required></label>
           <label>Difficulty<select id="difficulty"><option value="1">1 - Beginner</option><option value="2">2 - Accessible</option><option value="3" selected>3 - Intermediate</option><option value="4">4 - Advanced</option><option value="5">5 - Expert</option></select></label>
           <label>Theme<input id="theme" placeholder="Northern Wilderness" required></label>
-          <label>Art Style<select id="art-style"><option>Dark Fantasy Viking</option><option>Dark Fantasy</option><option>Realistic Fantasy</option><option>Painterly Fantasy</option><option>Cinematic Fantasy</option><option>Stylized Fantasy</option><option>Custom</option></select></label>
+          <label>Art Style<select id="art-style"><option>Dark Fantasy Viking</option><option>Dark Fantasy</option><option>Realistic Fantasy</option><option>Painterly Fantasy</option><option>Cinematic Fantasy</option><option>Stylized Fantasy</option><option value="Custom">Custom</option></select></label><label id="custom-art-style-wrap" hidden>Custom Art Style<span class="system-field-help">Enter a style name, then select Add Style</span><span class="custom-style-entry"><input id="custom-art-style" placeholder="Example: Nordic Ink Illustration"><button id="add-custom-art-style" type="button">Add Style</button></span></label>
           </div></section>
           <section class="definition-card"><div class="definition-card-heading"><span>03</span><div><h3>Creative Direction</h3><p>Set the visual language shared by all generated assets.</p></div></div><div class="form-grid three-columns"><label class="wide">Short Description<input id="short-description" maxlength="180" placeholder="Short selection-card description" required></label>
           <label class="wide">Character Description<textarea id="character-description" rows="4" placeholder="Physical appearance, armor, weapons, silhouette, and defining class features." required></textarea></label>

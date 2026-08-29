@@ -25,7 +25,7 @@
   function addRow(type){const list=$(`#${type}-list`);list.insertAdjacentHTML('beforeend',repeatRow(type,list.children.length));}
   function validateImage(file,w,h){return new Promise(resolve=>{const u=URL.createObjectURL(file),img=new Image();img.onload=()=>resolve({valid:img.naturalWidth===w&&img.naturalHeight===h,width:img.naturalWidth,height:img.naturalHeight,url:u});img.onerror=()=>resolve({valid:false,width:0,height:0,url:u});img.src=u})}
   function collectRows(type){return $$(`[data-${type}-row]`).map((row,index)=>{const key=row.querySelector('[data-icon-upload]')?.dataset.iconUpload;return{id:slug(row.querySelector('[data-field="name"]').value),name:row.querySelector('[data-field="name"]').value.trim(),type:row.querySelector('[data-field="type"]').value.trim(),description:row.querySelector('[data-field="description"]').value.trim(),visual_requirement:row.querySelector('[data-field="theme"]').value.trim(),icon:savedAssets.icons?.[key]||null,order:index+1}})}
-  function collect(){const cn=$('#class-name').value.trim(),an=$('#adventurer-name').value.trim();return{template_type:$('#template-type').value,realm:slug($('#realm').value),adventure_name:$('#adventure').value.trim(),class_id:slug($('#class-id').value||cn),class_name:cn,adventurer_id:slug($('#adventurer-id').value||an),adventurer_name:an,specialization:$('#specialization').value.trim(),role:$('#role').value.trim(),difficulty:Number($('#difficulty').value),theme:$('#theme').value.trim(),art_style:$('#art-style').value,short_description:$('#short-description').value.trim(),character_description:$('#character-description').value.trim(),visual_identity:$('#visual-identity').value.trim(),companion_identity:$('#companion-identity').value.trim(),consistency_rules:$('#consistency').value.trim(),assets:savedAssets,abilities:collectRows('ability'),equipment:collectRows('equipment'),consumables:collectRows('consumable'),base_attributes:{str:Number($('#attr-str').value)||0,dex:Number($('#attr-dex').value)||0,con:Number($('#attr-con').value)||0,int:Number($('#attr-int').value)||0,wis:Number($('#attr-wis').value)||0,cha:Number($('#attr-cha').value)||0}}}
+  function collect(){const cn=$('#class-name').value.trim(),an=$('#adventurer-name').value.trim();return{template_type:$('#template-type').value,realm:slug($('#realm').value),adventure_name:$('#adventure').value.trim(),class_id:slug($('#class-id').value||cn),class_name:cn,adventurer_id:slug($('#adventurer-id').value||an),adventurer_name:an,specialization:$('#specialization').value.trim(),role:$('#role').value.trim(),difficulty:Number($('#difficulty').value),theme:$('#theme').value.trim(),art_style:$('#art-style').value==='Custom'?$('#custom-art-style').value.trim():$('#art-style').value,short_description:$('#short-description').value.trim(),character_description:$('#character-description').value.trim(),visual_identity:$('#visual-identity').value.trim(),companion_identity:$('#companion-identity').value.trim(),consistency_rules:$('#consistency').value.trim(),assets:savedAssets,abilities:collectRows('ability'),equipment:collectRows('equipment'),consumables:collectRows('consumable'),base_attributes:{str:Number($('#attr-str').value)||0,dex:Number($('#attr-dex').value)||0,con:Number($('#attr-con').value)||0,int:Number($('#attr-int').value)||0,wis:Number($('#attr-wis').value)||0,cha:Number($('#attr-cha').value)||0}}}
   const basePath=d=>`${d.realm}/${d.class_id}/${d.adventurer_id}`;
   function generatedFilename(key,d){const p=`${d.class_name} - ${d.adventurer_name}`;return{portrait:`${p} - Portrait.png`,model:`${p} Model.png`,board:`${p} Board Piece.png`,banner:`${p} - Banner.png`,card:`${p} - Preview Card.png`}[key]}
   async function uploadFile(path,file){const {error}=await window.DND.client.storage.from(BUCKET).upload(path,file,{upsert:true,contentType:file.type,cacheControl:'3600'});if(error)throw error;return window.DND.client.storage.from(BUCKET).getPublicUrl(path).data.publicUrl}
@@ -39,10 +39,55 @@
   function renderValidation(){const d=collect(),list=checks(d);$('#folder-preview').textContent=`Supabase Storage: ${BUCKET}/${basePath(d)}/`;$('#filename-preview').innerHTML=assetSpecs.map(a=>`<span>${esc(generatedFilename(a.key,d))}</span>`).join('');$('#validation-list').innerHTML=list.map(c=>`<div class="validation-item ${c.valid?'valid':''}"><span>${esc(c.name)}</span><b>${c.valid?'Complete':'Missing'}</b></div>`).join('');$('#json-preview').textContent=JSON.stringify(d,null,2);$('#mark-ready').disabled=!list.every(c=>c.valid)}
   function showStep(n){step=Math.max(1,Math.min(6,n));$$('[data-step-panel]').forEach(p=>{const on=Number(p.dataset.stepPanel)===step;p.hidden=!on;p.classList.toggle('active',on)});$$('[data-studio-step]').forEach(b=>b.classList.toggle('active',Number(b.dataset.studioStep)===step));$('#studio-back').disabled=step===1;$('#studio-next').textContent=step===6?'Refresh Validation':'Next';$('#studio-status').textContent=`Step ${step} of 6`;if(step===6)renderValidation();scrollTo({top:0,behavior:'smooth'})}
   function exportBackup(){const d=collect(),blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${d.adventurer_id||'adventurer'}-backup.json`;a.click();URL.revokeObjectURL(a.href)}
+  const REALM_ADVENTURES={viking:['Viking Adventure']};
+  function syncAdventureOptions(){
+    const realm=$('#realm').value,adventure=$('#adventure'),current=adventure.value;
+    const options=REALM_ADVENTURES[realm]||[];
+    adventure.innerHTML=options.map(name=>`<option value="${esc(name)}">${esc(name)}</option>`).join('');
+    if(options.includes(current))adventure.value=current;
+  }
+  function loadCustomStyles(){
+    let styles=[];try{styles=JSON.parse(localStorage.getItem('three-realms-custom-art-styles')||'[]')}catch{}
+    const select=$('#art-style');
+    styles.filter(Boolean).forEach(style=>{if(![...select.options].some(o=>o.value===style)){const option=document.createElement('option');option.value=style;option.textContent=style;select.insertBefore(option,select.querySelector('option[value="Custom"]'))}});
+  }
+  function toggleCustomStyle(){
+    const custom=$('#art-style').value==='Custom';
+    $('#custom-art-style-wrap').hidden=!custom;
+    if(custom)$('#custom-art-style').focus();
+  }
+  function addCustomStyle(){
+    const input=$('#custom-art-style'),style=input.value.trim();
+    if(!style){window.DND.toast('Enter a custom Art Style first.','error');return}
+    const select=$('#art-style');
+    let option=[...select.options].find(o=>o.value.toLowerCase()===style.toLowerCase());
+    if(!option){option=document.createElement('option');option.value=style;option.textContent=style;select.insertBefore(option,select.querySelector('option[value="Custom"]'))}
+    select.value=option.value;
+    let styles=[];try{styles=JSON.parse(localStorage.getItem('three-realms-custom-art-styles')||'[]')}catch{}
+    if(!styles.some(x=>String(x).toLowerCase()===style.toLowerCase()))styles.push(style);
+    localStorage.setItem('three-realms-custom-art-styles',JSON.stringify(styles));
+    $('#custom-art-style-wrap').hidden=true;
+    window.DND.toast(`${style} was added to Art Style.`, 'success');
+  }
+  async function checkGeneratedIds(){
+    const data=collect();
+    if(!data.class_id||!data.adventurer_id)return true;
+    const {data:matches,error}=await window.DND.client.from('character_template_drafts').select('id,name').eq('realm',data.realm).eq('class_id',data.class_id).eq('adventurer_id',data.adventurer_id).limit(1);
+    if(error)return true;
+    const duplicate=matches?.find(row=>row.id!==draftId);
+    if(duplicate){window.DND.toast(`The generated Adventurer ID already exists for ${duplicate.name}. Change the Adventurer Name.`, 'error');return false}
+    return true;
+  }
   window.addEventListener('dnd:navigation-ready',event=>{session=event.detail.session;if(!event.detail.canManage){$('#studio-denied').hidden=false;return}$('#studio-main').hidden=false;renderAssets();for(let i=0;i<3;i++)addRow('ability');for(let i=0;i<4;i++)addRow('equipment');addRow('consumable');
-    $('#class-name').oninput=()=>{if(!$('#class-id').dataset.edited)$('#class-id').value=slug($('#class-name').value)};$('#class-id').oninput=()=>$('#class-id').dataset.edited='1';$('#adventurer-name').oninput=()=>{if(!$('#adventurer-id').dataset.edited)$('#adventurer-id').value=slug($('#adventurer-name').value);const d=collect();assetSpecs.forEach(a=>{const el=$(`#filename-${a.key}`);if(el)el.textContent=generatedFilename(a.key,d)})};$('#adventurer-id').oninput=()=>$('#adventurer-id').dataset.edited='1';
+    loadCustomStyles();syncAdventureOptions();toggleCustomStyle();
+    $('#realm').onchange=syncAdventureOptions;
+    $('#art-style').onchange=toggleCustomStyle;
+    $('#add-custom-art-style').onclick=addCustomStyle;
+    $('#custom-art-style').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addCustomStyle()}});
+    $('#class-name').oninput=()=>{$('#class-id').value=slug($('#class-name').value)};
+    $('#adventurer-name').oninput=()=>{$('#adventurer-id').value=slug($('#adventurer-name').value);const d=collect();assetSpecs.forEach(a=>{const el=$(`#filename-${a.key}`);if(el)el.textContent=generatedFilename(a.key,d)})};
     $('#asset-requirements').addEventListener('change',async e=>{const input=e.target.closest('[data-asset-upload]');if(!input?.files[0])return;const spec=assetSpecs.find(a=>a.key===input.dataset.assetUpload),file=input.files[0],r=await validateImage(file,spec.w,spec.h),st=$(`#status-${spec.key}`),badge=$(`#badge-${spec.key}`);if(!r.valid){st.textContent=`Invalid: ${r.width} × ${r.height}px`;st.className='asset-status invalid';badge.textContent='Invalid';badge.className='asset-validation-badge invalid';savedAssets[spec.key]={valid:false};return}selectedAssetFiles[spec.key]=file;savedAssets[spec.key]={valid:true,width:r.width,height:r.height,size:file.size,filename:file.name};$(`#preview-${spec.key}`).innerHTML=`<img src="${r.url}" alt="${spec.name} preview">`;st.textContent=`Ready to upload • ${(file.size/1024).toFixed(0)} KB`;st.className='asset-status valid';badge.textContent='Validated';badge.className='asset-validation-badge valid'});
     document.addEventListener('change',async e=>{const input=e.target.closest('[data-icon-upload]');if(!input?.files[0])return;const r=await validateImage(input.files[0],128,128),key=input.dataset.iconUpload,preview=$(`[data-icon-preview="${key}"]`),st=$(`[data-icon-status="${key}"]`);if(!r.valid){st.textContent=`Invalid: ${r.width} × ${r.height}`;st.className='icon-status invalid';return}selectedIconFiles[key]=input.files[0];preview.innerHTML=`<img src="${r.url}" alt="Icon preview">`;st.textContent='Validated and ready to upload';st.className='icon-status valid';input.closest('.content-builder-card').querySelector('.content-state').textContent='Icon Ready'});
-    document.addEventListener('click',e=>{const remove=e.target.closest('.remove-row');if(remove){const type=['ability','equipment','consumable'].find(t=>remove.closest(`[data-${t}-row]`));remove.closest('.content-builder-card').remove();if(type)renumber(type)}});$('#add-ability').onclick=()=>addRow('ability');$('#add-equipment').onclick=()=>addRow('equipment');$('#add-consumable').onclick=()=>addRow('consumable');$('#studio-next').onclick=()=>step<6?showStep(step+1):renderValidation();$('#studio-back').onclick=()=>showStep(step-1);$$('[data-studio-step]').forEach(b=>b.onclick=()=>showStep(Number(b.dataset.studioStep)));$('#save-template-draft').onclick=()=>saveDraft();$('#download-json').onclick=exportBackup;$('#mark-ready').onclick=async()=>{if(await saveDraft('ready_for_review'))renderValidation()};
+    document.addEventListener('click',e=>{const remove=e.target.closest('.remove-row');if(remove){const type=['ability','equipment','consumable'].find(t=>remove.closest(`[data-${t}-row]`));remove.closest('.content-builder-card').remove();if(type)renumber(type)}});$('#add-ability').onclick=()=>addRow('ability');$('#add-equipment').onclick=()=>addRow('equipment');$('#add-consumable').onclick=()=>addRow('consumable');$('#studio-next').onclick=()=>step<6?showStep(step+1):renderValidation();$('#studio-back').onclick=()=>showStep(step-1);$$('[data-studio-step]').forEach(b=>b.onclick=()=>showStep(Number(b.dataset.studioStep)));$('#save-template-draft').onclick=async()=>{if(await checkGeneratedIds())saveDraft()};$('#download-json').onclick=exportBackup;$('#mark-ready').onclick=async()=>{if(await checkGeneratedIds()&&await saveDraft('ready_for_review'))renderValidation()};
   });
 })();
