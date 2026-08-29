@@ -58,9 +58,26 @@
       if (badge) badge.textContent = platformRole;
 
       const isAdmin = platformRole === 'admin';
-      const canManage = isAdmin || platformRole === 'manager';
+      let permissions = {};
+      const { data: permissionRows, error: permissionError } = await window.DND.client
+        .from('role_permissions')
+        .select('permission_key, allowed')
+        .eq('role_name', platformRole);
+
+      if (!permissionError && permissionRows) {
+        permissions = Object.fromEntries(permissionRows.map(row => [row.permission_key, Boolean(row.allowed)]));
+      } else {
+        // Safe fallback preserves the previous hard-coded navigation behavior.
+        permissions = {
+          view_management: isAdmin || platformRole === 'manager',
+          view_administration: isAdmin
+        };
+      }
+
+      const canManage = permissions.view_management === true;
+      const canViewAdministration = permissions.view_administration === true;
       mount.querySelectorAll('[data-role-link="manager"]').forEach(element => element.hidden = !canManage);
-      mount.querySelectorAll('[data-role-link="admin"]').forEach(element => element.hidden = !isAdmin);
+      mount.querySelectorAll('[data-role-link="admin"]').forEach(element => element.hidden = !canViewAdministration);
 
       mount.querySelector('#signout-button')?.addEventListener('click', async () => {
         await window.DND.client.auth.signOut();
@@ -68,7 +85,7 @@
       });
 
       window.dispatchEvent(new CustomEvent('dnd:navigation-ready', {
-        detail: { session, displayName, platformRole, isAdmin, canManage }
+        detail: { session, displayName, platformRole, isAdmin, canManage, canViewAdministration, permissions }
       }));
     } catch (error) {
       console.error(error);

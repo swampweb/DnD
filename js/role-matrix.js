@@ -3,6 +3,7 @@
   const ROLES = ['user','manager','admin'];
   const PERMISSIONS = [
     ['view_administration','See Administration navigation','Show the Administration area in site navigation.'],
+    ['view_management','See Management navigation','Show the Management area in site navigation.'],
     ['view_users','View User Management','View registered users and character counts.'],
     ['edit_user_roles','Edit User Roles','Change a user between User, Manager, and Admin.'],
     ['view_created_characters','View Created Characters','View the characters created by players.'],
