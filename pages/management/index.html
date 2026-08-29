@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#11100f">
+  <title>Management | Three Realms Adventures</title>
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/management-hub.css">
+</head>
+<body>
+  <div class="management-page-shell">
+    <div id="site-navigation" data-active-page="management"></div>
+
+    <main class="management-main" id="management-main" hidden>
+      <header class="management-heading">
+        <div>
+          <p class="management-kicker">Three Realms Operations</p>
+          <h1>Management</h1>
+          <p>Build and manage reusable game content, campaign systems, inventory, abilities, and future world resources.</p>
+        </div>
+        <span class="management-access" id="management-access">Management Access</span>
+      </header>
+
+      <section class="management-overview">
+        <div>
+          <span>Content Workspace</span>
+          <strong>Build the Three Realms</strong>
+          <p>Use the available studios below to create structured content while keeping completed player systems locked.</p>
+        </div>
+        <div class="management-overview-mark" aria-hidden="true">M</div>
+      </section>
+
+      <section class="management-section">
+        <div class="management-section-heading">
+          <div><p class="management-kicker">Available Now</p><h2>Content Studios</h2></div>
+          <p>Open a Studio to create or manage its content.</p>
+        </div>
+
+        <div class="management-card-grid">
+          <a class="management-card available" href="character-templates.html">
+            <div class="management-card-icon" aria-hidden="true">CT</div>
+            <div class="management-card-copy">
+              <span class="management-status available-status">Available</span>
+              <h3>Character Template Studio</h3>
+              <p>Create a new Class or add an Adventurer to an existing Class. Define identity, required artwork, Abilities, Equipment, Consumables, Attributes, generated filenames, and JSON data.</p>
+              <ul>
+                <li>Six-step structured workflow</li>
+                <li>Image size validation</li>
+                <li>Draft and Ready for Review status</li>
+              </ul>
+              <strong>Open Character Template Studio</strong>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="management-section future-section">
+        <div class="management-section-heading">
+          <div><p class="management-kicker">Planned Workspaces</p><h2>Future Management Areas</h2></div>
+          <p>These cards reserve the Management structure without enabling unfinished tools.</p>
+        </div>
+
+        <div class="management-card-grid future-grid">
+          <article class="management-card coming-soon">
+            <div class="management-card-icon" aria-hidden="true">IM</div>
+            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Inventory Item Management</h3><p>Create reusable Weapons, Armor, Equipment, Tonics, Potions, Quest Items, and their 128 × 128 icon requirements.</p></div>
+          </article>
+          <article class="management-card coming-soon">
+            <div class="management-card-icon" aria-hidden="true">AM</div>
+            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Ability Management</h3><p>Create reusable Abilities, gameplay effects, theme requirements, and Ability Icon Coins.</p></div>
+          </article>
+          <article class="management-card coming-soon">
+            <div class="management-card-icon" aria-hidden="true">CM</div>
+            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Campaign Management</h3><p>Create Campaigns, assign Characters, track sessions, and manage story progression.</p></div>
+          </article>
+          <article class="management-card coming-soon">
+            <div class="management-card-icon" aria-hidden="true">PM</div>
+            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Progression Management</h3><p>Define XP, Levels, unlocks, starting resources, health, mana, and advancement rules.</p></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <main class="management-denied" id="management-denied" hidden>
+      <div class="management-denied-card">
+        <span aria-hidden="true">!</span>
+        <h1>Management Access Required</h1>
+        <p>This area is available only when the signed-in role has Management permission.</p>
+        <a href="../../index.html">Return Home</a>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/navigation.js"></script>
+  <script src="../../js/management-hub.js"></script>
+</body>
+</html>
