@@ -23,8 +23,29 @@
     if(error){body.innerHTML=`<tr><td colspan="4" class="empty-cell">${escapeHtml(error.message)}</td></tr>`;return}
     const counts=new Map();(characters||[]).forEach(row=>counts.set(row.user_id,(counts.get(row.user_id)||0)+1));
     const rows=profiles||[];$('#admin-user-count').textContent=`${rows.length} user${rows.length===1?'':'s'}`;
-    body.innerHTML=rows.length?rows.map(row=>`<tr><td>${escapeHtml(displayUser(row))}</td><td><span class="role-chip">${escapeHtml(row.role||'user')}</span></td><td>${formatDate(row.created_at)}</td><td>${counts.get(row.id)||0}</td></tr>`).join(''):'<tr><td colspan="4" class="empty-cell">No users were returned.</td></tr>';
+    body.innerHTML=rows.length?rows.map(row=>{
+      const role=String(row.role||'user').toLowerCase();
+      const allowedRoles=['user','manager','admin'];
+      const options=allowedRoles.map(item=>`<option value="${item}" ${item===role?'selected':''}>${item.charAt(0).toUpperCase()+item.slice(1)}</option>`).join('');
+      return `<tr><td>${escapeHtml(displayUser(row))}</td><td><div class="role-editor role-${escapeHtml(role)}"><span class="role-dot" aria-hidden="true"></span><select class="role-select" data-profile-id="${escapeHtml(row.id)}" data-original-role="${escapeHtml(role)}" aria-label="Role for ${escapeHtml(displayUser(row))}">${options}</select><span class="role-save-state" aria-live="polite"></span></div></td><td>${formatDate(row.created_at)}</td><td>${counts.get(row.id)||0}</td></tr>`;
+    }).join(''):'<tr><td colspan="4" class="empty-cell">No users were returned.</td></tr>';
     usersLoaded=true;
+  }
+
+  async function updateUserRole(select){
+    const profileId=select.dataset.profileId;
+    const previousRole=select.dataset.originalRole||'user';
+    const nextRole=select.value;
+    const editor=select.closest('.role-editor');
+    const state=editor.querySelector('.role-save-state');
+    if(nextRole===previousRole)return;
+    const confirmed=await window.DNDModal.confirm({type:'warning',kicker:'User Management',title:'Update User Role',message:`Change this user's role from ${previousRole} to ${nextRole}?`,confirmText:'Update Role',cancelText:'Cancel',focusCancel:true});
+    if(!confirmed){select.value=previousRole;return}
+    select.disabled=true;state.textContent='Saving...';
+    const {error}=await window.DND.client.from('profiles').update({role:nextRole}).eq('id',profileId);
+    select.disabled=false;
+    if(error){select.value=previousRole;state.textContent='Not saved';window.DND.toast(error.message||'The role could not be updated.','error');return}
+    select.dataset.originalRole=nextRole;editor.className=`role-editor role-${nextRole}`;state.textContent='Saved';window.DND.toast(`User role updated to ${nextRole}.`,'success');setTimeout(()=>{if(state.textContent==='Saved')state.textContent=''},2200);
   }
 
   async function loadCharacters(){
@@ -82,6 +103,7 @@
     $('#user-management-panel').addEventListener('toggle',()=>{if($('#user-management-panel').open&&!usersLoaded)loadUsers()});
     $('#created-characters-panel').addEventListener('toggle',()=>{if($('#created-characters-panel').open&&!charactersLoaded)loadCharacters()});
     $('#refresh-users').addEventListener('click',loadUsers);$('#refresh-characters').addEventListener('click',loadCharacters);
+    $('#admin-users-body').addEventListener('change',event=>{const select=event.target.closest('.role-select');if(select)updateUserRole(select)});
     $('#defaults-class').addEventListener('change',handleClassChange);$('#defaults-adventurer').addEventListener('change',handleAdventurerChange);$('#creation-defaults-form').addEventListener('submit',saveDefaults);$('#reset-json-defaults').addEventListener('click',resetJsonDefaults);
   });
 })();
