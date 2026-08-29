@@ -14,3 +14,6 @@
 
 /* Review Attribute calculation: Base + Allocated = Final */
 .review-attribute-item p{display:flex;align-items:center;justify-content:center;gap:5px;margin:7px 0 0;padding-top:7px;border-top:1px solid rgba(255,255,255,.06);font-size:.63rem}.review-attribute-item p b{color:#b7aa9e;font-weight:600}.review-attribute-item p i{color:#e18a3e;font-style:normal;font-weight:700}.review-attribute-item p em{color:#d8c4ae;font-style:normal}.review-attribute-item p b:before{content:'Base '}.review-attribute-item p i:before{content:'Bonus '}
+
+/* Final character name and save */
+.review-name-panel{grid-column:2}.review-name-content{display:grid;gap:7px;padding:14px}.review-name-content label{color:#cbaa7b;font-size:.7rem}.review-name-content input{width:100%;border:1px solid rgba(229,111,29,.28);border-radius:8px;padding:11px 12px;color:#f1e2d0;background:#090807;font:1rem Georgia,serif;outline:none}.review-name-content input:focus{border-color:#d87332;box-shadow:0 0 0 2px rgba(216,115,50,.12)}.review-name-content small{color:#83786f;font-size:.63rem}@media(max-width:800px){.review-name-panel{grid-column:auto}}
