@@ -13,6 +13,7 @@
   let added={str:0,dex:0,con:0,int:0,wis:0,cha:0};
   let awarded=0;
   let active=false;
+  let reviewActive=false;
 
   function getDraft(){for(const key of Object.keys(sessionStorage)){if(key.startsWith('three-realms-character-draft')){try{const value=JSON.parse(sessionStorage.getItem(key));if(value?.adventurerId)return{key,value}}catch{}}}return null}
   function saveDraft(){const draft=getDraft();if(!draft)return;draft.value.attributes={baseAttributes:base,attributeAllocations:added,finalAttributes:Object.fromEntries(ATTRS.map(([key])=>[key,base[key]+added[key]])),attributeCreditsAwarded:awarded,attributeCreditsRemaining:remaining()};draft.value.step=5;sessionStorage.setItem(draft.key,JSON.stringify(draft.value))}
@@ -38,14 +39,19 @@
     const d=draft.value;const attrs=d.attributes?.finalAttributes||Object.fromEntries(ATTRS.map(([key])=>[key,base[key]+added[key]]));
     document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='6';panel.hidden=!on;panel.classList.toggle('active',on)});
     document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===6);button.classList.toggle('complete',number<6);if(number===6)button.disabled=false});
-    active=false;$('#creator-back').hidden=false;$('#creator-continue').disabled=true;$('#creator-continue').textContent='Create Character (Next Build)';
+    active=false;reviewActive=true;$('#creator-back').hidden=false;$('#creator-continue').disabled=true;$('#creator-continue').textContent='Create Character (Next Build)';
     $('#review-class-name').textContent=`${pretty(d.classId)} • Viking Adventure`;$('#review-summary-class').textContent=pretty(d.classId);$('#review-summary-adventurer').textContent=pretty(d.adventurerId);$('#review-adventurer-name').textContent=pretty(d.adventurerId);$('#review-summary-credits').textContent=Number(d.fortune?.credits||0)+Number(d.fortune?.bonusCredits||0);$('#review-fortune-label').textContent=d.fortune?.experience||`${$('#review-summary-credits').textContent} Attribute Credits`;
-    $('#review-attribute-grid').innerHTML=ATTRS.map(([key,name,abbr])=>`<div><span>${abbr}</span><strong>${attrs[key]??0}</strong><small>${name}</small></div>`).join('');
+    $('#review-attribute-grid').innerHTML=ATTRS.map(([key,name,abbr])=>{
+      const baseValue=Number(d.attributes?.baseAttributes?.[key]??base[key]??0);
+      const bonusValue=Number(d.attributes?.attributeAllocations?.[key]??added[key]??0);
+      const finalValue=Number(attrs[key]??(baseValue+bonusValue));
+      return `<div class="review-attribute-item"><span>${abbr}</span><strong>${finalValue}</strong><small>${name}</small><p><b>${baseValue}</b><i>+${bonusValue}</i><em>= ${finalValue}</em></p></div>`;
+    }).join('');
     try{const folder=`assets/classes/viking/${d.classId}/${d.adventurerId}`;const json=await fetch(window.DND.siteUrl(`${folder}/${d.adventurerId}.json`),{cache:'no-cache'}).then(response=>response.json());$('#review-adventurer-name').textContent=json.name||pretty(d.adventurerId);$('#review-summary-adventurer').textContent=json.name||pretty(d.adventurerId);const model=json.assets?.model||json.assets?.previewCard||json.assets?.portrait;const image=$('#review-model-image');if(model){image.src=encodeURI(window.DND.siteUrl(`${folder}/${model}`));image.hidden=false}else image.hidden=true}catch{$('#review-model-image').hidden=true}
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function showAttributes(){document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='5';panel.hidden=!on;panel.classList.toggle('active',on)});document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===5);button.classList.toggle('complete',number<5);if(number===5)button.disabled=false});$('#creator-back').hidden=false;$('#creator-continue').disabled=true;$('#creator-continue').textContent='Loading Attributes...';active=true;loadAttributeDescriptions().then(loadDefaults).catch(error=>{$('#attribute-status').textContent=error.message;$('#attribute-status').className='attribute-status'})}
+  function showAttributes(){document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='5';panel.hidden=!on;panel.classList.toggle('active',on)});document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===5);button.classList.toggle('complete',number<5);if(number===5)button.disabled=false});$('#creator-back').hidden=false;$('#creator-continue').disabled=true;$('#creator-continue').textContent='Loading Attributes...';active=true;reviewActive=false;const currentDraft=getDraft();if(currentDraft){currentDraft.value.step=5;sessionStorage.setItem(currentDraft.key,JSON.stringify(currentDraft.value))}loadAttributeDescriptions().then(loadDefaults).catch(error=>{$('#attribute-status').textContent=error.message;$('#attribute-status').className='attribute-status'})}
   window.addEventListener('dnd:navigation-ready',()=>{
     $('#attribute-grid').addEventListener('click',event=>{
       const infoButton=event.target.closest('[data-attribute-info]');
@@ -78,7 +84,17 @@
       if(!step5?.hidden&&remaining()===0){event.preventDefault();event.stopImmediatePropagation();showReview();return}
       const step4=document.querySelector('.creator-step[data-step="4"]');const draft=getDraft();if(!step4?.hidden&&draft?.value?.fortune?.complete){event.preventDefault();event.stopImmediatePropagation();showAttributes()}
     },true);
-    $('#creator-back').addEventListener('click',event=>{if(!active)return;event.preventDefault();event.stopImmediatePropagation();active=false;document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='4';panel.hidden=!on;panel.classList.toggle('active',on)});document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===4);button.classList.toggle('complete',number<4)});$('#creator-continue').disabled=false;$('#creator-continue').textContent='Continue to Attributes'},true);
+    $('#creator-back').addEventListener('click',event=>{
+      if(reviewActive){
+        event.preventDefault();event.stopImmediatePropagation();showAttributes();return;
+      }
+      if(!active)return;
+      event.preventDefault();event.stopImmediatePropagation();active=false;
+      document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='4';panel.hidden=!on;panel.classList.toggle('active',on)});
+      document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===4);button.classList.toggle('complete',number<4)});
+      const currentDraft=getDraft();if(currentDraft){currentDraft.value.step=4;sessionStorage.setItem(currentDraft.key,JSON.stringify(currentDraft.value))}
+      $('#creator-continue').disabled=false;$('#creator-continue').textContent='Continue to Attributes';
+    },true);
     const draft=getDraft();
     const resumeRequested=new URLSearchParams(location.search).get('resume')==='1';
     const fortuneComplete=draft?.value?.fortune?.complete===true;
