@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#11100f">
+  <title>Character Template Studio | Three Realms Adventures</title>
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/modal.css">
+  <link rel="stylesheet" href="../../css/character-template-studio.css">
+</head>
+<body>
+  <div class="studio-page-shell">
+    <div id="site-navigation" data-active-page="management"></div>
+    <main class="studio-main" id="studio-main" hidden>
+      <header class="studio-header">
+        <div><p class="studio-kicker">Management Studio</p><h1>Character Template Studio</h1><p>Create, validate, and save a complete Adventurer content package without editing JSON by hand.</p></div>
+        <div class="studio-header-actions"><span id="draft-state" class="draft-state">Unsaved Draft</span><button id="save-template-draft" type="button">Save Draft</button></div>
+      </header>
+
+      <nav class="studio-progress" aria-label="Template creation steps">
+        <button class="active" data-studio-step="1"><span>1</span>Definition</button><button data-studio-step="2"><span>2</span>Assets</button><button data-studio-step="3"><span>3</span>Abilities</button><button data-studio-step="4"><span>4</span>Equipment</button><button data-studio-step="5"><span>5</span>Attributes</button><button data-studio-step="6"><span>6</span>Validate</button>
+      </nav>
+
+      <section class="studio-step active" data-step-panel="1">
+        <div class="section-heading"><div><p class="studio-kicker">Step 1</p><h2>Character Definition</h2></div><p>Define the permanent identity and visual rules shared by every asset.</p></div>
+        <div class="studio-card form-grid three-columns">
+          <label>Template Type<select id="template-type"><option value="existing">Add Adventurer to Existing Class</option><option value="new-class">Create New Class and Adventurer</option></select></label>
+          <label>Realm<input id="realm" value="viking" required></label>
+          <label>Adventure<input id="adventure" value="Viking Adventure" required></label>
+          <label>Class Name<input id="class-name" placeholder="Wolf Ranger" required></label>
+          <label>Class ID<input id="class-id" placeholder="wolf-ranger" required></label>
+          <label>Adventurer Name<input id="adventurer-name" placeholder="Wolf Companion" required></label>
+          <label>Adventurer ID<input id="adventurer-id" placeholder="wolf-companion" required></label>
+          <label>Specialization<input id="specialization" placeholder="Wolf Companion" required></label>
+          <label>Role<input id="role" placeholder="Ranged Specialist" required></label>
+          <label>Difficulty<select id="difficulty"><option value="1">1 - Beginner</option><option value="2">2 - Accessible</option><option value="3" selected>3 - Intermediate</option><option value="4">4 - Advanced</option><option value="5">5 - Expert</option></select></label>
+          <label>Theme<input id="theme" placeholder="Northern Wilderness" required></label>
+          <label>Art Style<select id="art-style"><option>Dark Fantasy Viking</option><option>Dark Fantasy</option><option>Realistic Fantasy</option><option>Painterly Fantasy</option><option>Cinematic Fantasy</option><option>Stylized Fantasy</option><option>Custom</option></select></label>
+          <label class="wide">Short Description<input id="short-description" maxlength="180" placeholder="Short selection-card description" required></label>
+          <label class="wide">Character Description<textarea id="character-description" rows="4" placeholder="Physical appearance, armor, weapons, silhouette, and defining class features." required></textarea></label>
+          <label class="wide">Visual Identity<textarea id="visual-identity" rows="3" placeholder="Materials, color palette, symbols, clothing, weapons, and environmental language." required></textarea></label>
+          <label class="wide">Companion Identity<textarea id="companion-identity" rows="3" placeholder="Enter None or define companion appearance, equipment, and required presence." required></textarea></label>
+          <label class="wide">Consistency Rules<textarea id="consistency" rows="3" placeholder="List at least three visual markers that must remain consistent across every asset." required></textarea></label>
+        </div>
+      </section>
+
+      <section class="studio-step" data-step-panel="2" hidden>
+        <div class="section-heading"><div><p class="studio-kicker">Step 2</p><h2>Character Assets</h2></div><p>Upload each required image. Dimensions are checked before the asset passes validation.</p></div>
+        <div id="asset-requirements" class="asset-requirements"></div>
+      </section>
+
+      <section class="studio-step" data-step-panel="3" hidden>
+        <div class="section-heading"><div><p class="studio-kicker">Step 3</p><h2>Ability Icon Coins</h2></div><p>Three themed Abilities are required. Each icon must be 128 × 128 PNG with a transparent background.</p></div>
+        <div id="ability-list" class="repeatable-list"></div><button class="add-row-button" id="add-ability" type="button">Add Ability</button>
+      </section>
+
+      <section class="studio-step" data-step-panel="4" hidden>
+        <div class="section-heading"><div><p class="studio-kicker">Step 4</p><h2>Equipment and Consumables</h2></div><p>Four Equipment items and one Tonic or Potion are required.</p></div>
+        <h3 class="subsection-title">Equipment Icon Coins</h3><div id="equipment-list" class="repeatable-list"></div><button class="add-row-button" id="add-equipment" type="button">Add Equipment</button>
+        <h3 class="subsection-title">Tonic / Potion Icon Coins</h3><div id="consumable-list" class="repeatable-list"></div><button class="add-row-button" id="add-consumable" type="button">Add Consumable</button>
+      </section>
+
+      <section class="studio-step" data-step-panel="5" hidden>
+        <div class="section-heading"><div><p class="studio-kicker">Step 5</p><h2>Default Attributes</h2></div><p>These values become the Admin-controlled defaults for newly created Characters.</p></div>
+        <div class="studio-card attribute-template-grid">
+          <label>Strength <span>STR</span><input id="attr-str" type="number" min="0" max="99" value="0"></label><label>Dexterity <span>DEX</span><input id="attr-dex" type="number" min="0" max="99" value="0"></label><label>Constitution <span>CON</span><input id="attr-con" type="number" min="0" max="99" value="0"></label><label>Intelligence <span>INT</span><input id="attr-int" type="number" min="0" max="99" value="0"></label><label>Wisdom <span>WIS</span><input id="attr-wis" type="number" min="0" max="99" value="0"></label><label>Charisma <span>CHA</span><input id="attr-cha" type="number" min="0" max="99" value="0"></label>
+        </div>
+      </section>
+
+      <section class="studio-step" data-step-panel="6" hidden>
+        <div class="section-heading"><div><p class="studio-kicker">Step 6</p><h2>Validate Template</h2></div><p>Review the generated folder, filenames, JSON preview, and missing requirements.</p></div>
+        <div class="validation-layout"><section class="studio-card"><h3>Generated Folder</h3><code id="folder-preview"></code><h3>Generated Filenames</h3><div id="filename-preview" class="filename-preview"></div></section><section class="studio-card"><h3>Validation Checklist</h3><div id="validation-list" class="validation-list"></div><div class="validation-actions"><button id="download-json" type="button">Download JSON Preview</button><button id="mark-ready" type="button" disabled>Mark Ready for Review</button></div></section></div>
+        <section class="studio-card json-preview-card"><h3>Character Data Preview</h3><pre id="json-preview"></pre></section>
+      </section>
+
+      <footer class="studio-footer"><button id="studio-back" type="button" disabled>Back</button><span id="studio-status">Step 1 of 6</span><button id="studio-next" type="button">Next</button></footer>
+    </main>
+    <main class="studio-denied" id="studio-denied" hidden><h1>Management Access Required</h1><p>The Character Template Studio is available to roles with Management access.</p></main>
+  </div>
+  <div class="toast" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../../js/config.js"></script><script src="../../js/supabase.js"></script><script src="../../js/navigation.js"></script><script src="../../js/modal.js"></script><script src="../../js/character-template-studio.js"></script>
+</body></html>
