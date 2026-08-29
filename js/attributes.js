@@ -31,7 +31,7 @@
   }
 
   async function loadDefaults(){const draft=getDraft();if(!draft)throw new Error('Character draft was not found.');const d=draft.value;awarded=Number(d.fortune?.credits||0)+Number(d.fortune?.bonusCredits||0);const {data,error}=await window.DND.client.from('character_creation_defaults').select('strength,dexterity,constitution,intelligence,wisdom,charisma').eq('adventure_id',d.adventureId||'viking').eq('class_id',d.classId).eq('adventurer_id',d.adventurerId).maybeSingle();if(error)throw error;if(data){base={str:data.strength,dex:data.dexterity,con:data.constitution,int:data.intelligence,wis:data.wisdom,cha:data.charisma}}else{const json=await fetch(window.DND.siteUrl(`assets/classes/viking/${d.classId}/${d.adventurerId}/${d.adventurerId}.json`)).then(response=>response.json());base={str:Number(json.baseAttributes?.str)||0,dex:Number(json.baseAttributes?.dex)||0,con:Number(json.baseAttributes?.con)||0,int:Number(json.baseAttributes?.int)||0,wis:Number(json.baseAttributes?.wis)||0,cha:Number(json.baseAttributes?.cha)||0}}if(d.attributes?.attributeAllocations)added={...added,...d.attributes.attributeAllocations};render()}
-  function showAttributes(){document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='5';panel.hidden=!on;panel.classList.toggle('active',on)});document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===5);button.classList.toggle('complete',number<5);if(number===5)button.disabled=false});$('#creator-back').hidden=false;active=true;loadAttributeDescriptions().then(loadDefaults).catch(error=>{$('#attribute-status').textContent=error.message;$('#attribute-status').className='attribute-status'})}
+  function showAttributes(){document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='5';panel.hidden=!on;panel.classList.toggle('active',on)});document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===5);button.classList.toggle('complete',number<5);if(number===5)button.disabled=false});$('#creator-back').hidden=false;$('#creator-continue').disabled=true;$('#creator-continue').textContent='Loading Attributes...';active=true;loadAttributeDescriptions().then(loadDefaults).catch(error=>{$('#attribute-status').textContent=error.message;$('#attribute-status').className='attribute-status'})}
   window.addEventListener('dnd:navigation-ready',()=>{
     $('#attribute-grid').addEventListener('click',event=>{
       const infoButton=event.target.closest('[data-attribute-info]');
@@ -61,6 +61,12 @@
     });
     $('#creator-continue').addEventListener('click',event=>{const step4=document.querySelector('.creator-step[data-step="4"]');const draft=getDraft();if(!step4?.hidden&&draft?.value?.fortune?.complete){event.preventDefault();event.stopImmediatePropagation();showAttributes()}},true);
     $('#creator-back').addEventListener('click',event=>{if(!active)return;event.preventDefault();event.stopImmediatePropagation();active=false;document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='4';panel.hidden=!on;panel.classList.toggle('active',on)});document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===4);button.classList.toggle('complete',number<4)});$('#creator-continue').disabled=false;$('#creator-continue').textContent='Continue to Attributes'},true);
-    const draft=getDraft();if(new URLSearchParams(location.search).get('resume')==='1'&&Number(draft?.value?.step)>=5)setTimeout(showAttributes,0);
+    const draft=getDraft();
+    const resumeRequested=new URLSearchParams(location.search).get('resume')==='1';
+    const fortuneComplete=draft?.value?.fortune?.complete===true;
+    const savedStep=Number(draft?.value?.step)||1;
+    if(resumeRequested&&(savedStep>=5||fortuneComplete)){
+      setTimeout(showAttributes,0);
+    }
   });
 })();
