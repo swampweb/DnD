@@ -16,6 +16,7 @@
   let reviewActive=false;
   let creatingCharacter=false;
   let reviewAdventurerJson=null;
+  let currentSession=null;
 
   function getDraft(){for(const key of Object.keys(sessionStorage)){if(key.startsWith('three-realms-character-draft')){try{const value=JSON.parse(sessionStorage.getItem(key));if(value?.adventurerId)return{key,value}}catch{}}}return null}
   function saveDraft(){const draft=getDraft();if(!draft)return;draft.value.attributes={baseAttributes:base,attributeAllocations:added,finalAttributes:Object.fromEntries(ATTRS.map(([key])=>[key,base[key]+added[key]])),attributeCreditsAwarded:awarded,attributeCreditsRemaining:remaining()};draft.value.step=5;sessionStorage.setItem(draft.key,JSON.stringify(draft.value))}
@@ -59,12 +60,13 @@
     if(creatingCharacter||!reviewActive)return;
     const draft=getDraft();if(!draft)return;
     const d=draft.value;const name=$('#review-character-name').value.trim();
+    if(!currentSession?.user?.id){creatingCharacter=false;window.DND.toast('Unable to determine signed in user. Refresh and sign in again.','error');return;}
     if(!name){window.DND.toast('Enter a character name before creating the character.','error');return}
     const attrs=d.attributes?.finalAttributes;if(!attrs||Number(d.attributes?.attributeCreditsRemaining)!==0){window.DND.toast('Assign every Attribute Credit before creating the character.','error');return}
     creatingCharacter=true;const button=$('#creator-continue');button.disabled=true;button.textContent='Creating Character...';
     const folder=`assets/classes/viking/${d.classId}/${d.adventurerId}`;const portrait=reviewAdventurerJson?.assets?.portrait||reviewAdventurerJson?.assets?.previewCard||reviewAdventurerJson?.assets?.model||'';
     const payload={
-      user_id:window.DND.session.user.id,
+      user_id:currentSession?.user?.id,
       name,
       title:'',
       level:1,
@@ -99,7 +101,7 @@
   }
 
   function showAttributes(){document.querySelectorAll('.creator-step').forEach(panel=>{const on=panel.dataset.step==='5';panel.hidden=!on;panel.classList.toggle('active',on)});document.querySelectorAll('[data-step-button]').forEach(button=>{const number=Number(button.dataset.stepButton);button.classList.toggle('active',number===5);button.classList.toggle('complete',number<5);if(number===5)button.disabled=false});$('#creator-back').hidden=false;$('#creator-continue').disabled=true;$('#creator-continue').textContent='Loading Attributes...';active=true;reviewActive=false;const currentDraft=getDraft();if(currentDraft){currentDraft.value.step=5;sessionStorage.setItem(currentDraft.key,JSON.stringify(currentDraft.value))}loadAttributeDescriptions().then(loadDefaults).catch(error=>{$('#attribute-status').textContent=error.message;$('#attribute-status').className='attribute-status'})}
-  window.addEventListener('dnd:navigation-ready',()=>{
+  window.addEventListener('dnd:navigation-ready',(event)=>{currentSession=event.detail?.session||null;
     $('#attribute-grid').addEventListener('click',event=>{
       const infoButton=event.target.closest('[data-attribute-info]');
       const closeButton=event.target.closest('[data-close-attribute-info]');
