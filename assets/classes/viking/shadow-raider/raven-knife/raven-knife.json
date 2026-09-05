@@ -1,13 +1,10 @@
 {
   "id": "raven-knife",
   "name": "Raven Knife",
-
   "realm": "Viking Adventure",
   "class": "Shadow Raider",
   "specialization": "Raven Knife",
-
   "role": "Stealth / Specialist",
-
   "difficulty": 4,
   "difficultyMax": 5,
 
@@ -66,27 +63,27 @@
 
   "starterEquipment": [
     {
-      "id": "ravenfang-seax-knives",
-      "name": "Ravenfang Seax Knives",
-      "icon": "Ravenfang Seax Knives Icon.png",
+      "id": "ravenfang-hooked-seax-knives",
+      "name": "Ravenfang Hooked Seax Knives",
+      "icon": "Ravenfang Hooked Seax Knives Icon.png",
       "quantity": 2
     },
     {
-      "id": "shadowweave-raider-leathers",
-      "name": "Shadowweave Raider Leathers",
-      "icon": "Shadowweave Raider Leathers Icon.png",
+      "id": "feathercloak-raider-leathers",
+      "name": "Feathercloak Raider Leathers",
+      "icon": "Feathercloak Raider Leathers Icon.png",
       "quantity": 1
     },
     {
-      "id": "ravencloak-mantle",
-      "name": "Ravencloak Mantle",
-      "icon": "Ravencloak Mantle Icon.png",
-      "quantity": 1
+      "id": "raven-ash-smoke-vials",
+      "name": "Raven Ash Smoke Vials",
+      "icon": "Raven Ash Smoke Vials Icon.png",
+      "quantity": 2
     },
     {
-      "id": "infiltrator-tool-kit",
-      "name": "Infiltrator Tool Kit",
-      "icon": "Infiltrator Tool Kit Icon.png",
+      "id": "raven-talon-climbing-kit",
+      "name": "Raven Talon Climbing Kit",
+      "icon": "Raven Talon Climbing Kit Icon.png",
       "quantity": 1
     },
     {
