@@ -106,10 +106,22 @@
   function renderReport(report) {
     lastReport = report;
     const [label, className] = severityLabel(report);
+    const details = report.character || {};
+    const counts = report.usage || {};
+    const attrs = details.attributes || {};
     $('#repair-summary').innerHTML = `
-      <div class="repair-summary-card ${className}"><span>Overall Status</span><strong>${escapeHtml(label)}</strong><small>${report.issue_count} issue${report.issue_count === 1 ? '' : 's'} found</small></div>
-      <div class="repair-summary-card"><span>Safe Repairs</span><strong>${report.repairable_count}</strong><small>Can be corrected automatically</small></div>
-      <div class="repair-summary-card"><span>Warnings</span><strong>${report.warning_count}</strong><small>Information or manual review</small></div>`;
+      <section class="repair-character-overview">
+        <div class="repair-character-portrait">${details.portrait_url ? `<img src="${escapeHtml(details.portrait_url)}" alt="${escapeHtml(details.name || 'Character')} portrait">` : '<span>No Portrait</span>'}</div>
+        <div class="repair-character-identity"><p>Character Summary</p><h3>${escapeHtml(details.name || activeCharacter.name)}</h3><span>${escapeHtml(details.class || 'Unknown Class')} • ${escapeHtml(details.adventurer || 'Unknown Adventurer')}</span><div class="repair-identity-grid"><b>Owner<small>${escapeHtml(details.owner_name || activeCharacter.player)}</small></b><b>Role<small>${escapeHtml(details.owner_role || 'Unknown')}</small></b><b>Level<small>${escapeHtml(details.level ?? '—')}</small></b><b>Status<small>${escapeHtml(details.status || '—')}</small></b><b>Created<small>${escapeHtml(details.created_display || '—')}</small></b><b>Updated<small>${escapeHtml(details.updated_display || '—')}</small></b></div></div>
+        <div class="repair-resource-snapshot"><div><span>HP</span><strong>${details.current_hp ?? 0} / ${details.max_hp ?? 0}</strong></div><div><span>Mana</span><strong>${details.current_mana ?? 0} / ${details.max_mana ?? 0}</strong></div><div><span>XP</span><strong>${details.experience ?? 0} / ${details.experience_to_next ?? 0}</strong></div></div>
+      </section>
+      <div class="repair-summary-grid">
+        <div class="repair-summary-card ${className}"><span>Overall Status</span><strong>${escapeHtml(label)}</strong><small>${report.issue_count} issue${report.issue_count === 1 ? '' : 's'} found</small></div>
+        <div class="repair-summary-card"><span>Safe Repairs</span><strong>${report.repairable_count}</strong><small>Can be corrected automatically</small></div>
+        <div class="repair-summary-card"><span>Warnings</span><strong>${report.warning_count}</strong><small>Information or manual review</small></div>
+      </div>
+      <section class="repair-usage-section"><h3>Usage Snapshot</h3><div class="repair-usage-grid">${[['Inventory',counts.inventory],['Skills',counts.skills],['Journal',counts.journal],['Campaigns',counts.campaigns],['Achievements',counts.achievements]].map(([name,value])=>`<div><span>${name}</span><strong>${value ?? 0}</strong></div>`).join('')}</div></section>
+      <section class="repair-attribute-section"><h3>Attributes</h3><div class="repair-attribute-grid">${[['STR',attrs.str],['DEX',attrs.dex],['CON',attrs.con],['INT',attrs.int],['WIS',attrs.wis],['CHA',attrs.cha]].map(([name,value])=>`<div><span>${name}</span><strong>${value ?? 0}</strong></div>`).join('')}</div></section>`;
 
     const groups = report.checks.reduce((map, check) => {
       const category = check.category || 'General';
