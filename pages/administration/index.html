@@ -1,95 +1,16 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#11100f">
-  <title>Administration | Three Realms Adventures</title>
-  <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
-  <link rel="stylesheet" href="../../css/global.css">
-  <link rel="stylesheet" href="../../css/dashboard.css">
-  <link rel="stylesheet" href="../../css/administration.css">
-  <link rel="stylesheet" href="../../css/administration-actions.css">
-  <link rel="stylesheet" href="../../css/admin-panels.css">
-  <link rel="stylesheet" href="../../css/modal.css">
-</head>
-<body>
-  <div class="admin-shell">
-    <div id="site-navigation" data-active-page="administration"></div>
-    <main class="admin-main" id="admin-content" hidden>
-      <div class="admin-heading"><div><p class="section-label">Platform Control</p><h1>Administration</h1></div><button class="refresh-button" id="refresh-admin" type="button">Refresh Data</button></div>
-
-      <section class="admin-card invitation-card">
-        <div class="card-heading"><div><h2>Invitation Management</h2><p>Send invitations and review delivery, acceptance, expiration, and provider errors.</p></div><button class="invite-button" id="admin-invite-button" type="button">Invite Adventurer</button></div>
-        <div class="summary-grid" aria-label="Invitation summary">
-          <div class="summary-item"><span>Total</span><strong id="invite-total">0</strong></div>
-          <div class="summary-item sent"><span>Sent</span><strong id="invite-sent">0</strong></div>
-          <div class="summary-item accepted"><span>Accepted</span><strong id="invite-accepted">0</strong></div>
-          <div class="summary-item pending"><span>Pending</span><strong id="invite-pending">0</strong></div>
-          <div class="summary-item failed"><span>Failed</span><strong id="invite-failed">0</strong></div>
-          <div class="summary-item expired"><span>Expired</span><strong id="invite-expired">0</strong></div>
-        </div>
-        <div class="filter-row"><label for="status-filter">Status</label><select id="status-filter"><option value="all">All invitations</option><option value="sent">Sent</option><option value="accepted">Accepted</option><option value="pending">Pending</option><option value="failed">Failed</option><option value="expired">Expired</option></select><label class="search-label" for="invite-search">Search</label><input id="invite-search" type="search" placeholder="Email or invited by"></div>
-        <div class="table-wrap"><table class="invite-table"><thead><tr><th>Email</th><th>Invited By</th><th>Created</th><th>Sent</th><th>Status</th><th>Details</th><th>Actions</th></tr></thead><tbody id="invite-table-body"><tr><td colspan="7" class="loading-cell">Loading invitation history...</td></tr></tbody></table></div>
-      </section>
-
-      <section class="admin-accordion-stack" aria-label="Administration tools">
-        <details class="admin-card admin-accordion" id="user-management-panel">
-          <summary><span><strong>User Management</strong><small>View registered users and their platform roles.</small></span><span class="accordion-chevron" aria-hidden="true">⌄</span></summary>
-          <div class="accordion-content"><div class="panel-toolbar"><span id="admin-user-count">0 users</span><button class="panel-refresh" id="refresh-users" type="button">Refresh Users</button></div><div class="table-wrap"><table class="admin-data-table"><thead><tr><th>User</th><th>Role</th><th>Created</th><th>Characters</th></tr></thead><tbody id="admin-users-body"><tr><td colspan="4" class="loading-cell">Open this section to load users.</td></tr></tbody></table></div></div>
-        </details>
-
-        <details class="admin-card admin-accordion" id="created-characters-panel">
-          <summary><span><strong>Created Characters</strong><small>View player characters created across Three Realms.</small></span><span class="accordion-chevron" aria-hidden="true">⌄</span></summary>
-          <div class="accordion-content"><div class="panel-toolbar"><span id="admin-character-count">0 characters</span><button class="panel-refresh" id="refresh-characters" type="button">Refresh Characters</button></div><div class="table-wrap"><table class="admin-data-table"><thead><tr><th>Character</th><th>Player</th><th>Adventure</th><th>Class</th><th>Adventurer</th><th>Level</th><th>Created</th><th>Actions</th></tr></thead><tbody id="admin-characters-body"><tr><td colspan="8" class="loading-cell">Open this section to load characters.</td></tr></tbody></table></div></div>
-        </details>
-
-        <details class="admin-card admin-accordion" id="role-matrix-panel">
-          <summary><span><strong>Role Matrix</strong><small>Admin can edit permissions. Manager can view the matrix.</small></span><span class="accordion-chevron" aria-hidden="true">⌄</span></summary>
-          <div class="accordion-content role-matrix-content"><div class="panel-toolbar"><span id="role-matrix-mode">Loading access...</span><button class="save-role-matrix" id="save-role-matrix" type="button" hidden>Save Role Matrix</button></div><div id="role-matrix-status" class="defaults-status">Open this section to load permissions.</div><div class="table-wrap"><table class="admin-data-table role-matrix-table"><thead><tr><th>Permission</th><th>User</th><th>Manager</th><th>Admin</th></tr></thead><tbody id="role-matrix-body"><tr><td colspan="4" class="loading-cell">Open this section to load permissions.</td></tr></tbody></table></div><p class="defaults-note">Role Matrix controls site visibility and actions. Database security policies must still protect sensitive tables.</p></div>
-        </details>
-
-        <details class="admin-card admin-accordion" id="creation-defaults-panel">
-          <summary><span><strong>Character Creation Defaults</strong><small>Edit the base attributes used only when new characters are created.</small></span><span class="accordion-chevron" aria-hidden="true">⌄</span></summary>
-          <div class="accordion-content defaults-content">
-            <div class="defaults-selectors"><label>Adventure<select id="defaults-adventure"><option value="viking">Viking Adventure</option></select></label><label>Class<select id="defaults-class"><option value="">Select a Class</option></select></label><label>Adventurer<select id="defaults-adventurer" disabled><option value="">Select an Adventurer</option></select></label></div>
-            <div id="defaults-status" class="defaults-status">Select a Class and Adventurer to edit new-character defaults.</div>
-            <form id="creation-defaults-form" class="defaults-form"><fieldset id="defaults-fieldset" disabled><legend>Base Attributes</legend><div class="attribute-default-grid">
-              <label><span>Strength</span><b>STR</b><input id="default-strength" name="strength" type="number" min="0" max="99" step="1" required></label>
-              <label><span>Dexterity</span><b>DEX</b><input id="default-dexterity" name="dexterity" type="number" min="0" max="99" step="1" required></label>
-              <label><span>Constitution</span><b>CON</b><input id="default-constitution" name="constitution" type="number" min="0" max="99" step="1" required></label>
-              <label><span>Intelligence</span><b>INT</b><input id="default-intelligence" name="intelligence" type="number" min="0" max="99" step="1" required></label>
-              <label><span>Wisdom</span><b>WIS</b><input id="default-wisdom" name="wisdom" type="number" min="0" max="99" step="1" required></label>
-              <label><span>Charisma</span><b>CHA</b><input id="default-charisma" name="charisma" type="number" min="0" max="99" step="1" required></label>
-            </div><div class="defaults-actions"><button class="reset-defaults" id="reset-json-defaults" type="button">Reset to JSON Values</button><button class="save-defaults" type="submit">Save New Character Defaults</button></div></fieldset></form>
-            <p class="defaults-note">Saved values apply to future character creation only. Existing characters are not changed.</p>
-          </div>
-        </details>
-      </section>
-
-      <section class="admin-grid">
-        <article class="admin-card compact-card"><h2>User and Role Management</h2><p>Review platform users and assign Admin, Manager, or User access.</p><span class="coming-label">Page coming next</span></article>
-        <article class="admin-card compact-card"><h2>Adventure Management</h2><p>Manage realm availability and shared Adventure information.</p><span class="coming-label">Page coming later</span></article>
-        <article class="admin-card compact-card"><h2>Campaign Oversight</h2><p>Review campaigns, membership, and campaign status across the platform.</p><span class="coming-label">Page coming later</span></article>
-      </section>
-    </main>
-
-    <main class="access-denied" id="access-denied" hidden><div class="denied-card"><h1>Administrator Access Required</h1><p>This page is available only to Three Realms platform administrators.</p><a href="../dashboard/index.html">Return to Dashboard</a></div></main>
-  </div>
-
-  <div class="modal-backdrop" id="admin-invite-modal" role="dialog" aria-modal="true" aria-labelledby="admin-invite-title" hidden>
-    <div class="admin-modal"><button class="modal-close" id="admin-invite-close" type="button" aria-label="Close">×</button><div class="modal-symbol">✦</div><h2 id="admin-invite-title">Invite Adventurer</h2><p>The invitation will be sent securely through the Three Realms backend.</p><form id="admin-invite-form"><label for="admin-invite-email">Email address</label><input id="admin-invite-email" type="email" autocomplete="email" required placeholder="adventurer@example.com"><div class="modal-actions"><button class="cancel-button" id="admin-invite-cancel" type="button">Cancel</button><button class="send-button" type="submit">Send Invite</button></div></form></div>
-  </div>
-
-  <div class="toast" aria-live="polite"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../../js/config.js"></script>
-  <script src="../../js/supabase.js"></script>
-  <script src="../../js/navigation.js"></script>
-  <script src="../../js/modal.js"></script>
-  <script src="../../js/administration.js"></script>
-  <script src="../../js/admin-panels.js"></script>
-  <script src="../../js/character-repair.js"></script>
-  <script src="../../js/role-matrix.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11100f"><title>Administration | Three Realms Adventures</title>
+<link rel="icon" type="image/png" href="../../assets/images/favicon.png"><link rel="stylesheet" href="../../css/global.css"><link rel="stylesheet" href="../../css/dashboard.css"><link rel="stylesheet" href="../../css/administration.css"><link rel="stylesheet" href="../../css/administration-actions.css"><link rel="stylesheet" href="../../css/admin-panels.css"><link rel="stylesheet" href="../../css/template-audit.css"><link rel="stylesheet" href="../../css/modal.css"></head>
+<body><div class="admin-shell"><div id="site-navigation" data-active-page="administration"></div><main class="admin-main" id="admin-content" hidden>
+<div class="admin-heading"><div><p class="section-label">Platform Control</p><h1>Administration</h1></div><button class="refresh-button" id="refresh-admin" type="button">Refresh Data</button></div>
+<section class="admin-card invitation-card"><div class="card-heading"><div><h2>Invitation Management</h2><p>Send invitations and review delivery, acceptance, expiration, and provider errors.</p></div><button class="invite-button" id="admin-invite-button" type="button">Invite Adventurer</button></div><div class="summary-grid" aria-label="Invitation summary"><div class="summary-item"><span>Total</span><strong id="invite-total">0</strong></div><div class="summary-item sent"><span>Sent</span><strong id="invite-sent">0</strong></div><div class="summary-item accepted"><span>Accepted</span><strong id="invite-accepted">0</strong></div><div class="summary-item pending"><span>Pending</span><strong id="invite-pending">0</strong></div><div class="summary-item failed"><span>Failed</span><strong id="invite-failed">0</strong></div><div class="summary-item expired"><span>Expired</span><strong id="invite-expired">0</strong></div></div><div class="filter-row"><label for="status-filter">Status</label><select id="status-filter"><option value="all">All invitations</option><option value="sent">Sent</option><option value="accepted">Accepted</option><option value="pending">Pending</option><option value="failed">Failed</option><option value="expired">Expired</option></select><label class="search-label" for="invite-search">Search</label><input id="invite-search" type="search" placeholder="Email or invited by"></div><div class="table-wrap"><table class="invite-table"><thead><tr><th>Email</th><th>Invited By</th><th>Created</th><th>Sent</th><th>Status</th><th>Details</th><th>Actions</th></tr></thead><tbody id="invite-table-body"><tr><td colspan="7" class="loading-cell">Loading invitation history...</td></tr></tbody></table></div></section>
+<section class="admin-accordion-stack" aria-label="Administration tools">
+<details class="admin-card admin-accordion" id="user-management-panel"><summary><span><strong>User Management</strong><small>View registered users and their platform roles.</small></span><span class="accordion-chevron">⌄</span></summary><div class="accordion-content"><div class="panel-toolbar"><span id="admin-user-count">0 users</span><button class="panel-refresh" id="refresh-users" type="button">Refresh Users</button></div><div class="table-wrap"><table class="admin-data-table"><thead><tr><th>User</th><th>Role</th><th>Created</th><th>Characters</th></tr></thead><tbody id="admin-users-body"><tr><td colspan="4" class="loading-cell">Open this section to load users.</td></tr></tbody></table></div></div></details>
+<details class="admin-card admin-accordion" id="created-characters-panel"><summary><span><strong>Created Characters</strong><small>View player characters created across Three Realms.</small></span><span class="accordion-chevron">⌄</span></summary><div class="accordion-content"><div class="panel-toolbar"><span id="admin-character-count">0 characters</span><button class="panel-refresh" id="refresh-characters" type="button">Refresh Characters</button></div><div class="table-wrap"><table class="admin-data-table"><thead><tr><th>Character</th><th>Player</th><th>Adventure</th><th>Class</th><th>Adventurer</th><th>Level</th><th>Created</th><th>Actions</th></tr></thead><tbody id="admin-characters-body"><tr><td colspan="8" class="loading-cell">Open this section to load characters.</td></tr></tbody></table></div></div></details>
+<details class="admin-card admin-accordion" id="role-matrix-panel"><summary><span><strong>Role Matrix</strong><small>Admin can edit permissions. Manager can view the matrix.</small></span><span class="accordion-chevron">⌄</span></summary><div class="accordion-content role-matrix-content"><div class="panel-toolbar"><span id="role-matrix-mode">Loading access...</span><button class="save-role-matrix" id="save-role-matrix" type="button" hidden>Save Role Matrix</button></div><div id="role-matrix-status" class="defaults-status">Open this section to load permissions.</div><div class="table-wrap"><table class="admin-data-table role-matrix-table"><thead><tr><th>Permission</th><th>User</th><th>Manager</th><th>Admin</th></tr></thead><tbody id="role-matrix-body"><tr><td colspan="4" class="loading-cell">Open this section to load permissions.</td></tr></tbody></table></div></div></details>
+<details class="admin-card admin-accordion" id="template-audit-panel"><summary><span><strong>Character Template Audit</strong><small>Scan every Class and Adventurer for broken assets, invalid JSON, and missing Admin defaults.</small></span><span class="accordion-chevron">⌄</span></summary><div class="accordion-content template-audit-content"><div class="panel-toolbar"><span id="template-audit-summary">Open this section to scan templates.</span><button class="panel-refresh" id="run-template-audit" type="button">Scan All Templates</button></div><div id="template-audit-progress" class="template-audit-progress" hidden><span id="template-audit-progress-copy">Preparing scan...</span><div><i id="template-audit-progress-bar"></i></div></div><div id="template-audit-results" class="template-audit-results"><div class="template-audit-empty">No template scan has been run.</div></div></div></details>
+<details class="admin-card admin-accordion" id="creation-defaults-panel"><summary><span><strong>Character Creation Defaults</strong><small>Edit the base attributes used only when new characters are created.</small></span><span class="accordion-chevron">⌄</span></summary><div class="accordion-content defaults-content"><div class="defaults-selectors"><label>Adventure<select id="defaults-adventure"><option value="viking">Viking Adventure</option></select></label><label>Class<select id="defaults-class"><option value="">Select a Class</option></select></label><label>Adventurer<select id="defaults-adventurer" disabled><option value="">Select an Adventurer</option></select></label></div><div id="defaults-status" class="defaults-status">Select a Class and Adventurer to edit new-character defaults.</div><form id="creation-defaults-form" class="defaults-form"><fieldset id="defaults-fieldset" disabled><legend>Base Attributes</legend><div class="attribute-default-grid"><label><span>Strength</span><b>STR</b><input id="default-strength" name="strength" type="number" min="0" max="99" required></label><label><span>Dexterity</span><b>DEX</b><input id="default-dexterity" name="dexterity" type="number" min="0" max="99" required></label><label><span>Constitution</span><b>CON</b><input id="default-constitution" name="constitution" type="number" min="0" max="99" required></label><label><span>Intelligence</span><b>INT</b><input id="default-intelligence" name="intelligence" type="number" min="0" max="99" required></label><label><span>Wisdom</span><b>WIS</b><input id="default-wisdom" name="wisdom" type="number" min="0" max="99" required></label><label><span>Charisma</span><b>CHA</b><input id="default-charisma" name="charisma" type="number" min="0" max="99" required></label></div><div class="defaults-actions"><button class="reset-defaults" id="reset-json-defaults" type="button">Reset to JSON Values</button><button class="save-defaults" type="submit">Save New Character Defaults</button></div></fieldset></form><p class="defaults-note">Saved values apply to future character creation only. Existing characters are not changed.</p></div></details>
+</section>
+<section class="admin-grid"><article class="admin-card compact-card"><h2>User and Role Management</h2><p>Review platform users and assign access.</p><span class="coming-label">Page coming next</span></article><article class="admin-card compact-card"><h2>Adventure Management</h2><p>Manage realm availability and shared Adventure information.</p><span class="coming-label">Page coming later</span></article><article class="admin-card compact-card"><h2>Campaign Oversight</h2><p>Review campaigns, membership, and campaign status.</p><span class="coming-label">Page coming later</span></article></section></main><main class="access-denied" id="access-denied" hidden><div class="denied-card"><h1>Administrator Access Required</h1><p>This page is available only to Three Realms platform administrators.</p><a href="../dashboard/index.html">Return to Dashboard</a></div></main></div>
+<div class="modal-backdrop" id="admin-invite-modal" role="dialog" aria-modal="true" aria-labelledby="admin-invite-title" hidden><div class="admin-modal"><button class="modal-close" id="admin-invite-close" type="button">×</button><div class="modal-symbol">✦</div><h2 id="admin-invite-title">Invite Adventurer</h2><p>The invitation will be sent securely through the Three Realms backend.</p><form id="admin-invite-form"><label for="admin-invite-email">Email address</label><input id="admin-invite-email" type="email" required placeholder="adventurer@example.com"><div class="modal-actions"><button class="cancel-button" id="admin-invite-cancel" type="button">Cancel</button><button class="send-button" type="submit">Send Invite</button></div></form></div></div><div class="toast" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../../js/config.js"></script><script src="../../js/supabase.js"></script><script src="../../js/navigation.js"></script><script src="../../js/modal.js"></script><script src="../../js/administration.js"></script><script src="../../js/admin-panels.js"></script><script src="../../js/character-repair.js"></script><script src="../../js/template-audit.js"></script><script src="../../js/role-matrix.js"></script></body></html>
