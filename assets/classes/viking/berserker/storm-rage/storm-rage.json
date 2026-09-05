@@ -1,34 +1,31 @@
 {
   "id": "storm-rage",
   "name": "Storm Rage",
-
   "realm": "Viking Adventure",
   "class": "Berserker",
   "specialization": "Storm Rage",
-
   "role": "Damage Dealer / Frontline",
-
   "difficulty": 4,
   "difficultyMax": 5,
 
   "baseAttributes": {
-    "str": 0,
-    "dex": 0,
-    "con": 0,
-    "int": 0,
-    "wis": 0,
-    "cha": 0
+    "str": 15,
+    "dex": 13,
+    "con": 14,
+    "int": 8,
+    "wis": 10,
+    "cha": 12
   },
 
   "startingLevel": 1,
 
   "baseHealth": {
-    "hp": 0
+    "hp": 100
   },
 
   "baseResource": {
-    "type": "",
-    "amount": 0
+    "type": "Rage",
+    "amount": 100
   },
 
   "startingCurrency": {
@@ -47,19 +44,19 @@
     {
       "id": "storm-rage",
       "name": "Storm Rage",
-      "icon": "Storm Rage Icon.png",
+      "icon": "Berserker - Storm Rage - Storm Rage Icon.png",
       "description": "Harness thunderous fury to overwhelm enemies."
     },
     {
       "id": "tempest-strike",
       "name": "Tempest Strike",
-      "icon": "Tempest Strike Icon.png",
+      "icon": "Berserker - Storm Rage - Tempest Strike Icon.png",
       "description": "Strike with the force of a raging storm."
     },
     {
       "id": "unrelenting-fury",
       "name": "Unrelenting Fury",
-      "icon": "Unrelenting Fury Icon.png",
+      "icon": "Berserker - Storm Rage - Unrelenting Fury Icon.png",
       "description": "Maintain relentless offensive momentum during battle."
     }
   ],
@@ -68,31 +65,31 @@
     {
       "id": "tempest-greataxe",
       "name": "Tempest Greataxe",
-      "icon": "Tempest Greataxe Icon.png",
+      "icon": "Berserker - Storm Rage - Tempest Greataxe Icon.png",
       "quantity": 1
     },
     {
       "id": "stormforged-harness",
       "name": "Stormforged Harness",
-      "icon": "Stormforged Harness Icon.png",
+      "icon": "Berserker - Storm Rage - Stormforged Harness Icon.png",
       "quantity": 1
     },
     {
       "id": "thunderheart-core",
       "name": "Thunderheart Core",
-      "icon": "Thunderheart Core Icon.png",
+      "icon": "Berserker - Storm Rage - Thunderheart Core Icon.png",
       "quantity": 1
     },
     {
       "id": "volt-javelins",
       "name": "Volt Javelins",
-      "icon": "Volt Javelins Icon.png",
+      "icon": "Berserker - Storm Rage - Volt Javelins Icon.png",
       "quantity": 3
     },
     {
       "id": "stormblood-tonic",
       "name": "Stormblood Tonic",
-      "icon": "Stormblood Tonic Icon.png",
+      "icon": "Berserker - Storm Rage - Stormblood Tonic Icon.png",
       "quantity": 2
     }
   ],
