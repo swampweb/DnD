@@ -1,3 +1,0 @@
-#adventure-scope-field[hidden],#class-scope-field[hidden],#adventurer-scope-field[hidden]{display:none!important}
-#adventure-scope-field select option:disabled{color:#766d66;background:#15110e}
-.distribution-card form:has(#distribution-type option:checked[value="adventure"]) #adventure-scope-field{display:grid}
