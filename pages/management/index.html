@@ -12,57 +12,78 @@
   <link rel="stylesheet" href="../../css/item-catalog.css">
 </head>
 <body>
-  <div class="catalog-shell">
-    <div id="site-navigation" data-active-page="management"></div>
-    <main class="catalog-main" id="catalog-main" hidden>
-      <header class="catalog-heading">
-        <div><p>Game Management</p><h1>Item Catalog</h1><span>Define equipment slots, Attribute bonuses, Vital bonuses, descriptions, and notes.</span></div>
-        <button id="catalog-new" type="button">Create Item</button>
-      </header>
+<div class="catalog-shell">
+  <div id="site-navigation" data-active-page="management"></div>
+  <main class="catalog-main" id="catalog-main" hidden>
+    <header class="catalog-heading">
+      <div><p>Game Management</p><h1>Item Catalog</h1><span>Create Items, upload icons, define valid Equipment slots, and configure bonuses.</span></div>
+      <button id="catalog-new" type="button">Create Item</button>
+    </header>
 
-      <section class="catalog-summary">
-        <div><span>Total Items</span><strong id="catalog-total">0</strong></div>
-        <div><span>Equippable</span><strong id="catalog-equippable">0</strong></div>
-        <div><span>With Bonuses</span><strong id="catalog-bonuses">0</strong></div>
-        <div><span>Needs Setup</span><strong id="catalog-incomplete">0</strong></div>
-      </section>
+    <section class="catalog-summary">
+      <div><span>Total Items</span><strong id="catalog-total">0</strong></div>
+      <div><span>Equippable</span><strong id="catalog-equippable">0</strong></div>
+      <div><span>With Bonuses</span><strong id="catalog-bonuses">0</strong></div>
+      <div><span>Needs Setup</span><strong id="catalog-incomplete">0</strong></div>
+    </section>
 
-      <section class="catalog-toolbar">
-        <label>Search<input id="catalog-search" type="search" placeholder="Search item name, key, type, or slot"></label>
-        <label>Type<select id="catalog-type"><option value="all">All Types</option><option>Weapon</option><option>Armor</option><option>Consumable</option><option>Quest</option><option>Item</option></select></label>
-        <label>Setup<select id="catalog-setup"><option value="all">All Setup States</option><option value="ready">Ready</option><option value="incomplete">Needs Setup</option></select></label>
-        <button id="catalog-refresh" type="button">Refresh</button>
-      </section>
+    <section class="catalog-toolbar">
+      <label>Search<input id="catalog-search" type="search" placeholder="Search name, key, type, or slot"></label>
+      <label>Type<select id="catalog-type"><option value="all">All Types</option><option>Weapon</option><option>Armor</option><option>Consumable</option><option>Quest</option><option>Item</option></select></label>
+      <label>Setup<select id="catalog-setup"><option value="all">All Setup States</option><option value="ready">Ready</option><option value="incomplete">Needs Setup</option></select></label>
+      <button id="catalog-refresh" type="button">Refresh</button>
+    </section>
 
-      <section class="catalog-body">
-        <div id="catalog-list" class="catalog-list"><p>Loading Items...</p></div>
-        <form id="catalog-form" class="catalog-editor" hidden>
-          <div class="editor-heading"><div><p>Item Editor</p><h2 id="editor-title">Create Item</h2></div><button id="editor-close" type="button">×</button></div>
-          <input id="item-id" type="hidden">
-          <div class="editor-grid">
-            <label class="wide">Item Name<input id="item-name" required maxlength="100"></label>
-            <label>Item Key<input id="item-key" required maxlength="100" placeholder="item-name"></label>
-            <label>Rarity<select id="item-rarity"><option>Common</option><option>Uncommon</option><option>Rare</option><option>Epic</option><option>Legendary</option></select></label>
-            <label>Item Type<select id="item-type"><option>Weapon</option><option>Armor</option><option>Consumable</option><option>Quest</option><option>Item</option></select></label>
-            <label>Primary Slot<select id="item-slot"><option value="">Not Equippable</option><option>Head</option><option>Neck</option><option>Chest</option><option>Hands</option><option>Legs</option><option>Feet</option><option>Main Hand</option><option>Off Hand</option><option>Ring 1</option><option>Ring 2</option><option>Artifact</option></select></label>
-            <label class="wide">Image URL<input id="item-image" type="text" placeholder="/DnD/assets/classes/.../Item Icon.png"></label>
-            <fieldset class="wide"><legend>Allowed Equipment Slots</legend><div id="allowed-slot-list" class="slot-checks"></div></fieldset>
-            <fieldset class="wide"><legend>Attribute Bonuses</legend><div class="bonus-grid"><label>STR<input id="bonus-strength" type="number" min="-99" max="99" value="0"></label><label>DEX<input id="bonus-dexterity" type="number" min="-99" max="99" value="0"></label><label>CON<input id="bonus-constitution" type="number" min="-99" max="99" value="0"></label><label>INT<input id="bonus-intelligence" type="number" min="-99" max="99" value="0"></label><label>WIS<input id="bonus-wisdom" type="number" min="-99" max="99" value="0"></label><label>CHA<input id="bonus-charisma" type="number" min="-99" max="99" value="0"></label></div></fieldset>
-            <fieldset class="wide"><legend>Vital Resource Bonuses</legend><div class="bonus-grid vital"><label>Max HP<input id="bonus-hp" type="number" min="-9999" max="9999" value="0"></label><label>Max Mana<input id="bonus-mana" type="number" min="-9999" max="9999" value="0"></label></div></fieldset>
-            <label>Stackable<select id="item-stackable"><option value="false">No</option><option value="true">Yes</option></select></label>
-            <label>Maximum Stack<input id="item-max-stack" type="number" min="1" max="999" value="1"></label>
-            <label class="wide">Description<textarea id="item-description" rows="4" placeholder="What the Item is and how it is used."></textarea></label>
-            <label class="wide">Notes<textarea id="item-notes" rows="4" placeholder="Restrictions, lore, handling notes, or special rules."></textarea></label>
-          </div>
-          <div class="editor-preview"><img id="editor-image-preview" alt="Item preview"><div><h3 id="editor-preview-name">Item Preview</h3><p id="editor-preview-meta">Common • Item</p><div id="editor-preview-effects"></div></div></div>
-          <div class="editor-actions"><button id="catalog-delete" class="delete" type="button" hidden>Delete Item</button><span></span><button id="catalog-cancel" type="button">Cancel</button><button class="save" type="submit">Save Item</button></div>
-        </form>
-      </section>
-    </main>
-    <main class="catalog-denied" id="catalog-denied" hidden><h1>Administrator Access Required</h1><p>Only platform administrators can edit the Item Catalog.</p><a href="../dashboard/index.html">Return to Dashboard</a></main>
-  </div>
-  <div class="toast" aria-live="polite"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../../js/config.js"></script><script src="../../js/supabase.js"></script><script src="../../js/navigation.js"></script><script src="../../js/modal.js"></script><script src="../../js/item-catalog.js"></script>
+    <section class="catalog-body">
+      <div id="catalog-list" class="catalog-list"><p>Loading Items...</p></div>
+      <form id="catalog-form" class="catalog-editor" hidden>
+        <div class="editor-heading"><div><p>Item Editor</p><h2 id="editor-title">Create Item</h2></div><button id="editor-close" type="button" aria-label="Close">×</button></div>
+        <input id="item-id" type="hidden">
+        <input id="item-image" type="hidden">
+
+        <div class="editor-grid">
+          <label class="wide">Item Name<input id="item-name" required maxlength="100"></label>
+          <label>Item Key<input id="item-key" required maxlength="100" placeholder="frostbound-rune-staff"></label>
+          <label>Rarity<select id="item-rarity"><option>Common</option><option>Uncommon</option><option>Rare</option><option>Epic</option><option>Legendary</option></select></label>
+          <label>Item Type<select id="item-type"><option>Weapon</option><option>Armor</option><option>Consumable</option><option>Quest</option><option>Item</option></select></label>
+          <label>Primary Slot<select id="item-slot"><option value="">Not Equippable</option><option>Head</option><option>Neck</option><option>Chest</option><option>Hands</option><option>Legs</option><option>Feet</option><option>Main Hand</option><option>Off Hand</option><option>Ring 1</option><option>Ring 2</option><option>Artifact</option></select></label>
+
+          <section class="item-upload-section wide" aria-labelledby="item-icon-heading">
+            <div class="upload-heading"><div><h3 id="item-icon-heading">Item Icon</h3><p>The URL is created automatically after upload.</p></div><button id="remove-item-image" type="button" hidden>Remove Image</button></div>
+            <div id="item-upload-zone" class="item-upload-zone" tabindex="0" role="button" aria-label="Upload Item icon">
+              <input id="item-image-file" type="file" accept="image/png,image/webp" hidden>
+              <div class="upload-placeholder" id="upload-placeholder"><strong>Drop an Item icon here</strong><span>or select a file from the computer</span><button id="choose-item-image" type="button">Choose Image</button></div>
+              <div class="upload-preview" id="upload-preview" hidden><img id="upload-preview-image" alt="Uploaded Item icon preview"><div><strong id="upload-file-name">Item icon</strong><span id="upload-file-details"></span><em id="upload-status">Ready to upload</em></div></div>
+            </div>
+            <div class="upload-requirements">
+              <div><b>Accepted</b><span>PNG or WebP</span></div>
+              <div><b>Recommended</b><span>256 × 256 px</span></div>
+              <div><b>Allowed Dimensions</b><span>128 × 128 to 1024 × 1024 px</span></div>
+              <div><b>Maximum File Size</b><span>5 MB</span></div>
+              <div><b>Background</b><span>Transparent recommended</span></div>
+              <div><b>Shape</b><span>Square required</span></div>
+            </div>
+            <div id="upload-validation" class="upload-validation" aria-live="polite"></div>
+          </section>
+
+          <fieldset class="wide"><legend>Allowed Equipment Slots</legend><div id="allowed-slot-list" class="slot-checks"></div></fieldset>
+          <fieldset class="wide"><legend>Attribute Bonuses</legend><div class="bonus-grid"><label>STR<input id="bonus-strength" type="number" min="-99" max="99" value="0"></label><label>DEX<input id="bonus-dexterity" type="number" min="-99" max="99" value="0"></label><label>CON<input id="bonus-constitution" type="number" min="-99" max="99" value="0"></label><label>INT<input id="bonus-intelligence" type="number" min="-99" max="99" value="0"></label><label>WIS<input id="bonus-wisdom" type="number" min="-99" max="99" value="0"></label><label>CHA<input id="bonus-charisma" type="number" min="-99" max="99" value="0"></label></div></fieldset>
+          <fieldset class="wide"><legend>Vital Resource Bonuses</legend><div class="bonus-grid vital"><label>Max HP<input id="bonus-hp" type="number" min="-9999" max="9999" value="0"></label><label>Max Mana<input id="bonus-mana" type="number" min="-9999" max="9999" value="0"></label></div></fieldset>
+          <label>Stackable<select id="item-stackable"><option value="false">No</option><option value="true">Yes</option></select></label>
+          <label>Maximum Stack<input id="item-max-stack" type="number" min="1" max="999" value="1"></label>
+          <label class="wide">Description<textarea id="item-description" rows="4" placeholder="What the Item is and how the Item is used."></textarea></label>
+          <label class="wide">Notes<textarea id="item-notes" rows="4" placeholder="Restrictions, lore, handling notes, or special rules."></textarea></label>
+        </div>
+
+        <div class="editor-preview"><img id="editor-image-preview" alt="Item preview"><div><h3 id="editor-preview-name">Item Preview</h3><p id="editor-preview-meta">Common • Item</p><div id="editor-preview-effects"></div></div></div>
+        <div class="editor-actions"><button id="catalog-delete" class="delete" type="button" hidden>Delete Item</button><span></span><button id="catalog-cancel" type="button">Cancel</button><button class="save" type="submit">Save Item</button></div>
+      </form>
+    </section>
+  </main>
+  <main class="catalog-denied" id="catalog-denied" hidden><h1>Administrator Access Required</h1><p>Only platform administrators can edit the Item Catalog.</p><a href="../dashboard/index.html">Return to Dashboard</a></main>
+</div>
+<div class="toast" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/config.js"></script><script src="../../js/supabase.js"></script><script src="../../js/navigation.js"></script><script src="../../js/modal.js"></script><script src="../../js/item-catalog.js"></script>
 </body>
 </html>
