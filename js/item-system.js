@@ -7,7 +7,7 @@
     .replaceAll('"', '&quot;');
 
   const characterId = new URLSearchParams(location.search).get('id');
-  const slots = ['Head','Neck','Chest','Hands','Legs','Feet','Main Hand','Off Hand','Ring 1','Ring 2','Artifact'];
+  const slots = ['Head','Neck','Chest','Hands','Legs','Feet','Main Hand','Off Hand','Ring 1','Ring 2','Artifact','Backpack'];
   const cols = {
     'Head':'head_item_id',
     'Neck':'neck_item_id',
@@ -19,7 +19,8 @@
     'Off Hand':'off_hand_item_id',
     'Ring 1':'ring_1_item_id',
     'Ring 2':'ring_2_item_id',
-    'Artifact':'artifact_item_id'
+    'Artifact':'artifact_item_id',
+    'Backpack':'backpack_item_id'
   };
 
   let character;
@@ -123,6 +124,9 @@
     }
 
     equipment = equipmentData || {};
+    const storageResult = await window.DND.client.from('character_item_storage').select('inventory_id,location').eq('character_id', characterId);
+    const storedIds = new Set((storageResult.data || []).filter(entry => entry.location !== 'inventory').map(entry => entry.inventory_id));
+    inventory.forEach(entry => entry._stored = storedIds.has(entry.id));
     renderAll();
   }
 
@@ -137,11 +141,12 @@
   }
 
   function renderInventory() {
+    const looseInventory = inventory.filter(row => !row._stored);
     const rows = activeFilter === 'all'
-      ? inventory
-      : inventory.filter(row => (row.items?.item_type || '').toLowerCase().includes(activeFilter));
+      ? looseInventory
+      : looseInventory.filter(row => (row.items?.item_type || '').toLowerCase().includes(activeFilter));
 
-    q('#inventory-count').textContent = `${inventory.length} Item${inventory.length === 1 ? '' : 's'}`;
+    q('#inventory-count').textContent = `${looseInventory.length} Item${inventory.length === 1 ? '' : 's'}`;
     q('#inventory-grid').innerHTML = rows.length
       ? rows.map(row => `<button class="inventory-slot-v2 item-system-inventory ${isEquipped(row.items.id) ? 'is-equipped' : ''}" draggable="${owner}" data-inventory-id="${row.id}" data-item-id="${row.items.id}" title="${esc(row.items.name)}">${row.items.image_url ? `<img src="${esc(row.items.image_url)}" alt="${esc(row.items.name)}" draggable="false">` : '◇'}<b>${row.quantity || 1}</b>${isEquipped(row.items.id) ? '<i>Equipped</i>' : ''}</button>`).join('')
       : '<div class="inventory-empty-v2">No items in this category.</div>';
@@ -166,7 +171,7 @@
       hp_bonus:0,
       mana_bonus:0
     };
-    slots.forEach(slot => {
+    slots.filter(slot => slot !== 'Backpack').forEach(slot => {
       const row = inventory.find(entry => entry.items?.id === equipment[cols[slot]]);
       if (row) Object.keys(total).forEach(key => total[key] += Number(row.items[key]) || 0);
     });
@@ -300,6 +305,7 @@
     });
   }
 
+  window.addEventListener('dnd:storage-updated', load);
   window.addEventListener('dnd:navigation-ready', () => {
     const wait = setInterval(() => {
       if (q('#character-sheet') && !q('#character-sheet').hidden) {
