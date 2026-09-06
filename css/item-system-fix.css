@@ -1,0 +1,10 @@
+/* Distribution controls marked hidden must stay hidden even when form label styles use display:grid. */
+#class-scope-field[hidden],#adventurer-scope-field[hidden]{display:none!important}
+
+/* Stronger drag guidance. */
+.equipment-grid-v2.equipment-drag-active .item-system-slot.invalid-drop{opacity:.28!important;border-color:#4b2b25!important;background:rgba(83,29,23,.12)!important;box-shadow:none!important}
+.equipment-grid-v2.equipment-drag-active .item-system-slot.valid-drop{opacity:1!important;border:2px solid #58c66d!important;background:rgba(49,139,66,.24)!important;box-shadow:0 0 18px rgba(79,204,101,.48),inset 0 0 18px rgba(55,151,72,.22)!important}
+.equipment-grid-v2.equipment-drag-active .item-system-slot.valid-drop::after{content:'Valid Slot';position:absolute;left:50%;bottom:7px;transform:translateX(-50%);padding:3px 6px;border-radius:999px;color:#b7f1c0;background:#183d20;font-size:.52rem;white-space:nowrap}
+.item-system-slot.drag-over{transform:scale(1.035);border-color:#8cff9d!important;box-shadow:0 0 26px rgba(99,231,120,.75)!important}
+.inventory-slot-v2[draggable="true"]{cursor:grab}.inventory-slot-v2[draggable="true"]:active{cursor:grabbing}
+.sheet-attribute em{display:block;min-height:13px;color:#9cdda7;font-size:.58rem;font-style:normal;line-height:1.2;text-align:center}.sheet-attribute em.no-equipment-bonus{color:#6f665f}.sheet-vitals strong small{display:block;margin-top:3px;color:#9cdda7;font-size:.58rem;line-height:1.2}
