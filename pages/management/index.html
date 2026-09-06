@@ -4,100 +4,65 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#11100f">
-  <title>Management | Three Realms Adventures</title>
+  <title>Item Catalog | Three Realms Adventures</title>
+  <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
   <link rel="stylesheet" href="../../css/global.css">
   <link rel="stylesheet" href="../../css/dashboard.css">
-  <link rel="stylesheet" href="../../css/management-hub.css">
+  <link rel="stylesheet" href="../../css/modal.css">
+  <link rel="stylesheet" href="../../css/item-catalog.css">
 </head>
 <body>
-  <div class="management-page-shell">
+  <div class="catalog-shell">
     <div id="site-navigation" data-active-page="management"></div>
-
-    <main class="management-main" id="management-main" hidden>
-      <header class="management-heading">
-        <div>
-          <p class="management-kicker">Three Realms Operations</p>
-          <h1>Management</h1>
-          <p>Build and manage reusable game content, campaign systems, inventory, abilities, and future world resources.</p>
-        </div>
-        <span class="management-access" id="management-access">Management Access</span>
+    <main class="catalog-main" id="catalog-main" hidden>
+      <header class="catalog-heading">
+        <div><p>Game Management</p><h1>Item Catalog</h1><span>Define equipment slots, Attribute bonuses, Vital bonuses, descriptions, and notes.</span></div>
+        <button id="catalog-new" type="button">Create Item</button>
       </header>
 
-      <section class="management-overview">
-        <div>
-          <span>Content Workspace</span>
-          <strong>Build the Three Realms</strong>
-          <p>Use the available studios below to create structured content while keeping completed player systems locked.</p>
-        </div>
-        <div class="management-overview-mark" aria-hidden="true">M</div>
+      <section class="catalog-summary">
+        <div><span>Total Items</span><strong id="catalog-total">0</strong></div>
+        <div><span>Equippable</span><strong id="catalog-equippable">0</strong></div>
+        <div><span>With Bonuses</span><strong id="catalog-bonuses">0</strong></div>
+        <div><span>Needs Setup</span><strong id="catalog-incomplete">0</strong></div>
       </section>
 
-      <section class="management-section">
-        <div class="management-section-heading">
-          <div><p class="management-kicker">Available Now</p><h2>Content Studios</h2></div>
-          <p>Open a Studio to create or manage its content.</p>
-        </div>
-
-        <div class="management-card-grid">
-          <a class="management-card available" href="character-templates.html">
-            <div class="management-card-icon" aria-hidden="true">CT</div>
-            <div class="management-card-copy">
-              <span class="management-status available-status">Available</span>
-              <h3>Character Template Studio</h3>
-              <p>Create a new Class or add an Adventurer to an existing Class. Define identity, required artwork, Abilities, Equipment, Consumables, Attributes, generated filenames, and JSON data.</p>
-              <ul>
-                <li>Six-step structured workflow</li>
-                <li>Image size validation</li>
-                <li>Draft and Ready for Review status</li>
-              </ul>
-              <strong>Open Character Template Studio</strong>
-            </div>
-          </a>
-        </div>
+      <section class="catalog-toolbar">
+        <label>Search<input id="catalog-search" type="search" placeholder="Search item name, key, type, or slot"></label>
+        <label>Type<select id="catalog-type"><option value="all">All Types</option><option>Weapon</option><option>Armor</option><option>Consumable</option><option>Quest</option><option>Item</option></select></label>
+        <label>Setup<select id="catalog-setup"><option value="all">All Setup States</option><option value="ready">Ready</option><option value="incomplete">Needs Setup</option></select></label>
+        <button id="catalog-refresh" type="button">Refresh</button>
       </section>
 
-      <section class="management-section future-section">
-        <div class="management-section-heading">
-          <div><p class="management-kicker">Planned Workspaces</p><h2>Future Management Areas</h2></div>
-          <p>These cards reserve the Management structure without enabling unfinished tools.</p>
-        </div>
-
-        <div class="management-card-grid future-grid">
-          <article class="management-card coming-soon">
-            <div class="management-card-icon" aria-hidden="true">IM</div>
-            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Inventory Item Management</h3><p>Create reusable Weapons, Armor, Equipment, Tonics, Potions, Quest Items, and their 128 × 128 icon requirements.</p></div>
-          </article>
-          <article class="management-card coming-soon">
-            <div class="management-card-icon" aria-hidden="true">AM</div>
-            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Ability Management</h3><p>Create reusable Abilities, gameplay effects, theme requirements, and Ability Icon Coins.</p></div>
-          </article>
-          <article class="management-card coming-soon">
-            <div class="management-card-icon" aria-hidden="true">CM</div>
-            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Campaign Management</h3><p>Create Campaigns, assign Characters, track sessions, and manage story progression.</p></div>
-          </article>
-          <article class="management-card coming-soon">
-            <div class="management-card-icon" aria-hidden="true">PM</div>
-            <div class="management-card-copy"><span class="management-status">Planned</span><h3>Progression Management</h3><p>Define XP, Levels, unlocks, starting resources, health, mana, and advancement rules.</p></div>
-          </article>
-        </div>
+      <section class="catalog-body">
+        <div id="catalog-list" class="catalog-list"><p>Loading Items...</p></div>
+        <form id="catalog-form" class="catalog-editor" hidden>
+          <div class="editor-heading"><div><p>Item Editor</p><h2 id="editor-title">Create Item</h2></div><button id="editor-close" type="button">×</button></div>
+          <input id="item-id" type="hidden">
+          <div class="editor-grid">
+            <label class="wide">Item Name<input id="item-name" required maxlength="100"></label>
+            <label>Item Key<input id="item-key" required maxlength="100" placeholder="item-name"></label>
+            <label>Rarity<select id="item-rarity"><option>Common</option><option>Uncommon</option><option>Rare</option><option>Epic</option><option>Legendary</option></select></label>
+            <label>Item Type<select id="item-type"><option>Weapon</option><option>Armor</option><option>Consumable</option><option>Quest</option><option>Item</option></select></label>
+            <label>Primary Slot<select id="item-slot"><option value="">Not Equippable</option><option>Head</option><option>Neck</option><option>Chest</option><option>Hands</option><option>Legs</option><option>Feet</option><option>Main Hand</option><option>Off Hand</option><option>Ring 1</option><option>Ring 2</option><option>Artifact</option></select></label>
+            <label class="wide">Image URL<input id="item-image" type="text" placeholder="/DnD/assets/classes/.../Item Icon.png"></label>
+            <fieldset class="wide"><legend>Allowed Equipment Slots</legend><div id="allowed-slot-list" class="slot-checks"></div></fieldset>
+            <fieldset class="wide"><legend>Attribute Bonuses</legend><div class="bonus-grid"><label>STR<input id="bonus-strength" type="number" min="-99" max="99" value="0"></label><label>DEX<input id="bonus-dexterity" type="number" min="-99" max="99" value="0"></label><label>CON<input id="bonus-constitution" type="number" min="-99" max="99" value="0"></label><label>INT<input id="bonus-intelligence" type="number" min="-99" max="99" value="0"></label><label>WIS<input id="bonus-wisdom" type="number" min="-99" max="99" value="0"></label><label>CHA<input id="bonus-charisma" type="number" min="-99" max="99" value="0"></label></div></fieldset>
+            <fieldset class="wide"><legend>Vital Resource Bonuses</legend><div class="bonus-grid vital"><label>Max HP<input id="bonus-hp" type="number" min="-9999" max="9999" value="0"></label><label>Max Mana<input id="bonus-mana" type="number" min="-9999" max="9999" value="0"></label></div></fieldset>
+            <label>Stackable<select id="item-stackable"><option value="false">No</option><option value="true">Yes</option></select></label>
+            <label>Maximum Stack<input id="item-max-stack" type="number" min="1" max="999" value="1"></label>
+            <label class="wide">Description<textarea id="item-description" rows="4" placeholder="What the Item is and how it is used."></textarea></label>
+            <label class="wide">Notes<textarea id="item-notes" rows="4" placeholder="Restrictions, lore, handling notes, or special rules."></textarea></label>
+          </div>
+          <div class="editor-preview"><img id="editor-image-preview" alt="Item preview"><div><h3 id="editor-preview-name">Item Preview</h3><p id="editor-preview-meta">Common • Item</p><div id="editor-preview-effects"></div></div></div>
+          <div class="editor-actions"><button id="catalog-delete" class="delete" type="button" hidden>Delete Item</button><span></span><button id="catalog-cancel" type="button">Cancel</button><button class="save" type="submit">Save Item</button></div>
+        </form>
       </section>
     </main>
-
-    <main class="management-denied" id="management-denied" hidden>
-      <div class="management-denied-card">
-        <span aria-hidden="true">!</span>
-        <h1>Management Access Required</h1>
-        <p>This area is available only when the signed-in role has Management permission.</p>
-        <a href="../../index.html">Return Home</a>
-      </div>
-    </main>
+    <main class="catalog-denied" id="catalog-denied" hidden><h1>Administrator Access Required</h1><p>Only platform administrators can edit the Item Catalog.</p><a href="../dashboard/index.html">Return to Dashboard</a></main>
   </div>
-
   <div class="toast" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../../js/config.js"></script>
-  <script src="../../js/supabase.js"></script>
-  <script src="../../js/navigation.js"></script>
-  <script src="../../js/management-hub.js"></script>
+  <script src="../../js/config.js"></script><script src="../../js/supabase.js"></script><script src="../../js/navigation.js"></script><script src="../../js/modal.js"></script><script src="../../js/item-catalog.js"></script>
 </body>
 </html>
