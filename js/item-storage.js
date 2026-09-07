@@ -104,7 +104,7 @@
     grid.style.setProperty('--cols', columns);
     grid.style.setProperty('--rows', rows);
     grid.innerHTML = Array.from({ length: columns * rows }, (_, index) =>
-      `<div class="backpack-cell" data-x="${index % columns}" data-y="${Math.floor(index / columns)}" style="--cell-x:${(index % columns) + 1};--cell-y:${Math.floor(index / columns) + 1}"></div>`
+      `<div class="backpack-cell" data-x="${index % columns}" data-y="${Math.floor(index / columns)}" style="--cell-x:${(index % columns) + 1};--cell-y:${Math.floor(index / columns) + 1}"><span>Slot ${index + 1}</span></div>`
     ).join('');
 
     storage.filter(row => row.location === 'backpack').forEach(placement => {
