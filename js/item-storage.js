@@ -62,11 +62,13 @@
     slot.className = `pocket-slot item-system-slot ${row ? 'filled' : ''}`;
     slot.draggable = Boolean(row && owner);
     slot.dataset.storageInventory = row?.id || '';
+    slot.dataset.inventoryId = row?.id || '';
     slot.dataset.itemId = row?.items?.id || '';
     slot.title = row?.items?.name || `Pocket ${slotNumber}`;
 
     slot.innerHTML = row
       ? `${row.items.image_url ? `<img src="${row.items.image_url}" alt="${row.items.name}" draggable="false">` : '<span class="pocket-placeholder">◇</span>'}
+         <button class="storage-remove" type="button" data-return-inventory="${row.id}" aria-label="Return ${row.items.name} to Inventory">×</button>
          <strong>${row.items.name}</strong>
          <small>Pocket ${slotNumber}</small>`
       : `<span class="pocket-label">Pocket ${slotNumber}</span>`;
@@ -111,9 +113,10 @@
       const width = placement.rotated ? row.items.grid_height : row.items.grid_width;
       const height = placement.rotated ? row.items.grid_width : row.items.grid_height;
       grid.insertAdjacentHTML('beforeend', `
-        <button class="backpack-item" draggable="${owner}" data-storage-inventory="${row.id}"
+        <button class="backpack-item" draggable="${owner}" data-storage-inventory="${row.id}" data-inventory-id="${row.id}"
           style="--x:${placement.grid_x};--y:${placement.grid_y};--w:${width};--h:${height}">
           ${row.items.image_url ? `<img src="${row.items.image_url}" alt="${row.items.name}" draggable="false">` : ''}
+          <button class="storage-remove" type="button" data-return-inventory="${row.id}" aria-label="Return ${row.items.name} to Inventory">×</button>
           <strong>${row.items.name}</strong><small>${width} × ${height}</small>
         </button>`);
     });
@@ -136,13 +139,22 @@
     document.querySelectorAll('[data-pocket-slot]').forEach(slot =>
       slot.classList.toggle('valid-storage-drop', Boolean(draggedRow.items.pocket_eligible))
     );
+    const allowedSlots = draggedRow.items.allowed_slots?.length
+      ? draggedRow.items.allowed_slots
+      : (draggedRow.items.equip_slot ? [draggedRow.items.equip_slot] : []);
+    const equipmentGrid = $('#equipment-grid');
+    equipmentGrid?.classList.add('dragging');
+    document.querySelectorAll('[data-equipment-slot]').forEach(slot => {
+      slot.classList.toggle('valid-drop', allowedSlots.includes(slot.dataset.equipmentSlot));
+    });
   }
 
   function endDrag() {
     draggedRow = null;
     document.body.classList.remove('storage-dragging');
+    $('#equipment-grid')?.classList.remove('dragging');
     document.querySelectorAll('.valid-storage-drop,.storage-over').forEach(element =>
-      element.classList.remove('valid-storage-drop', 'storage-over')
+      element.classList.remove('valid-storage-drop', 'storage-over', 'valid-drop', 'drag-over')
     );
   }
 
@@ -155,6 +167,46 @@
   function bind() {
     document.addEventListener('dragstart', startDrag, true);
     document.addEventListener('dragend', endDrag, true);
+    document.addEventListener('click', event => {
+      const removeButton = event.target.closest('[data-return-inventory]');
+      if (!removeButton || !owner) return;
+      event.preventDefault();
+      event.stopPropagation();
+      rpc('storage_move_to_inventory', {
+        p_character_id: characterId,
+        p_inventory_id: removeButton.dataset.returnInventory
+      });
+    });
+
+    const equipmentGrid = $('#equipment-grid');
+    equipmentGrid?.addEventListener('dragover', event => {
+      if (!draggedRow) return;
+      const slot = event.target.closest('[data-equipment-slot]');
+      if (!slot?.classList.contains('valid-drop')) return;
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'move';
+      slot.classList.add('drag-over');
+    }, true);
+    equipmentGrid?.addEventListener('dragleave', event => {
+      event.target.closest('[data-equipment-slot]')?.classList.remove('drag-over');
+    }, true);
+    equipmentGrid?.addEventListener('drop', async event => {
+      if (!draggedRow) return;
+      const slot = event.target.closest('[data-equipment-slot]');
+      if (!slot?.classList.contains('valid-drop')) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const itemName = draggedRow.items.name;
+      const destination = slot.dataset.equipmentSlot;
+      const { error } = await window.DND.client.rpc('equip_character_item', {
+        p_character_id: characterId,
+        p_item_id: draggedRow.items.id,
+        p_slot: destination
+      });
+      if (error) return window.DND.toast(error.message, 'error');
+      window.DND.toast(`${itemName} equipped to ${destination}.`, 'success');
+      location.reload();
+    }, true);
     document.addEventListener('keydown', event => {
       if (event.key.toLowerCase() === 'r' && draggedRow?.items.can_rotate) {
         rotated = !rotated;
