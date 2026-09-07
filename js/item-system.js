@@ -103,10 +103,16 @@
     const session = sessionData?.session || null;
     window.DND.session = session;
 
-    const [{data: characterData}, {data: inventoryData, error: inventoryError}, {data: equipmentData}] = await Promise.all([
+    const [
+      {data: characterData},
+      {data: inventoryData, error: inventoryError},
+      {data: equipmentData},
+      {data: activeBackpackData}
+    ] = await Promise.all([
       window.DND.client.from('characters').select('*').eq('id', characterId).maybeSingle(),
       window.DND.client.from('inventory').select('id,quantity,items(*)').eq('character_id', characterId),
-      window.DND.client.from('character_equipment').select('*').eq('character_id', characterId).maybeSingle()
+      window.DND.client.from('character_equipment').select('*').eq('character_id', characterId).maybeSingle(),
+      window.DND.client.from('character_storage_config').select('active_backpack_inventory_id').eq('character_id', characterId).maybeSingle()
     ]);
 
     character = characterData;
@@ -125,7 +131,14 @@
 
     equipment = equipmentData || {};
     const storageResult = await window.DND.client.from('character_item_storage').select('inventory_id,location').eq('character_id', characterId);
-    const storedIds = new Set((storageResult.data || []).filter(entry => entry.location !== 'inventory').map(entry => entry.inventory_id));
+    const storedIds = new Set(
+      (storageResult.data || [])
+        .filter(entry => entry.location !== 'inventory')
+        .map(entry => entry.inventory_id)
+    );
+    if (activeBackpackData?.active_backpack_inventory_id) {
+      storedIds.add(activeBackpackData.active_backpack_inventory_id);
+    }
     inventory.forEach(entry => entry._stored = storedIds.has(entry.id));
     renderAll();
   }
@@ -146,7 +159,7 @@
       ? looseInventory
       : looseInventory.filter(row => (row.items?.item_type || '').toLowerCase().includes(activeFilter));
 
-    q('#inventory-count').textContent = `${looseInventory.length} Item${inventory.length === 1 ? '' : 's'}`;
+    q('#inventory-count').textContent = `${looseInventory.length} Item${looseInventory.length === 1 ? '' : 's'}`;
     q('#inventory-grid').innerHTML = rows.length
       ? rows.map(row => `<button class="inventory-slot-v2 item-system-inventory ${isEquipped(row.items.id) ? 'is-equipped' : ''}" draggable="${owner}" data-inventory-id="${row.id}" data-item-id="${row.items.id}" title="${esc(row.items.name)}">${row.items.image_url ? `<img src="${esc(row.items.image_url)}" alt="${esc(row.items.name)}" draggable="false">` : '◇'}<b>${row.quantity || 1}</b>${isEquipped(row.items.id) ? '<i>Equipped</i>' : ''}</button>`).join('')
       : '<div class="inventory-empty-v2">No items in this category.</div>';

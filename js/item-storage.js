@@ -104,7 +104,7 @@
     grid.style.setProperty('--cols', columns);
     grid.style.setProperty('--rows', rows);
     grid.innerHTML = Array.from({ length: columns * rows }, (_, index) =>
-      `<div class="backpack-cell" data-x="${index % columns}" data-y="${Math.floor(index / columns)}"></div>`
+      `<div class="backpack-cell" data-x="${index % columns}" data-y="${Math.floor(index / columns)}" style="--cell-x:${(index % columns) + 1};--cell-y:${Math.floor(index / columns) + 1}"></div>`
     ).join('');
 
     storage.filter(row => row.location === 'backpack').forEach(placement => {
@@ -113,12 +113,12 @@
       const width = placement.rotated ? row.items.grid_height : row.items.grid_width;
       const height = placement.rotated ? row.items.grid_width : row.items.grid_height;
       grid.insertAdjacentHTML('beforeend', `
-        <button class="backpack-item" draggable="${owner}" data-storage-inventory="${row.id}" data-inventory-id="${row.id}"
-          style="--x:${placement.grid_x};--y:${placement.grid_y};--w:${width};--h:${height}">
+        <div class="backpack-item" draggable="${owner}" data-storage-inventory="${row.id}" data-inventory-id="${row.id}"
+          style="grid-column:${Number(placement.grid_x) + 1} / span ${width};grid-row:${Number(placement.grid_y) + 1} / span ${height}">
           ${row.items.image_url ? `<img src="${row.items.image_url}" alt="${row.items.name}" draggable="false">` : ''}
           <button class="storage-remove" type="button" data-return-inventory="${row.id}" aria-label="Return ${row.items.name} to Inventory">×</button>
           <strong>${row.items.name}</strong><small>${width} × ${height}</small>
-        </button>`);
+        </div>`);
     });
   }
 
@@ -139,6 +139,10 @@
     document.querySelectorAll('[data-pocket-slot]').forEach(slot =>
       slot.classList.toggle('valid-storage-drop', Boolean(draggedRow.items.pocket_eligible))
     );
+    const backpackReady = Boolean(activeBackpack?.active_backpack_inventory_id) && !draggedRow.items.is_backpack;
+    document.querySelectorAll('#backpack-grid .backpack-cell').forEach(cell =>
+      cell.classList.toggle('valid-storage-drop', backpackReady)
+    );
     const allowedSlots = draggedRow.items.allowed_slots?.length
       ? draggedRow.items.allowed_slots
       : (draggedRow.items.equip_slot ? [draggedRow.items.equip_slot] : []);
@@ -153,7 +157,7 @@
     draggedRow = null;
     document.body.classList.remove('storage-dragging');
     $('#equipment-grid')?.classList.remove('dragging');
-    document.querySelectorAll('.valid-storage-drop,.storage-over').forEach(element =>
+    document.querySelectorAll('.valid-storage-drop,.storage-over,.valid-drop,.drag-over').forEach(element =>
       element.classList.remove('valid-storage-drop', 'storage-over', 'valid-drop', 'drag-over')
     );
   }
@@ -246,11 +250,20 @@
     });
 
     $('#backpack-grid').ondragover = event => {
-      if (draggedRow && activeBackpack?.active_backpack_inventory_id) event.preventDefault();
+      if (!draggedRow || !activeBackpack?.active_backpack_inventory_id || draggedRow.items.is_backpack) return;
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('#backpack-grid .storage-over').forEach(cell => cell.classList.remove('storage-over'));
+      event.target.closest('.backpack-cell')?.classList.add('storage-over');
+    };
+    $('#backpack-grid').ondragleave = event => {
+      if (!event.currentTarget.contains(event.relatedTarget)) {
+        document.querySelectorAll('#backpack-grid .storage-over').forEach(cell => cell.classList.remove('storage-over'));
+      }
     };
     $('#backpack-grid').ondrop = event => {
-      const cell = event.target.closest('[data-x]');
-      if (!cell || !draggedRow) return;
+      const cell = event.target.closest('.backpack-cell');
+      if (!cell || !draggedRow || draggedRow.items.is_backpack) return;
       event.preventDefault();
       rpc('storage_move_to_backpack', {
         p_character_id: characterId,
